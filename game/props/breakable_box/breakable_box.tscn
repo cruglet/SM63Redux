@@ -5,16 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://bgu3tbp5yyymq" path="res://assets/textures/objects/interactive/interactable/breakable_box_0.png" id="2_qhjox"]
 [ext_resource type="Texture2D" uid="uid://bppjnj2wb5fqe" path="res://assets/textures/objects/interactive/interactable/breakable_box_2.png" id="3_8nl6k"]
 [ext_resource type="Texture2D" uid="uid://c8vi7fcgcrxm2" path="res://assets/textures/objects/interactive/interactable/breakable_box_1.png" id="3_ju08t"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="3_prsgq"]
 [ext_resource type="Script" uid="uid://3ara7t8dqmih" path="res://util/entity/hurt_box.gd" id="4_po2cq"]
 [ext_resource type="AudioStream" uid="uid://cwxgel8xnrt2m" path="res://assets/sfx/object/breakable_box/box_break.wav" id="4_prsgq"]
 [ext_resource type="Texture2D" uid="uid://2vcfa37p1h7t" path="res://assets/textures/objects/interactive/interactable/breakable_box_particles.png" id="5_3wji2"]
 [ext_resource type="Script" uid="uid://drtqc6at2evph" path="res://util/entity/hurt_box_component.gd" id="5_key8f"]
 [ext_resource type="Script" uid="uid://df82mcnubnp0h" path="res://util/2d/animated_particles.gd" id="7_debris"]
 [ext_resource type="Script" uid="uid://bua0v2wcixcy" path="res://game/entity_data/components/pound_cancel_component.gd" id="8_sustain"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_ju08t"]
-diffuse_texture = ExtResource("2_qhjox")
+[ext_resource type="Script" uid="uid://csk0lir3br2qj" path="res://util/entity/drop.gd" id="drop"]
 
 [sub_resource type="Resource" id="Resource_4xhut"]
 script = ExtResource("5_key8f")
@@ -83,26 +80,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="BreakableBox" type="Node2D" unique_id=1219245977 node_paths=PackedStringArray("break_sfx", "debris", "sprite", "collision_shape", "hurt_box")]
+[node name="BreakableBox" type="Node2D" unique_id=1219245977 node_paths=PackedStringArray("break_sfx", "debris", "sprite", "collision_shape", "hurt_box", "contents")]
 script = ExtResource("1_qhjox")
 break_sfx = NodePath("BreakSFX")
 textures = Array[Texture2D]([ExtResource("2_qhjox"), ExtResource("3_ju08t"), ExtResource("3_8nl6k")])
-break_sfx_list = Array[AudioStream]([ExtResource("4_prsgq")])
 debris = NodePath("Debris")
 sprite = NodePath("Sprite")
 collision_shape = NodePath("StaticBody2D/CollisionShape2D")
 hurt_box = NodePath("HurtBox")
-coin = ExtResource("2_4xhut")
+contents = NodePath("Contents")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=286401553]
-texture = SubResource("CanvasTexture_ju08t")
-script = ExtResource("3_prsgq")
-canvas_texture = SubResource("CanvasTexture_ju08t")
-diffuse_texture = ExtResource("2_qhjox")
-current_animation = ""
-current_frame = 0
-speed_scale = 1.0
-playing = false
+texture = ExtResource("2_qhjox")
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=920770686]
 script = ExtResource("4_po2cq")
@@ -144,5 +133,11 @@ speed_scale_min = 0.7
 speed_scale_max = 1.4
 random_start_frame = true
 random_flip = true
+
+[node name="Contents" type="Marker2D" parent="." unique_id=1730914262]
+script = ExtResource("drop")
+scene = ExtResource("2_4xhut")
+count = 5
+spread = 12.0
 
 [connection signal="damaged" from="HurtBox" to="." method="_on_hurt_box_damaged"]

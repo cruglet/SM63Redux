@@ -65,12 +65,25 @@ static func run_test() -> void:
 	var template: Node2D = Node2D.new()
 	burst_scene.pack(template)
 	template.free()
+	var drop: Drop = Drop.new()
+	drop.scene = burst_scene
+	drop.count = 5
+	drop.spread = 8.0
+	source.add_child(drop)
 	var before: int = world.get_child_count()
-	Spawner.spawn_burst(source, burst_scene, 5, 8.0)
+	drop.release()
 	await tree.process_frame
 	assert(world.get_child_count() == before + 5)
 	for child: Node in world.get_children().slice(before):
 		var offset: Vector2 = (child as Node2D).global_position - source.global_position
 		assert(absf(offset.x) <= 8.0 and is_zero_approx(offset.y))
+	
+	drop.reward = true
+	Drop.release_all(source, false)
+	await tree.process_frame
+	assert(world.get_child_count() == before + 5)
+	Drop.release_all(source)
+	await tree.process_frame
+	assert(world.get_child_count() == before + 10)
 	
 	root.free()

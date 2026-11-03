@@ -149,7 +149,7 @@ func attach(batch: int = ATTACH_BATCH) -> void:
 	loaded.emit()
 
 
-func respawn(old: GameObject, data: ObjectData, drops_coins: bool = false) -> void:
+func respawn(old: GameObject, data: ObjectData, drops_rewards: bool = false) -> void:
 	var layer: LevelLayer = _area.get_layer_of(old)
 	var object: GameObject = ObjectRegistry.spawn(data, GameObject.Context.GAME) if layer else null
 	if object == null:
@@ -157,7 +157,7 @@ func respawn(old: GameObject, data: ObjectData, drops_coins: bool = false) -> vo
 	
 	var entity: Entity = object.game_root as Entity
 	if entity:
-		entity.drops_coins = drops_coins
+		entity.drops_rewards = drops_rewards
 	var at: int = layer.remove_object(old)
 	old.queue_free()
 	layer.add_object(object, at)

@@ -26,7 +26,7 @@ func _tick(_delta: float) -> void:
 		return
 	
 	if time > WATER_TIMEOUT:
-		goomba.queue_free()
+		goomba.die()
 	elif goomba.is_on_anything():
 		_pop()
 
@@ -34,4 +34,4 @@ func _tick(_delta: float) -> void:
 func _pop() -> void:
 	_finishing = true
 	sprite.play(&"squish")
-	sprite.animation_finished.connect(goomba.queue_free, CONNECT_ONE_SHOT)
+	sprite.animation_finished.connect(goomba.die, CONNECT_ONE_SHOT)

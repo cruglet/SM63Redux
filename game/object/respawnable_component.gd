@@ -22,7 +22,7 @@ var _waiting: bool = false
 var _remaining: float = 0.0
 var _frame: int = 0
 var _despawning: bool = false
-var _drops_coins: bool = false
+var _drops_rewards: bool = false
 var _outside: bool = false
 var _outside_time: float = 0.0
 
@@ -57,8 +57,8 @@ func _physics_process(delta: float) -> void:
 		_outside_time = _outside_time + delta if _outside else 0.0
 		if _outside_time >= despawn_delay:
 			_despawning = true
-			_drops_coins = root.drops_coins
-			root.despawn()
+			_drops_rewards = root.drops_rewards
+			root.queue_free()
 		return
 	
 	match mode:
@@ -92,7 +92,7 @@ func _on_root_exiting() -> void:
 	
 	_waiting = true
 	if not _despawning:
-		_drops_coins = false
+		_drops_rewards = false
 	_remaining = countdown
 	set_physics_process(true)
 
@@ -114,4 +114,4 @@ func _respawn() -> void:
 	set_physics_process(false)
 	var level: Level = Level.of(_object)
 	if level:
-		level.respawn(_object, _snapshot, _drops_coins)
+		level.respawn(_object, _snapshot, _drops_rewards)

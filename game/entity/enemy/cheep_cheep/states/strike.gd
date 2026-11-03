@@ -24,6 +24,6 @@ func _tick(_delta: float) -> void:
 	if cheep_cheep.is_in_water():
 		cheep_cheep.velocity = lerp(cheep_cheep.velocity, Vector2.ZERO, SINK_WEIGHT)
 		if time > DEATH_DELAY:
-			cheep_cheep.queue_free()
+			cheep_cheep.die()
 	elif time > DEATH_DELAY and cheep_cheep.is_on_floor():
-		cheep_cheep.queue_free()
+		cheep_cheep.die()

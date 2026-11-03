@@ -10,13 +10,16 @@ func _tick(_delta: float) -> void:
 	if not player:
 		return
 	
-	var direction: Vector2 = cheep_cheep.global_position.direction_to(player.global_position)
+	var goal: Vector2 = player.global_position
+	if not player.is_in_water():
+		goal.y = maxf(goal.y, cheep_cheep.global_position.y)
+	var direction: Vector2 = cheep_cheep.global_position.direction_to(goal)
 	cheep_cheep.velocity = direction * CHASE_SPEED
 	sprite.local_rotation = rad_to_deg(asin(direction.y))
 
 
 func _exit() -> void:
-	sprite.rotation = 0
+	sprite.local_rotation = 0.0
 
 
 func _next() -> StringName:

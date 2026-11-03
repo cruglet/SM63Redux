@@ -12,18 +12,9 @@ var _phase_shift: float = 0.0
 
 
 func _tick(_delta: float) -> void:
-	if _is_blocked():
+	if entity.is_path_blocked(signf(entity.velocity.x), floor_check_l, floor_check_r):
 		_phase_shift += PI
 	
-	sprite.flip_h = entity.velocity.x < 0.0
 	entity.velocity.x = AMPLITUDE * displacement.sample(sin(time / PERIOD + _phase_shift))
-
-
-func _is_blocked() -> bool:
-	if entity.is_on_wall():
-		return true
-	if entity.velocity.x > 0.0:
-		return entity.is_on_floor() and floor_check_r != null and not floor_check_r.is_colliding()
-	if entity.velocity.x < 0.0:
-		return floor_check_l != null and not floor_check_l.is_colliding()
-	return false
+	if not is_zero_approx(entity.velocity.x):
+		sprite.flip_h = entity.velocity.x < 0.0

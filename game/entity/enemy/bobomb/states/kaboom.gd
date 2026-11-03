@@ -16,7 +16,7 @@ func _enter() -> void:
 	bobomb.disable()
 	hurtbox_shape.set_deferred(&"disabled", true)
 	explosion_shape.set_deferred(&"disabled", false)
-	bobomb.spawn_exit_objects()
+	bobomb.drop()
 
 
 func _tick(_delta: float) -> void:

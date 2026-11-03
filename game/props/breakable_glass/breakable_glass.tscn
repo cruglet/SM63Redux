@@ -1,24 +1,32 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b8543b0lqleba"]
 
-[ext_resource type="PackedScene" path="res://game/props/breakable_box/breakable_box.tscn" id="1_gb4rt"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/interactive/interactable/breakable_glass_0.png" id="2_q7nns"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/interactive/interactable/breakable_glass_2.png" id="3_5x1lc"]
-[ext_resource type="AudioStream" path="res://assets/sfx/object/breakable_glass/glass_break_1.ogg" id="3_iibrf"]
-[ext_resource type="Texture2D" path="res://assets/textures/objects/interactive/interactable/breakable_glass_particles.png" id="3_q7nns"]
-[ext_resource type="AudioStream" path="res://assets/sfx/object/breakable_glass/glass_break_2.ogg" id="3_vlmnl"]
-[ext_resource type="Script" path="res://util/2d/smart_sprite_2d.gd" id="4_71e71"]
-[ext_resource type="AudioStream" path="res://assets/sfx/object/breakable_glass/glass_break_3.ogg" id="4_ummfn"]
-[ext_resource type="Texture2D" path="res://assets/textures/item/collectible/yellow_coin_spin.png" id="5_x272f"]
+[ext_resource type="PackedScene" uid="uid://c7ler7lqg61m1" path="res://game/props/breakable_box/breakable_box.tscn" id="1_gb4rt"]
+[ext_resource type="Texture2D" uid="uid://csab8p3wucepo" path="res://assets/textures/objects/interactive/interactable/breakable_glass_0.png" id="2_q7nns"]
+[ext_resource type="Texture2D" uid="uid://by72j0f1vxmja" path="res://assets/textures/objects/interactive/interactable/breakable_glass_2.png" id="3_5x1lc"]
+[ext_resource type="AudioStream" uid="uid://csj1dtritxkmf" path="res://assets/sfx/object/breakable_glass/glass_break_1.ogg" id="3_iibrf"]
+[ext_resource type="Texture2D" uid="uid://b6rve2nk74725" path="res://assets/textures/objects/interactive/interactable/breakable_glass_particles.png" id="3_q7nns"]
+[ext_resource type="AudioStream" uid="uid://tsl83yg44tmp" path="res://assets/sfx/object/breakable_glass/glass_break_2.ogg" id="3_vlmnl"]
+[ext_resource type="AudioStream" uid="uid://dum4iavp1jkui" path="res://assets/sfx/object/breakable_glass/glass_break_3.ogg" id="4_ummfn"]
+[ext_resource type="Texture2D" uid="uid://b7wqc58gwogb6" path="res://assets/textures/item/collectible/yellow_coin_spin.png" id="5_x272f"]
+[ext_resource type="Script" uid="uid://dpl7wwc7qfmwq" path="res://game/props/breakable_glass/drop_preview.gd" id="drop_preview"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_vqqdr"]
-diffuse_texture = ExtResource("2_q7nns")
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fxmsb"]
+streams_count = 3
+stream_0/stream = ExtResource("3_iibrf")
+stream_1/stream = ExtResource("3_vlmnl")
+stream_2/stream = ExtResource("4_ummfn")
+
+[sub_resource type="Resource" id="RigClip_CoinTemplate_spin"]
+resource_name = "spin"
+script = ExtResource("rig_clip")
+name = &"spin"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_71wue"]
 atlas = ExtResource("5_x272f")
 region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_cq0fu"]
-diffuse_texture = SubResource("AtlasTexture_71wue")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2pf35"]
 atlas = ExtResource("5_x272f")
@@ -65,27 +73,6 @@ animations = [{
 "name": &"spin",
 "speed": 5.0
 }]
-
-[sub_resource type="GDScript" id="GDScript_x272f"]
-script/source = "extends Node2D
-
-@export var coin_template: SmartSprite2D
-
-
-func _ready() -> void:
-	var coin_amount: int = mini((owner as Prop).get_property(&\"coin_amount\", 0), 5)
-	for i: int in coin_amount:
-		var coin: SmartSprite2D = coin_template.duplicate()
-		add_child(coin)
-		coin.show()
-		coin.play()
-		coin.position += Vector2(randi_range(-coin_amount + 1, coin_amount - 1), randi_range(-coin_amount + 1, coin_amount - 1))
-
-
-func _on_hurt_box_damaged(_source_hitbox: HitBox) -> void:
-	hide()
-	queue_free()
-"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x272f"]
 atlas = ExtResource("3_q7nns")
@@ -146,12 +133,9 @@ animations = [{
 
 [node name="BreakableGlass" unique_id=1219245977 instance=ExtResource("1_gb4rt")]
 textures = Array[Texture2D]([ExtResource("2_q7nns"), ExtResource("2_q7nns"), ExtResource("3_5x1lc")])
-break_sfx_list = Array[AudioStream]([ExtResource("3_iibrf"), ExtResource("3_vlmnl"), ExtResource("4_ummfn")])
 
 [node name="Sprite" parent="." index="0" unique_id=286401553]
-texture = SubResource("CanvasTexture_vqqdr")
-canvas_texture = SubResource("CanvasTexture_vqqdr")
-diffuse_texture = ExtResource("2_q7nns")
+texture = ExtResource("2_q7nns")
 
 [node name="HurtBox" parent="." index="1" unique_id=920770686]
 visible = false
@@ -159,24 +143,31 @@ collision_layer = 32
 collision_mask = 16
 
 [node name="BreakSFX" parent="." index="4" unique_id=593496812]
-stream = ExtResource("3_iibrf")
+stream = SubResource("AudioStreamRandomizer_fxmsb")
 volume_db = -5.0
 
-[node name="CoinTemplate" type="Sprite2D" parent="." index="5" unique_id=548014254]
+[node name="CoinTemplate" type="Node2D" parent="." index="5" unique_id=548014254]
 visible = false
-texture = SubResource("CanvasTexture_cq0fu")
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_CoinTemplate_spin")])
+current_animation = &"spin"
+reset_animation = &"spin"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="CoinTemplate" index="0" unique_id=1284298527]
+use_parent_material = true
+texture = ExtResource("5_x272f")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
-script = ExtResource("4_71e71")
-canvas_texture = SubResource("CanvasTexture_cq0fu")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_ty8x8")
-current_animation = "spin"
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_ty8x8")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
-[node name="InsideCoins" type="Node2D" parent="." index="6" unique_id=1661808871 node_paths=PackedStringArray("coin_template")]
+[node name="InsideCoins" type="Node2D" parent="." index="6" unique_id=1661808871 node_paths=PackedStringArray("drop", "template")]
 show_behind_parent = true
-script = SubResource("GDScript_x272f")
-coin_template = NodePath("../CoinTemplate")
+script = ExtResource("drop_preview")
+drop = NodePath("../Contents")
+template = NodePath("../CoinTemplate")
 
 [node name="Debris" parent="." index="7" unique_id=1781001774]
 sprite_frames = SubResource("SpriteFrames_q7nns")

@@ -9,9 +9,8 @@ const STEP_EPSILON: float = 0.05
 @export var components_root: Node
 @export var collision_shapes: Array[CollisionShape2D]
 @export var machine: StateMachine
-@export var exit_objects: Dictionary[PackedScene, int]
 @export var water_check: WaterCheckArea
-@export var step_height: float = 4.0
+@export var step_height: float = 8.0
 ## Objects off screen are suspended by [LevelCuller]. Turn this off for anything
 ## that must keep running out of view, such as a platform carrying the player or
 ## a timed hazard.
@@ -20,7 +19,7 @@ const STEP_EPSILON: float = 0.05
 
 var object: GameObject
 var components: Array[EntityComponent]
-var drops_coins: bool = true
+var drops_rewards: bool = true
 
 ## Helper variable which takes into account the [member sprite]'s flip_h
 ## property.
@@ -36,11 +35,12 @@ var local_velocity: Vector2:
 		
 		velocity = Vector2(lv.x * (-1 if sprite.flip_h else 1), lv.y)
 var _velocity_lock: bool = false
-var _exit_objs_spawned: bool = false
+var _dropped: bool = false
 
 
 func _ready() -> void:
 	floor_snap_length = 7
+	floor_constant_speed = true
 	if components_root:
 		for child: Node in components_root.get_children():
 			if child is EntityComponent:
@@ -65,14 +65,6 @@ func _physics_process(delta: float) -> void:
 		if not _velocity_lock:
 			_try_step()
 			move_and_slide()
-
-
-## Only a real death (queue_free) should leave exit objects behind. Leaving the
-## tree because the whole scene is being torn down must not spawn: the deferred
-## add_child would be dropped and the spawned nodes stranded outside the tree.
-func _exit_tree() -> void:
-	if is_queued_for_deletion():
-		spawn_exit_objects()
 
 
 func get_property(key: StringName) -> Variant:
@@ -103,6 +95,18 @@ func is_in_air() -> bool:
 
 func is_on_anything() -> bool:
 	return is_on_floor() or is_on_wall() or is_on_ceiling()
+
+
+func is_path_blocked(direction: float, ledge_l: RayCast2D, ledge_r: RayCast2D) -> bool:
+	if is_zero_approx(direction):
+		return false
+	if is_on_wall() and get_wall_normal().x * direction < 0.0:
+		return true
+	if not is_on_floor():
+		return false
+	
+	var ledge: RayCast2D = ledge_r if direction > 0.0 else ledge_l
+	return ledge != null and not ledge.is_colliding()
 
 
 func get_terrain() -> StringName:
@@ -194,24 +198,17 @@ func move_and_slide_with_gravity() -> void:
 		rotation = angle
 
 
-func despawn() -> void:
-	_exit_objs_spawned = true
-	queue_free()
-
-
-func spawn_exit_objects() -> void:
-	if _exit_objs_spawned:
+func drop() -> void:
+	if _dropped:
 		return
 	
-	for packed: PackedScene in exit_objects:
-		for i: int in exit_objects[packed]:
-			var node: Node = packed.instantiate()
-			if node is Coin and not drops_coins:
-				node.free()
-			else:
-				Spawner.spawn_near(self, node)
-	
-	_exit_objs_spawned = true
+	_dropped = true
+	Drop.release_all(self, drops_rewards)
+
+
+func die() -> void:
+	drop()
+	queue_free()
 
 
 func _find_object() -> GameObject:
@@ -271,7 +268,7 @@ func _on_tick(delta: float) -> void:
 
 
 func _on_death(type: HitBox.DamageType, source: Node2D = null) -> void:
-	queue_free()
+	die()
 
 
 func _on_damage(amount: float, type: HitBox.DamageType, source: Node2D = null) -> void:
