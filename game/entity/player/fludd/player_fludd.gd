@@ -69,6 +69,8 @@ var power_drain_rate: float = 45.0
 	&"GroundPoundStart",
 	&"GroundPoundSlam",
 	&"Glide",
+	&"Sleep",
+	&"ShineGet",
 ]
 @export_group("Launch")
 ## Upward speed set when spraying lifts the player off the ground.
@@ -118,7 +120,11 @@ func _ready() -> void:
 
 func tick(delta: float) -> void:
 	_holding = player.controls.is_held(&"use_fludd")
-	if player.controls.is_just_pressed(&"switch_nozzle") and switch_nozzle():
+	if (
+			player.controls.is_just_pressed(&"switch_nozzle")
+			and not player.carry.is_holding()
+			and switch_nozzle()
+	):
 		SFX.build().set_stream(switch_sfx).set_db(switch_sfx_db).set_bus(&"Player").play()
 	
 	_tick_sfx()
@@ -281,6 +287,7 @@ func _can_spray() -> bool:
 			and mode.has_charge()
 			and fuel > 0.0
 			and not blocked_states.has(player.machine.get_state_name())
+			and not player.carry.is_holding()
 	)
 
 

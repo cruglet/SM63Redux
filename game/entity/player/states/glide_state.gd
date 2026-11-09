@@ -25,6 +25,7 @@ var max_turn_rate: float = 220.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:s")
 var rotation_halflife: float = 0.0
 @export var up_animation: StringName = &"fly_up"
+@export var middle_animation: StringName = &"fly_middle"
 @export var down_animation: StringName = &"fly_down"
 
 var _input: float = 0.0
@@ -64,7 +65,17 @@ func _render_tick(delta: float) -> void:
 	else:
 		_body_rotation = Motion.damp_angle(_body_rotation, get_heading(), rotation_halflife, delta)
 	sprite.local_rotation = rad_to_deg(_body_rotation)
-	var animation: StringName = up_animation if controls.glide < 0.0 else down_animation
+	
+	var animation: StringName
+	# If holding up
+	if controls.glide < 0.0:
+		animation = up_animation
+	# If holding down or descending
+	elif controls.glide > 0.0 or player.velocity.y > 0:
+		animation = down_animation
+	else:
+		animation = middle_animation
+	
 	if sprite.current_animation != animation:
 		sprite.play(animation)
 
@@ -78,7 +89,7 @@ func _exit() -> void:
 func _next() -> StringName:
 	if player.is_on_floor():
 		return &"Floorslide" if absf(player.velocity.x) >= slide_speed else &"Idle"
-	if player.is_on_wall() or player.is_on_ceiling() or not player.caps.is_running(&"Wing"):
+	if player.is_on_wall() or player.is_on_ceiling() or not player.can_glide():
 		return &"Fall"
 	return &""
 

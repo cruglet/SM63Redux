@@ -3,7 +3,7 @@ extends Prop
 @export var pickup_sfx: AudioStream
 @export var water_amount: int = 50
 @export var particle_emitter: ParticleEmitter
-@export var smart_sprite_2d: SmartSprite2D
+@export var sprite: Sprite2D
 @export var entity_check_area: EntityCheckArea
 
 
@@ -19,5 +19,5 @@ func _on_entity_check_area_player_entered(player: Player) -> void:
 
 
 func _disable() -> void:
-	smart_sprite_2d.hide()
+	sprite.hide()
 	entity_check_area.disable()

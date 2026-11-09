@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bph21tonmy3li" path="res://game/entity/passive/goonie/goonie.gd" id="1_jfxkd"]
 [ext_resource type="Texture2D" uid="uid://dcq1kqe3c5wbk" path="res://assets/textures/entity/passive/goonie_flap.png" id="2_dma5t"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="2_kaxjy"]
 [ext_resource type="Script" uid="uid://cb672xli6i2ns" path="res://game/entity_data/components/gravity_component.gd" id="2_pbwgp"]
 [ext_resource type="Script" path="res://game/entity_data/state/state_effects.gd" id="30_effects"]
 [ext_resource type="Texture2D" uid="uid://di1d8ih6gfgmm" path="res://assets/textures/entity/passive/goonie_glide.png" id="4_1cx3s"]
@@ -11,13 +10,13 @@
 [ext_resource type="Script" uid="uid://cpfwdp3pr6hbk" path="res://game/entity/passive/goonie/state_machine/states/heavy_flap.gd" id="6_bodhv"]
 [ext_resource type="Script" uid="uid://dvxkxevaf2f45" path="res://util/2d/ride_area.gd" id="6_bslqv"]
 [ext_resource type="Script" path="res://game/entity_data/state/state_machine.gd" id="7_i5hl1"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0v6xk"]
 atlas = ExtResource("2_dma5t")
 region = Rect2(0, 0, 48, 46)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_bslqv"]
-diffuse_texture = SubResource("AtlasTexture_0v6xk")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i5hl1"]
 atlas = ExtResource("2_dma5t")
@@ -128,6 +127,23 @@ animation = &"glide"
 script = ExtResource("30_effects")
 animation = &"heavy_flap"
 
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_flap"]
+script = ExtResource("rig_clip")
+resource_name = "flap"
+name = &"flap"
+fps = 10.0
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_glide"]
+script = ExtResource("rig_clip")
+resource_name = "glide"
+name = &"glide"
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_heavy_flap"]
+script = ExtResource("rig_clip")
+resource_name = "heavy_flap"
+name = &"heavy_flap"
+fps = 20.0
+
 [node name="Goonie" type="CharacterBody2D" unique_id=459377689 node_paths=PackedStringArray("ride_area", "sprite", "components_root", "machine")]
 collision_layer = 2
 collision_mask = 0
@@ -163,18 +179,18 @@ effects = SubResource("Effects_HeavyFlap")
 script = ExtResource("2_pbwgp")
 enabled = false
 
-[node name="SmartSprite2D" type="Sprite2D" parent="." unique_id=189232163]
-texture = SubResource("CanvasTexture_bslqv")
-region_enabled = true
-region_rect = Rect2(0, 0, 48, 46)
-script = ExtResource("2_kaxjy")
-canvas_texture = SubResource("CanvasTexture_bslqv")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_bodhv")
-current_animation = "flap"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+[node name="SmartSprite2D" type="Node2D" parent="." unique_id=189232163]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_SmartSprite2D_flap"), SubResource("RigClip_SmartSprite2D_glide"), SubResource("RigClip_SmartSprite2D_heavy_flap")])
+current_animation = &"flap"
+reset_animation = &"flap"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="SmartSprite2D"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_bodhv")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="RideArea" type="Area2D" parent="." unique_id=2094668029]
 collision_mask = 256

@@ -12,9 +12,6 @@
 atlas = ExtResource("2_y2pdo")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_p1qeo"]
-diffuse_texture = SubResource("AtlasTexture_1v6jc")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_40f15"]
 atlas = ExtResource("2_y2pdo")
 region = Rect2(16, 0, 16, 16)
@@ -67,10 +64,8 @@ group = "default"
 all_collected_sfx = NodePath("AllCollected")
 collect_label = NodePath("CollectLabel")
 
-[node name="Sprite" parent="." index="1" unique_id=1781944590]
-texture = SubResource("CanvasTexture_p1qeo")
-canvas_texture = SubResource("CanvasTexture_p1qeo")
-diffuse_frames = SubResource("SpriteFrames_e1rsr")
+[node name="Layer" parent="Sprite"]
+frames = SubResource("SpriteFrames_e1rsr")
 
 [node name="ParticleEmitter" parent="." index="3" unique_id=1981334313]
 texture = ExtResource("3_y2pdo")

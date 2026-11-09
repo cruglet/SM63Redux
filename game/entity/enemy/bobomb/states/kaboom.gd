@@ -10,6 +10,8 @@ const CLEANUP_DELAY: float = 1.0
 
 
 func _enter() -> void:
+	if bobomb.carryable:
+		bobomb.carryable.let_go()
 	sprite.hide()
 	explosion.show()
 	explosion.play()

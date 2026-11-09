@@ -6,7 +6,7 @@ extends Node
 
 var machine: StateMachine
 var entity: Entity
-var sprite: SmartSprite2D
+var sprite: SpriteRig2D
 var time: float = 0.0
 var frames: int = 0
 var sfx_frame_index: int = -1

@@ -10,9 +10,6 @@
 atlas = ExtResource("4_stgt0")
 region = Rect2(0, 0, 40, 36)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_ogkx1"]
-diffuse_texture = SubResource("AtlasTexture_bmc7g")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_witxg"]
 atlas = ExtResource("4_ogkx1")
 region = Rect2(60, 0, 60, 64)
@@ -121,9 +118,9 @@ animations = [{
 }]
 
 [node name="FluddBoxHover" unique_id=2137935164 instance=ExtResource("1_2x2gp")]
-spawn = ExtResource("2_witxg")
 
-[node name="Sprite" parent="." index="0" unique_id=499824916]
-texture = SubResource("CanvasTexture_ogkx1")
-canvas_texture = SubResource("CanvasTexture_ogkx1")
-diffuse_frames = SubResource("SpriteFrames_7ouo8")
+[node name="Layer" parent="Sprite"]
+frames = SubResource("SpriteFrames_7ouo8")
+
+[node name="Contents" parent="." unique_id=1386025907]
+scene = ExtResource("2_witxg")

@@ -2,9 +2,12 @@
 extends Mode
 
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var duration: float = 0.0
-@export var material: Material
-@export var material_target: CanvasItem
-@export var material_exempt: Array[CanvasItem] = []
+@export var music: AudioStream
+@export var effect_target: CanvasItem
+@export var effect_parameter: StringName = &""
+@export var effect_exempt: Array[CanvasItem] = []
+@export var sprite_material: Material
+@export var exempt_material: Material
 @export_group("Blink")
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var blink_time: float = 4.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:s")
@@ -15,8 +18,7 @@ var blink_interval_end: float = 0.05
 var player: Player
 
 var _blink_phase: float = 0.0
-var _look_shown: bool = false
-var _previous_material: Material
+var _effect_shown: bool = false
 
 
 func _bind() -> void:
@@ -25,7 +27,7 @@ func _bind() -> void:
 
 func _enter() -> void:
 	_blink_phase = 0.0
-	_set_look_shown(true)
+	_set_effect_shown(true)
 
 
 func _tick(delta: float) -> void:
@@ -37,13 +39,13 @@ func _tick(delta: float) -> void:
 				1.0 - remaining / blink_time,
 		)
 	
-	_set_look_shown(int(_blink_phase) % 2 == 0)
+	_set_effect_shown(int(_blink_phase) % 2 == 0)
 	if is_timed() and time >= duration:
 		end()
 
 
 func _exit() -> void:
-	_set_look_shown(false)
+	_set_effect_shown(false)
 
 
 func get_remaining_ratio() -> float:
@@ -115,24 +117,19 @@ func dive_keeps_fall_speed() -> bool:
 	return false
 
 
-func _show_look(shown: bool) -> void:
-	if not material:
-		return
-	
-	var target: CanvasItem = material_target if material_target else player.sprite
-	for item: CanvasItem in material_exempt:
+func _show_effect(shown: bool) -> void:
+	for item: CanvasItem in effect_exempt:
 		item.use_parent_material = not shown
-	
-	if shown:
-		_previous_material = target.material
-		target.material = material
-	elif target.material == material:
-		target.material = _previous_material
+		item.material = exempt_material if shown else null
+	if sprite_material:
+		player.sprite.material = sprite_material if shown else null
+	if effect_target and not effect_parameter.is_empty():
+		effect_target.set_instance_shader_parameter(effect_parameter, 1.0 if shown else 0.0)
 
 
-func _set_look_shown(shown: bool) -> void:
-	if shown == _look_shown:
+func _set_effect_shown(shown: bool) -> void:
+	if shown == _effect_shown:
 		return
 	
-	_look_shown = shown
-	_show_look(shown)
+	_effect_shown = shown
+	_show_effect(shown)

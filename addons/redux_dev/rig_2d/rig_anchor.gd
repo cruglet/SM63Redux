@@ -1,6 +1,7 @@
 @tool
 class_name RigAnchor
 extends Marker2D
+## A marker in space which can be posed
 
 
 signal captured(before: Dictionary[StringName, Variant])

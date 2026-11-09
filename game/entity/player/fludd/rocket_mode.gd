@@ -3,7 +3,7 @@ extends FluddMode
 const FRICTION_KEY: StringName = &"fludd_rocket"
 
 ## Sprite shaken and tinted while charging.
-@export var sprite: SmartSprite2D
+@export var sprite: RigLayer
 ## Water explosion fired from the nozzle on launch.
 @export var boom: RocketBoom
 

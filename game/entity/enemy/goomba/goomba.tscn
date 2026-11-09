@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://djgg3rgm58230" path="res://assets/textures/entity/enemy/goomba/goomba_walk.png" id="3_hysx3"]
 [ext_resource type="Script" uid="uid://4hwxabxucpuh" path="res://game/entity_data/state/state.gd" id="3_tx7nd"]
 [ext_resource type="Texture2D" uid="uid://dtakiqymwlidq" path="res://assets/textures/entity/enemy/goomba/goomba_alert.png" id="4_kyaey"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="4_whnfo"]
 [ext_resource type="Script" uid="uid://ckuqr7ws7p6tk" path="res://game/entity/enemy/goomba/states/alert.gd" id="4_x5cu4"]
 [ext_resource type="Script" uid="uid://bd8l4ri83uu5a" path="res://game/entity/enemy/_shared/states/patrol.gd" id="5_4grvk"]
 [ext_resource type="Script" uid="uid://c103bnb5445y3" path="res://util/entity/hit_box.gd" id="5_n0olq"]
@@ -29,6 +28,10 @@
 [ext_resource type="AudioStream" uid="uid://cucdekyl58ypv" path="res://assets/sfx/entity/goomba/goomba_stomped.wav" id="sfxres3"]
 [ext_resource type="AudioStream" uid="uid://dq4csxy68lb4q" path="res://assets/sfx/entity/goomba/goomba_struck.wav" id="sfxres4"]
 [ext_resource type="Script" uid="uid://owie463aj20g" path="res://game/entity/enemy/_shared/states/chase_state.gd" id="shared_chase"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
+[ext_resource type="Script" uid="uid://csk0lir3br2qj" path="res://util/entity/drop.gd" id="drop"]
 
 [sub_resource type="Curve" id="Curve_g7wuw"]
 _limits = [-1.0, 1.0, -1.0, 1.0]
@@ -71,9 +74,6 @@ sfx_enter_sound = ExtResource("sfxres4")
 [sub_resource type="AtlasTexture" id="AtlasTexture_n0olq"]
 atlas = ExtResource("3_hysx3")
 region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_rakc8"]
-diffuse_texture = SubResource("AtlasTexture_n0olq")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kyaey"]
 atlas = ExtResource("4_kyaey")
@@ -298,6 +298,43 @@ size = Vector2(14, 15)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42vey"]
 size = Vector2(16, 16)
 
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_alert_fall"]
+script = ExtResource("rig_clip")
+resource_name = "alert_fall"
+name = &"alert_fall"
+loop = false
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_alert_jump"]
+script = ExtResource("rig_clip")
+resource_name = "alert_jump"
+name = &"alert_jump"
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_alert_landed"]
+script = ExtResource("rig_clip")
+resource_name = "alert_landed"
+name = &"alert_landed"
+loop = false
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_squish"]
+script = ExtResource("rig_clip")
+resource_name = "squish"
+name = &"squish"
+fps = 10.0
+loop = false
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_strike"]
+script = ExtResource("rig_clip")
+resource_name = "strike"
+name = &"strike"
+
+[sub_resource type="Resource" id="RigClip_SmartSprite2D_walk"]
+script = ExtResource("rig_clip")
+resource_name = "walk"
+name = &"walk"
+fps = 8.0
+
 [node name="Goomba" type="CharacterBody2D" unique_id=2109535957 node_paths=PackedStringArray("sprite", "components_root", "machine", "water_check")]
 collision_layer = 8
 collision_mask = 514
@@ -305,10 +342,6 @@ script = ExtResource("1_hysx3")
 sprite = NodePath("SmartSprite2D")
 components_root = NodePath("Components")
 machine = NodePath("StateMachine")
-exit_objects = Dictionary[PackedScene, int]({
-ExtResource("2_onrng"): 1,
-ExtResource("3_7e3mf"): 1
-})
 water_check = NodePath("WaterCheckArea")
 
 [node name="StateMachine" type="Node" parent="." unique_id=48097513 node_paths=PackedStringArray("entity", "initial_state", "animation_player")]
@@ -331,9 +364,11 @@ effects = SubResource("Effects_Patrol")
 script = ExtResource("4_x5cu4")
 effects = SubResource("Effects_Alert")
 
-[node name="Chase" type="Node" parent="StateMachine" unique_id=1835913114]
+[node name="Chase" type="Node" parent="StateMachine" unique_id=1835913114 node_paths=PackedStringArray("floor_check_l", "floor_check_r")]
 script = ExtResource("shared_chase")
 snap_to_speed_on_enter = true
+floor_check_l = NodePath("../../FloorCheckL")
+floor_check_r = NodePath("../../FloorCheckR")
 effects = SubResource("Effects_Chase")
 
 [node name="Squish" type="Node" parent="StateMachine" unique_id=354975756 node_paths=PackedStringArray("hit_box")]
@@ -346,21 +381,19 @@ script = ExtResource("14_xvu80")
 hit_box = NodePath("../../HitBox")
 effects = SubResource("Effects_Strike")
 
-[node name="SmartSprite2D" type="Sprite2D" parent="." unique_id=1834512589 node_paths=PackedStringArray("rotation_source")]
+[node name="SmartSprite2D" type="Node2D" parent="." unique_id=1834512589]
 position = Vector2(0, -7)
-texture = SubResource("CanvasTexture_rakc8")
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
-script = ExtResource("4_whnfo")
-canvas_texture = SubResource("CanvasTexture_rakc8")
-flip_with_velocity = false
-rotation_source = NodePath("..")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_x5cu4")
-current_animation = "walk"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_SmartSprite2D_alert_fall"), SubResource("RigClip_SmartSprite2D_alert_jump"), SubResource("RigClip_SmartSprite2D_alert_landed"), SubResource("RigClip_SmartSprite2D_squish"), SubResource("RigClip_SmartSprite2D_strike"), SubResource("RigClip_SmartSprite2D_walk")])
+current_animation = &"walk"
+reset_animation = &"walk"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="SmartSprite2D"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_x5cu4")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=757983848]
 visible = false
@@ -462,5 +495,14 @@ script = ExtResource("29_rakc8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterCheckArea" unique_id=749598814]
 shape = SubResource("RectangleShape2D_42vey")
+
+[node name="CoinDrop" type="Marker2D" parent="." unique_id=1504872310]
+script = ExtResource("drop")
+scene = ExtResource("2_onrng")
+reward = true
+
+[node name="PoofDrop" type="Marker2D" parent="." unique_id=1504872311]
+script = ExtResource("drop")
+scene = ExtResource("3_7e3mf")
 
 [connection signal="damaged" from="HurtBox" to="." method="_on_hurt_box_damaged"]

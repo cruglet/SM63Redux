@@ -36,12 +36,20 @@ var turbo_strike_min_speed: float = 300.0
 @export_group("Nodes")
 ## The FLUDD backpack driven alongside the state machine each physics tick.
 @export var fludd: PlayerFludd
+@export var carry: PlayerCarry
 @export var caps: MultiModeMachine
 ## Audio effects added to the master bus while underwater and removed on exit.
 @export var submerged_bus_effects: Array[AudioEffect]
 ## Sprites drawn into the silhouette shown while the player is behind terrain.
 @export var silhouette_targets: Array[Sprite2D]
 @export var ground_pound_fall: GroundPoundFallState
+@export var shine_get: ShineGetState
+@export var base_collision: CollisionShape2D
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var squish_bounce_speed: float = 200.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var held_squish_bounce_speed: float = 412.5
+@export_group("Water Splash", "splash_")
+@export var splash_scene: PackedScene
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var splash_min_speed: float = 60.0
 
 ## Buffered player input, polled once per physics tick.
 var controls: PlayerInput = PlayerInput.new()
@@ -72,6 +80,8 @@ var gravity_modifiers: ModifierStack = ModifierStack.new()
 var friction_modifiers: ModifierStack = ModifierStack.new()
 var debug_forces: Dictionary[StringName, Vector2] = {}
 
+var _collision: CollisionShape2D
+
 
 func _physics_process(delta: float) -> void:
 	controls.poll(delta)
@@ -83,12 +93,14 @@ func _physics_process(delta: float) -> void:
 	gravity_modifiers.tick(delta)
 	friction_modifiers.tick(delta)
 	machine.tick(delta)
+	_update_collision()
 	if not lock_flipping and not is_zero_approx(move_input):
 		sprite.flip_h = move_input < 0.0
 	
 	fludd.tick(delta)
 	if not _velocity_lock:
 		_integrate(delta)
+	carry.tick(delta)
 
 
 func get_attribute_scale(attribute: StringName) -> float:
@@ -111,10 +123,22 @@ func is_harmless() -> bool:
 	)
 
 
+func ignores_hit(hitbox: HitBox) -> bool:
+	return carry.ignores(hitbox.owner)
+
+
+func bounce_off_squish() -> void:
+	var held: bool = controls.is_held(&"jump")
+	if held and machine.is_active(&"Airborne") and not machine.is_active(&"Dive"):
+		machine.change_state(&"IdleJump")
+	velocity.y = -get_jump_speed(held_squish_bounce_speed if held else squish_bounce_speed)
+
+
 func redirect_state(from: State, to: StringName) -> StringName:
 	if not from:
 		return to
 	
+	to = carry.redirect(from, to)
 	for cap: CapMode in get_caps():
 		var redirected: StringName = cap.redirect_state(from.name, to)
 		if redirected != to:
@@ -158,14 +182,20 @@ func get_sound_terrain() -> StringName:
 
 
 func get_debug_text() -> String:
-	var text: String = "State: %s\nAnimation: %s\nVelocity: %s\n" % [
+	var text: String = "State: %s\nAnimation: %s\nVelocity: %s\nQuiet: %.1fs\n" % [
 		machine.get_state(),
 		sprite.current_animation,
 		velocity,
+		controls.quiet_time,
 	]
 	if not is_equal_approx(Singleton.debug_time.get_scale(), 1.0):
 		text += "Time: %sx\n" % Singleton.debug_time.get_scale()
 	return text
+
+
+func celebrate_shine(kickout: bool) -> void:
+	shine_get.kickout = kickout
+	machine.change_state(&"ShineGet")
 
 
 func drive(
@@ -283,7 +313,10 @@ func set_wings_flapping(flapping: bool) -> void:
 
 
 func can_glide() -> bool:
-	return get_caps().any(func(cap: CapMode) -> bool: return cap.allows_glide())
+	return (
+			not is_in_water()
+			and get_caps().any(func(cap: CapMode) -> bool: return cap.allows_glide())
+	)
 
 
 func has_free_jump_chain() -> bool:
@@ -324,6 +357,19 @@ func is_moving_against_facing() -> bool:
 
 func is_crouching() -> bool:
 	return controls.is_held(&"crouch") and is_on_floor()
+
+
+func can_chain_jumps() -> bool:
+	return not carry.is_holding()
+
+
+func wants_ground_pound() -> bool:
+	return (
+			not is_on_floor()
+			and controls.is_held(&"ground_pound")
+			and can_ground_pound
+			and not carry.is_holding()
+	)
 
 
 func is_swim_pressed(buffer: float) -> bool:
@@ -384,8 +430,55 @@ func _integrate(delta: float) -> void:
 	velocity += end - mid
 
 
-func _on_feet_landed(_hurt_box: HurtBox) -> void:
+func _update_collision() -> void:
+	var target: CollisionShape2D = base_collision
+	for state: State in machine.get_active_states():
+		var shape: CollisionShape2D = (state as PlayerState).collision_shape
+		if shape:
+			target = shape
+	
+	if target == _collision or _collision and not _has_room_for(target):
+		return
+	
+	_collision = target
+	for shape: CollisionShape2D in collision_shapes:
+		shape.disabled = shape != target
+
+
+func _has_room_for(shape: CollisionShape2D) -> bool:
+	var grown: Rect2 = _get_shape_rect(shape)
+	var current: Rect2 = _get_shape_rect(_collision)
+	if grown.position.y >= current.position.y:
+		return true
+	
+	var gap: RectangleShape2D = RectangleShape2D.new()
+	gap.size = Vector2(grown.size.x - 1.0, current.position.y - grown.position.y)
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = gap
+	query.transform = global_transform.translated_local(
+			Vector2(grown.get_center().x, grown.position.y + gap.size.y * 0.5)
+	)
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	for hit: Dictionary in get_world_2d().direct_space_state.intersect_shape(query):
+		var body: CollisionObject2D = hit["collider"] as CollisionObject2D
+		if not body or not body.is_shape_owner_one_way_collision_enabled(
+				body.shape_find_owner(hit["shape"])
+		):
+			return false
+	
+	return true
+
+
+func _get_shape_rect(shape: CollisionShape2D) -> Rect2:
+	var rect: Rect2 = shape.shape.get_rect()
+	return Rect2(shape.position + rect.position, rect.size)
+
+
+func _on_feet_landed(hurt_box: HurtBox) -> void:
 	if velocity.y < 0.0 or machine.is_active(&"Stomp") or machine.is_active(&"GroundPound"):
+		return
+	if carry.ignores(hurt_box.owner):
 		return
 	
 	var dive: DiveState = machine.get_state() as DiveState
@@ -397,6 +490,7 @@ func _on_feet_landed(_hurt_box: HurtBox) -> void:
 
 
 func _on_water_entered() -> void:
+	_splash()
 	if ignores_water():
 		velocity *= get_attribute_scale(&"water_entry_damping")
 	swimming_changed.emit(true)
@@ -405,6 +499,16 @@ func _on_water_entered() -> void:
 
 
 func _on_water_exited() -> void:
+	_splash()
 	swimming_changed.emit(false)
 	for _effect: AudioEffect in submerged_bus_effects:
 		AudioServer.remove_bus_effect(0, 0)
+
+
+func _splash() -> void:
+	if not splash_scene or absf(velocity.y) < splash_min_speed:
+		return
+	
+	var splash: WaterSplash = splash_scene.instantiate() as WaterSplash
+	splash.speed = absf(velocity.y)
+	Spawner.spawn_near(water_check, splash)

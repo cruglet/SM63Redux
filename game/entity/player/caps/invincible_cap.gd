@@ -48,7 +48,7 @@ func _exit() -> void:
 	_overlay = null
 
 
-func _show_look(shown: bool) -> void:
+func _show_effect(shown: bool) -> void:
 	super(shown)
 	if _overlay:
 		_overlay.self_modulate.a = 1.0 if shown else 0.0

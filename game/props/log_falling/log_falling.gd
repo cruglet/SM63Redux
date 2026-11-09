@@ -5,7 +5,7 @@ const SHAKE_OFFSET: int = 2
 const CLEANUP_DELAY: float = 3.0
 
 @export var falling_speed: float = 200.0
-@export var sprite: SmartSprite2D
+@export var sprite: Sprite2D
 
 var _shaking: bool = false
 var _falling: bool = false

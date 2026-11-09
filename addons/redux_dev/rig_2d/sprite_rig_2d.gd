@@ -1,6 +1,8 @@
 @tool
 class_name SpriteRig2D
 extends Node2D
+## A class for setting up sprite rigs, which can consist of multiple
+## interlapping parts. Each rig can have a [RigAnchor] or [RigLayer].
 
 
 signal animation_finished

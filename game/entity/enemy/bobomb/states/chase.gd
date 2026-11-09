@@ -4,8 +4,9 @@ extends ChaseState
 @export var fuse_time: float = 3.25
 @export var fuse_light: PointLight2D
 @export var modulate_speed_curve: Curve
-@export var key: SmartSprite2D
-@export var fuse: SmartSprite2D
+@export var key: SpriteRig2D
+@export var fuse: SpriteRig2D
+@export var carryable: Carryable
 
 
 func _enter() -> void:
@@ -16,7 +17,8 @@ func _enter() -> void:
 
 
 func _tick(delta: float) -> void:
-	super(delta)
+	if not carryable or not carryable.is_carried():
+		super(delta)
 	sprite.self_modulate = _sample_modulate(time / fuse_time)
 
 

@@ -1,7 +1,7 @@
 class_name LoadingScreen
 extends ColorRect
 
-@export var sprite: SmartSprite2D
+@export var sprite: SpriteRig2D
 @export var indicator: Control
 @export var centered_offset: Vector2 = Vector2(67, -8)
 @export var corner_alpha: float = 0.3137255
@@ -19,7 +19,7 @@ func open(blurred: bool = false) -> void:
 	
 	(material as ShaderMaterial).set_shader_parameter(&"tint", blur_tint if blurred else solid_tint)
 	_place_indicator(blurred)
-	sprite.play(Array(sprite.diffuse_frames.get_animation_names()).pick_random())
+	sprite.play(Array(sprite.get_clip_names()).pick_random())
 	modulate.a = 0.0
 	show()
 	await _fade(1.0).finished

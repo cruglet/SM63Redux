@@ -21,6 +21,12 @@ var water_pound_fall_speed: float = 0.0
 @export var recovery_scale: float = 1.0
 
 
+func _tick(delta: float) -> void:
+	super(delta)
+	if effect_target:
+		effect_target.set_instance_shader_parameter(&"metal_facing", signf(player.sprite.scale.x))
+
+
 func get_animation_override(animation: StringName) -> StringName:
 	return animation_overrides.get(animation, animation)
 

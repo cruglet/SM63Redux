@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dfgbud22jos43" path="res://game/props/shine_sprite/shine_sprite.gd" id="1_22unf"]
 [ext_resource type="Texture2D" uid="uid://bh4jhqvk5nh4r" path="res://assets/textures/item/collectible/shine_sprite_spin.png" id="3_rtor7"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="4_uiaf0"]
 [ext_resource type="Texture2D" uid="uid://dhlplg0v0vihh" path="res://assets/textures/particle/object/shine_sprite/shine_sprite_particle.png" id="5_ejroc"]
 [ext_resource type="Texture2D" uid="uid://6x6lxccsh6al" path="res://assets/textures/item/collectible/shine_sprite.png" id="5_hwq0t"]
 [ext_resource type="Script" uid="uid://c2df6xnsl5aem" path="res://util/2d/particle_emitter.gd" id="6_rtor7"]
 [ext_resource type="AudioStream" uid="uid://csqbx8dqh1lgv" path="res://assets/sfx/object/shine_sprite/ambient.wav" id="7_rtor7"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gcfvk"]
 atlas = ExtResource("5_ejroc")
@@ -62,9 +64,6 @@ animations = [{
 [sub_resource type="AtlasTexture" id="AtlasTexture_pj2iy"]
 atlas = ExtResource("3_rtor7")
 region = Rect2(0, 0, 28, 31)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_rtor7"]
-diffuse_texture = SubResource("AtlasTexture_pj2iy")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_604nk"]
 atlas = ExtResource("5_hwq0t")
@@ -179,6 +178,17 @@ fill_to = Vector2(0.82478637, 0.13675214)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rtor7"]
 
+[sub_resource type="Resource" id="RigClip_Sprite_idle"]
+script = ExtResource("rig_clip")
+resource_name = "idle"
+name = &"idle"
+
+[sub_resource type="Resource" id="RigClip_Sprite_spin"]
+script = ExtResource("rig_clip")
+resource_name = "spin"
+name = &"spin"
+fps = 8.0
+
 [node name="ShineSprite" type="Node2D" unique_id=1870793460 node_paths=PackedStringArray("sprite", "sfx_player", "particle_emitter")]
 script = ExtResource("1_22unf")
 sprite = NodePath("Sprite")
@@ -205,19 +215,19 @@ script = ExtResource("6_rtor7")
 animated = true
 sprite_frames = SubResource("SpriteFrames_3nptm")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=147452074]
+[node name="Sprite" type="Node2D" parent="." unique_id=147452074]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_idle"), SubResource("RigClip_Sprite_spin")])
+current_animation = &"spin"
+reset_animation = &"spin"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
 light_mask = 0
-texture = SubResource("CanvasTexture_rtor7")
-region_enabled = true
-region_rect = Rect2(0, 0, 28, 31)
-script = ExtResource("4_uiaf0")
-canvas_texture = SubResource("CanvasTexture_rtor7")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_vtnyd")
-current_animation = "spin"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_vtnyd")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="PointLight2D" type="PointLight2D" parent="Sprite" unique_id=1429502587]
 color = Color(1, 0.6, 0, 1)

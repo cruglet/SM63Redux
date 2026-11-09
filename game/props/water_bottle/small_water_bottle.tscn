@@ -5,9 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://qleefwqvr0wh" path="res://assets/textures/item/fludd/water_bottle_small.png" id="2_vbv22"]
 [ext_resource type="Texture2D" uid="uid://km4j8i0io8ne" path="res://assets/textures/particle/item/water_bottle_small_particle.png" id="4_fh070"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_6b78n"]
-diffuse_texture = ExtResource("2_vbv22")
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vbv22"]
 size = Vector2(14, 16)
 
@@ -16,9 +13,7 @@ pickup_sfx = ExtResource("2_mmf11")
 water_amount = 15
 
 [node name="SmartSprite2D" parent="." index="0" unique_id=77171285]
-texture = SubResource("CanvasTexture_6b78n")
-canvas_texture = SubResource("CanvasTexture_6b78n")
-diffuse_texture = ExtResource("2_vbv22")
+texture = ExtResource("2_vbv22")
 
 [node name="CollisionShape2D" parent="EntityCheckArea" parent_id_path=PackedInt32Array(1041962242) index="0" unique_id=1183407697]
 position = Vector2(0, 1)

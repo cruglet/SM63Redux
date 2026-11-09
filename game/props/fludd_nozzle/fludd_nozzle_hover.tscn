@@ -2,12 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bum2yr1b2mck6" path="res://game/props/fludd_nozzle/fludd_nozzle_hover.gd" id="1_saqq8"]
 [ext_resource type="Texture2D" uid="uid://cstnoxk1myead" path="res://assets/textures/item/fludd/fludd_nozzle_hover.png" id="2_ltr0n"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="3_saqq8"]
 [ext_resource type="Script" uid="uid://cb672xli6i2ns" path="res://game/entity_data/components/gravity_component.gd" id="4_ljcff"]
 [ext_resource type="Script" uid="uid://cf0fqotw8gu4p" path="res://util/2d/entity_check_area.gd" id="5_ljcff"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_muw7e"]
-diffuse_texture = ExtResource("2_ltr0n")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_saqq8"]
 resource_local_to_scene = true
@@ -25,14 +21,7 @@ sprite = NodePath("SmartSprite2D")
 components_root = NodePath("Components/GravityComponent")
 
 [node name="SmartSprite2D" type="Sprite2D" parent="." unique_id=857828210]
-texture = SubResource("CanvasTexture_muw7e")
-script = ExtResource("3_saqq8")
-canvas_texture = SubResource("CanvasTexture_muw7e")
-diffuse_texture = ExtResource("2_ltr0n")
-current_animation = ""
-current_frame = 0
-speed_scale = 1.0
-playing = false
+texture = ExtResource("2_ltr0n")
 
 [node name="Components" type="Node" parent="." unique_id=1804980060]
 

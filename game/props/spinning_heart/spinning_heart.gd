@@ -6,7 +6,7 @@ const SPIN_DECAY: float = 0.04
 const HEAL_DURATION: float = 0.5
 
 @export var healing_curve: Curve
-@export var sprite: SmartSprite2D
+@export var sprite: SpriteRig2D
 @export var heal_sfx: AudioStreamPlayer2D
 
 var _spin_speed: float = 1.0

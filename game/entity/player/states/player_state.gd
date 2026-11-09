@@ -10,6 +10,7 @@ var max_fall_speed: float = 0.0
 ## Air steering used while this state is active; inherits the nearest parent's
 ## when empty.
 @export var air_control: PlayerAirControl
+@export var collision_shape: CollisionShape2D
 
 ## The player this state drives.
 var player: Player

@@ -3,7 +3,7 @@ extends PlayerState
 
 func _tick(delta: float) -> void:
 	_tick_jump_chain(delta)
-	if not player.is_on_floor() and controls.is_held(&"ground_pound") and player.can_ground_pound:
+	if player.wants_ground_pound():
 		machine.change_state(&"GroundPoundStart")
 
 

@@ -1,16 +1,15 @@
 [gd_scene format=3 uid="uid://dvgipuaxvl4ci"]
 
 [ext_resource type="Script" uid="uid://xcc1d80vf3c5" path="res://game/entity/passive/goonie_fat/goonie_fat.gd" id="1_h26e3"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="4_gsk8c"]
 [ext_resource type="Texture2D" uid="uid://bo4bpi80efao4" path="res://assets/textures/entity/passive/fat_goonie_flap.png" id="4_kiosy"]
 [ext_resource type="AudioStream" uid="uid://dlcohj4bf5vpj" path="res://assets/sfx/entity/goonie_fat/goonie_fat_bounce.wav" id="4_x1g4f"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_urfmg"]
 atlas = ExtResource("4_kiosy")
 region = Rect2(288, 0, 48, 49)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_x1g4f"]
-diffuse_texture = SubResource("AtlasTexture_urfmg")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2u7yk"]
 atlas = ExtResource("4_kiosy")
@@ -111,6 +110,12 @@ _data = {
 &"squish": SubResource("Animation_h26e3")
 }
 
+[sub_resource type="Resource" id="RigClip_Sprite_flap"]
+script = ExtResource("rig_clip")
+resource_name = "flap"
+name = &"flap"
+fps = 8.0
+
 [node name="FatGoonie" type="CharacterBody2D" unique_id=459377689 node_paths=PackedStringArray("animation_player", "bounce_sfx", "sprite", "components_root")]
 collision_layer = 0
 collision_mask = 0
@@ -122,18 +127,20 @@ components_root = NodePath("Components")
 
 [node name="Components" type="Node" parent="." unique_id=566607527]
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=189232163]
-texture = SubResource("CanvasTexture_x1g4f")
-region_enabled = true
-region_rect = Rect2(288, 0, 48, 49)
-script = ExtResource("4_gsk8c")
-canvas_texture = SubResource("CanvasTexture_x1g4f")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_7a6o2")
-current_animation = "flap"
+[node name="Sprite" type="Node2D" parent="." unique_id=189232163]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_flap")])
+current_animation = &"flap"
 current_frame = 6
-speed_scale = 1.0
-playing = false
+reset_animation = &"flap"
+reset_frame = 6
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_7a6o2")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="BounceArea" type="Area2D" parent="." unique_id=1711873262]
 position = Vector2(0, 2)

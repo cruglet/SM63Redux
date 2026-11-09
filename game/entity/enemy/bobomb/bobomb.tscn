@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://drtqc6at2evph" path="res://util/entity/hurt_box_component.gd" id="12_200vj"]
 [ext_resource type="Script" uid="uid://bd8l4ri83uu5a" path="res://game/entity/enemy/_shared/states/patrol.gd" id="14_qw5am"]
 [ext_resource type="Script" uid="uid://dnsd2a8oriy3" path="res://util/entity/force_box.gd" id="16_glled"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="17_gjan8"]
 [ext_resource type="Script" uid="uid://w00kyf4l0eer" path="res://game/entity/enemy/bobomb/states/chase.gd" id="19_na7jb"]
 [ext_resource type="Script" path="res://game/entity_data/components/player_detector_component.gd" id="detector"]
 [ext_resource type="Script" uid="uid://cs4dlhsjhinrv" path="res://game/entity_data/components/health_component.gd" id="21_fyph1"]
@@ -30,13 +29,16 @@
 [ext_resource type="AudioStream" uid="uid://cnu88x3ta80kk" path="res://assets/sfx/entity/bobomb/explosion_buildup_1.wav" id="sfxres3"]
 [ext_resource type="AudioStream" uid="uid://dbtylflefgm2o" path="res://assets/sfx/entity/bobomb/explosion.wav" id="sfxres5"]
 [ext_resource type="AudioStream" uid="uid://8ybrcf2gym5t" path="res://assets/sfx/entity/bobomb/knock.wav" id="sfxres6"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
+[ext_resource type="Script" uid="uid://csk0lir3br2qj" path="res://util/entity/drop.gd" id="drop"]
 
+[ext_resource type="Script" uid="uid://cfejoho51ig" path="res://util/entity/carryable.gd" id="carryable"]
+[ext_resource type="Material" path="res://util/entity/carry_outline.tres" id="carry_outline"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_ap0j0"]
 atlas = ExtResource("3_x8m5v")
 region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_glled"]
-diffuse_texture = SubResource("AtlasTexture_ap0j0")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0onm"]
 atlas = ExtResource("3_x8m5v")
@@ -114,9 +116,6 @@ animations = [{
 atlas = ExtResource("6_6sje6")
 region = Rect2(0, 0, 4, 4)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_rfasj"]
-diffuse_texture = SubResource("AtlasTexture_jixoj")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_nwfm8"]
 atlas = ExtResource("5_a0onm")
 region = Rect2(0, 0, 8, 8)
@@ -157,9 +156,6 @@ animations = [{
 [sub_resource type="AtlasTexture" id="AtlasTexture_6akqm"]
 atlas = ExtResource("6_4fxtu")
 region = Rect2(0, 0, 6, 10)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_7dm06"]
-diffuse_texture = SubResource("AtlasTexture_6akqm")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_swvkj"]
 atlas = ExtResource("6_4fxtu")
@@ -412,70 +408,102 @@ animation = &"strike"
 sfx_enter_enabled = true
 sfx_enter_sound = ExtResource("sfxres6")
 
+[sub_resource type="Resource" id="Effects_Kicked"]
+script = ExtResource("30_effects")
+animation = &"strike"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_glled"]
 size = Vector2(16, 18)
 
-[node name="Bobomb" type="CharacterBody2D" unique_id=2109535957 node_paths=PackedStringArray("fuse", "key", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
+[sub_resource type="Resource" id="RigClip_Sprite_patrol"]
+script = ExtResource("rig_clip")
+resource_name = "patrol"
+name = &"patrol"
+fps = 8.0
+
+[sub_resource type="Resource" id="RigClip_Sprite_strike"]
+script = ExtResource("rig_clip")
+resource_name = "strike"
+name = &"strike"
+
+[sub_resource type="Resource" id="RigClip_Sprite_Offset_Fuse_default"]
+script = ExtResource("rig_clip")
+resource_name = "default"
+name = &"default"
+
+[sub_resource type="Resource" id="RigClip_Sprite_Offset_Fuse_fuse"]
+script = ExtResource("rig_clip")
+resource_name = "fuse"
+name = &"fuse"
+fps = 8.0
+
+[sub_resource type="Resource" id="RigClip_Sprite_Offset_Key_default"]
+script = ExtResource("rig_clip")
+resource_name = "default"
+name = &"default"
+
+[sub_resource type="Resource" id="RigClip_Sprite_Offset_Key_spin"]
+script = ExtResource("rig_clip")
+resource_name = "spin"
+name = &"spin"
+
+[node name="Bobomb" type="CharacterBody2D" unique_id=2109535957 node_paths=PackedStringArray("fuse", "key", "carryable", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_txf1e")
 fuse = NodePath("Sprite/Offset/Fuse")
 key = NodePath("Sprite/Offset/Key")
+carryable = NodePath("Carryable")
 sprite = NodePath("Sprite")
 components_root = NodePath("Components")
 collision_shapes = [NodePath("HurtBox/HurtboxShape"), NodePath("ExplosionHitbox/ExplosionShape")]
 machine = NodePath("StateMachine")
-exit_objects = Dictionary[PackedScene, int]({
-ExtResource("2_ccar4"): 1
-})
 water_check = NodePath("WaterCheckArea")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1859430176 node_paths=PackedStringArray("subsprites")]
+[node name="Sprite" type="Node2D" parent="." unique_id=1859430176]
 position = Vector2(0, -6)
-texture = SubResource("CanvasTexture_glled")
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
-script = ExtResource("17_gjan8")
-canvas_texture = SubResource("CanvasTexture_glled")
-flip_with_velocity = false
-subsprites = [NodePath("Offset/Fuse"), NodePath("Offset/Key")]
-animated = true
-diffuse_frames = SubResource("SpriteFrames_ibfi8")
-current_animation = "patrol"
-current_frame = 0
-speed_scale = 1.0
-playing = false
 metadata/_edit_lock_ = true
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_patrol"), SubResource("RigClip_Sprite_strike")])
+current_animation = &"patrol"
+reset_animation = &"patrol"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_ibfi8")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="Offset" type="Marker2D" parent="Sprite" unique_id=457431154]
 
-[node name="Fuse" type="Sprite2D" parent="Sprite/Offset" unique_id=1770779985]
+[node name="Fuse" type="Node2D" parent="Sprite/Offset" unique_id=1770779985]
 position = Vector2(0, -4)
-texture = SubResource("CanvasTexture_rfasj")
-region_enabled = true
-region_rect = Rect2(0, 0, 4, 4)
-script = ExtResource("17_gjan8")
-canvas_texture = SubResource("CanvasTexture_rfasj")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_jixoj")
-current_animation = "default"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_Offset_Fuse_default"), SubResource("RigClip_Sprite_Offset_Fuse_fuse")])
+current_animation = &"default"
+reset_animation = &"default"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
 
-[node name="Key" type="Sprite2D" parent="Sprite/Offset" unique_id=990773306]
+[node name="Layer" type="Sprite2D" parent="Sprite/Offset/Fuse"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_jixoj")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
+
+[node name="Key" type="Node2D" parent="Sprite/Offset" unique_id=990773306]
 position = Vector2(-11, 7)
-texture = SubResource("CanvasTexture_7dm06")
-region_enabled = true
-region_rect = Rect2(0, 0, 6, 10)
-script = ExtResource("17_gjan8")
-canvas_texture = SubResource("CanvasTexture_7dm06")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_7nkl5")
-current_animation = "spin"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_Offset_Key_default"), SubResource("RigClip_Sprite_Offset_Key_spin")])
+current_animation = &"spin"
+reset_animation = &"spin"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite/Offset/Key"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_7nkl5")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="Explosion" type="AnimatedSprite2D" parent="." unique_id=705525699]
 visible = false
@@ -588,13 +616,16 @@ floor_check_l = NodePath("../../FloorCheckL")
 floor_check_r = NodePath("../../FloorCheckR")
 effects = SubResource("Effects_Patrol")
 
-[node name="Chase" type="Node" parent="StateMachine" unique_id=2076778657 node_paths=PackedStringArray("fuse_light", "key", "fuse")]
+[node name="Chase" type="Node" parent="StateMachine" unique_id=2076778657 node_paths=PackedStringArray("floor_check_l", "floor_check_r", "fuse_light", "key", "fuse", "carryable")]
 script = ExtResource("19_na7jb")
 chase_speed = 180.0
+floor_check_l = NodePath("../../FloorCheckL")
+floor_check_r = NodePath("../../FloorCheckR")
 fuse_light = NodePath("../../FuseLight")
 modulate_speed_curve = SubResource("Curve_na7jb")
 key = NodePath("../../Sprite/Offset/Key")
 fuse = NodePath("../../Sprite/Offset/Fuse")
+carryable = NodePath("../../Carryable")
 effects = SubResource("Effects_Chase")
 
 [node name="Kaboom" type="Node" parent="StateMachine" unique_id=1881694916 node_paths=PackedStringArray("explosion_shape", "explosion", "hurtbox_shape")]
@@ -611,10 +642,33 @@ key = NodePath("../../Sprite/Offset/Key")
 hurtbox_shape = NodePath("../../HurtBox/HurtboxShape")
 effects = SubResource("Effects_Strike")
 
+[node name="Kicked" type="Node" parent="StateMachine" unique_id=1746543688 node_paths=PackedStringArray("fuse", "key", "hurtbox_shape")]
+script = ExtResource("24_na7jb")
+fuse = NodePath("../../Sprite/Offset/Fuse")
+key = NodePath("../../Sprite/Offset/Key")
+hurtbox_shape = NodePath("../../HurtBox/HurtboxShape")
+effects = SubResource("Effects_Kicked")
+
 [node name="WaterCheckArea" type="Area2D" parent="." unique_id=1408411545]
 script = ExtResource("29_ekeht")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterCheckArea" unique_id=8270833]
 shape = SubResource("RectangleShape2D_glled")
 
+[node name="Carryable" type="Node" parent="." unique_id=1504872313 node_paths=PackedStringArray("entity", "visual")]
+script = ExtResource("carryable")
+entity = NodePath("..")
+visual = NodePath("../Sprite")
+carry_expression = "can_be_carried()"
+outline_material = ExtResource("carry_outline")
+hold_offset = Vector2(0, -6)
+kick_velocity = Vector2(220, -180)
+
+[node name="CoinDrop" type="Marker2D" parent="." unique_id=1504872312]
+script = ExtResource("drop")
+scene = ExtResource("2_ccar4")
+reward = true
+
 [connection signal="frame_changed" from="Sprite" to="." method="_on_sprite_frame_changed"]
+[connection signal="picked_up" from="Carryable" to="." method="_on_carryable_picked_up"]
+[connection signal="thrown" from="Carryable" to="." method="_on_carryable_thrown"]

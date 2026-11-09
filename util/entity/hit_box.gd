@@ -54,7 +54,7 @@ func is_airborne_squish() -> bool:
 
 func bounce_squisher() -> void:
 	if is_airborne_squish():
-		(owner as Entity).velocity.y = SQUISH_BOUNCE_VELOCITY
+		(owner as Entity).bounce_off_squish()
 
 
 func is_valid() -> bool:

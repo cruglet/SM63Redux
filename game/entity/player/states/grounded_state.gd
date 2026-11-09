@@ -45,7 +45,7 @@ func _exit() -> void:
 
 func _tick(delta: float) -> void:
 	var drag: float = player.get_floor_drag_rate()
-	if is_zero_approx(player.move_input) or machine.is_active(&"Crouch"):
+	if is_zero_approx(player.move_input) or machine.is_active(&"Crouch") or not player.can_walk:
 		player.brake(
 				brake_deceleration,
 				Motion.rate(brake_halflife) + drag * brake_friction_scale,

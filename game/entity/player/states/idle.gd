@@ -7,6 +7,7 @@ extends PlayerState
 var crouch_max_speed: float = 50.0
 ## How long a jump press stays valid after it was pressed.
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var jump_buffer: float = 0.25
+@export_custom(PROPERTY_HINT_NONE, "suffix:s") var sleep_delay: float = 20.0
 
 
 func _next() -> StringName:
@@ -24,4 +25,6 @@ func _next() -> StringName:
 		return &"Fall"
 	if grounded and player.can_jump and controls.is_buffered(&"jump", jump_buffer):
 		return &"BaseJump"
+	if grounded and time >= sleep_delay and controls.quiet_time >= sleep_delay:
+		return &"Sleep"
 	return &""

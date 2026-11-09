@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 const STEP_EPSILON: float = 0.05
 
-@export var sprite: SmartSprite2D
+@export var sprite: SpriteRig2D
 @export var components_root: Node
 @export var collision_shapes: Array[CollisionShape2D]
 @export var machine: StateMachine
@@ -20,6 +20,7 @@ const STEP_EPSILON: float = 0.05
 var object: GameObject
 var components: Array[EntityComponent]
 var drops_rewards: bool = true
+var last_move_velocity: Vector2 = Vector2.ZERO
 
 ## Helper variable which takes into account the [member sprite]'s flip_h
 ## property.
@@ -57,6 +58,7 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
+	last_move_velocity = velocity
 	if has_component(GravityComponent):
 		if not _velocity_lock:
 			_try_step()
@@ -143,6 +145,14 @@ func is_intangible() -> bool:
 
 func is_harmless() -> bool:
 	return false
+
+
+func ignores_hit(_hitbox: HitBox) -> bool:
+	return false
+
+
+func bounce_off_squish() -> void:
+	velocity.y = HitBox.SQUISH_BOUNCE_VELOCITY
 
 
 func damage(amount: float, type: HitBox.DamageType, source: Node2D = null) -> void:

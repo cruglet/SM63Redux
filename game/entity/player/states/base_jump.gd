@@ -11,7 +11,7 @@ var _cut: bool = false
 
 
 func _enter() -> void:
-	var index: int = mini(player.jump_chain, jumps.size() - 1)
+	var index: int = mini(player.jump_chain, jumps.size() - 1) if player.can_chain_jumps() else 0
 	while index > 0 and not jumps[index].can_chain():
 		index -= 1
 	

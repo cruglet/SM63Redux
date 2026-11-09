@@ -2,20 +2,20 @@
 
 [ext_resource type="Script" uid="uid://d1vbfhdttehec" path="res://game/props/fludd_box/fludd_box.gd" id="1_scmcn"]
 [ext_resource type="PackedScene" uid="uid://b1bysf6h2qqww" path="res://game/props/fludd_nozzle/fludd_nozzle_hover.tscn" id="2_6q8s3"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="2_js7x2"]
 [ext_resource type="Texture2D" uid="uid://cvuk603o47gb6" path="res://assets/textures/item/fludd/fludd_box_hover.png" id="3_748og"]
 [ext_resource type="Texture2D" uid="uid://chlxalycii75t" path="res://assets/textures/item/fludd/fludd_box_hover_open.png" id="4_748og"]
 [ext_resource type="AudioStream" uid="uid://dwbia6vwx81o7" path="res://assets/sfx/object/fludd/fludd_box_break.wav" id="5_fkvjd"]
 [ext_resource type="Texture2D" uid="uid://boy5g2xfm5w7k" path="res://assets/textures/item/fludd/fludd_box_hover_stretch.png" id="6_8x4kl"]
 [ext_resource type="Script" uid="uid://3ara7t8dqmih" path="res://util/entity/hurt_box.gd" id="8_6q8s3"]
 [ext_resource type="Script" uid="uid://drtqc6at2evph" path="res://util/entity/hurt_box_component.gd" id="9_ebuor"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
+[ext_resource type="Script" uid="uid://csk0lir3br2qj" path="res://util/entity/drop.gd" id="drop"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s2tvu"]
 atlas = ExtResource("3_748og")
 region = Rect2(0, 0, 40, 36)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_6q8s3"]
-diffuse_texture = SubResource("AtlasTexture_s2tvu")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3c337"]
 atlas = ExtResource("6_8x4kl")
@@ -131,27 +131,38 @@ accepted_hitbox_ids = PackedStringArray("feet")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_748og"]
 size = Vector2(30, 7)
 
-[node name="FluddBoxHover" type="Node2D" unique_id=2137935164 node_paths=PackedStringArray("sprite", "open_sfx", "hurt_box")]
+[sub_resource type="Resource" id="RigClip_Sprite_default"]
+script = ExtResource("rig_clip")
+resource_name = "default"
+name = &"default"
+loop = false
+
+[sub_resource type="Resource" id="RigClip_Sprite_open"]
+script = ExtResource("rig_clip")
+resource_name = "open"
+name = &"open"
+fps = 29.0
+loop = false
+
+[node name="FluddBoxHover" type="Node2D" unique_id=2137935164 node_paths=PackedStringArray("sprite", "open_sfx", "hurt_box", "contents")]
 script = ExtResource("1_scmcn")
-spawn = ExtResource("2_6q8s3")
 sprite = NodePath("Sprite")
 open_sfx = NodePath("OpenSFX")
 hurt_box = NodePath("HurtBox")
+contents = NodePath("Contents")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=499824916]
-texture = SubResource("CanvasTexture_6q8s3")
-region_enabled = true
-region_rect = Rect2(0, 0, 40, 36)
-script = ExtResource("2_js7x2")
-canvas_texture = SubResource("CanvasTexture_6q8s3")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_8x4kl")
-looping = false
-current_animation = "default"
-current_frame = 0
-speed_scale = 1.0
-playing = false
-looping = false
+[node name="Sprite" type="Node2D" parent="." unique_id=499824916]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_default"), SubResource("RigClip_Sprite_open")])
+current_animation = &"default"
+reset_animation = &"default"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_8x4kl")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="HurtBox" type="Area2D" parent="." unique_id=1846348069]
 script = ExtResource("8_6q8s3")
@@ -168,5 +179,10 @@ one_way_collision_margin = 8.0
 stream = ExtResource("5_fkvjd")
 volume_db = 2.0
 bus = &"SFX"
+
+[node name="Contents" type="Marker2D" parent="." unique_id=1386025907]
+script = ExtResource("drop")
+scene = ExtResource("2_6q8s3")
+behind = true
 
 [connection signal="damaged" from="HurtBox" to="." method="_on_hurt_box_damaged"]

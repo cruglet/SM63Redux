@@ -10,9 +10,6 @@
 atlas = ExtResource("3_rg780")
 region = Rect2(0, 0, 40, 36)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_nxwtm"]
-diffuse_texture = SubResource("AtlasTexture_r2bdr")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_0gn0l"]
 atlas = ExtResource("4_rg780")
 region = Rect2(0, 0, 60, 64)
@@ -128,9 +125,9 @@ animations = [{
 }]
 
 [node name="FluddBoxRocket" unique_id=2137935164 instance=ExtResource("1_nxwtm")]
-spawn = ExtResource("2_rg780")
 
-[node name="Sprite" parent="." index="0" unique_id=499824916]
-texture = SubResource("CanvasTexture_nxwtm")
-canvas_texture = SubResource("CanvasTexture_nxwtm")
-diffuse_frames = SubResource("SpriteFrames_o1tqm")
+[node name="Layer" parent="Sprite"]
+frames = SubResource("SpriteFrames_o1tqm")
+
+[node name="Contents" parent="." unique_id=1386025907]
+scene = ExtResource("2_rg780")

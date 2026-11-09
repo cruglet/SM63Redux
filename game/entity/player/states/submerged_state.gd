@@ -51,7 +51,7 @@ func _tick(delta: float) -> void:
 	if not (machine.get_state() as PlayerState).overrides_vertical():
 		_drift(delta)
 	
-	if not player.is_on_floor() and controls.is_held(&"ground_pound") and player.can_ground_pound:
+	if player.wants_ground_pound():
 		machine.change_state(&"GroundPoundStart")
 
 

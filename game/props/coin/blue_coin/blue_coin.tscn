@@ -9,9 +9,6 @@
 atlas = ExtResource("3_jldnt")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_t7vuc"]
-diffuse_texture = SubResource("AtlasTexture_1pk8k")
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7e76b"]
 atlas = ExtResource("3_jldnt")
 region = Rect2(16, 0, 16, 16)
@@ -63,10 +60,8 @@ coin_amount = 5
 power_amount = 10
 fludd_power_amount = 100.0
 
-[node name="Sprite" parent="." index="1" unique_id=1781944590]
-texture = SubResource("CanvasTexture_t7vuc")
-canvas_texture = SubResource("CanvasTexture_t7vuc")
-diffuse_frames = SubResource("SpriteFrames_sbsd4")
+[node name="Layer" parent="Sprite"]
+frames = SubResource("SpriteFrames_sbsd4")
 
 [node name="ParticleEmitter" parent="." index="3" unique_id=1981334313]
 texture = ExtResource("3_t7vuc")

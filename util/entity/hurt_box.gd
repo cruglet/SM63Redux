@@ -90,6 +90,8 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	if owner is Entity and (owner as Entity).is_intangible():
 		return
+	if owner is Entity and (owner as Entity).ignores_hit(hitbox):
+		return
 	if owner is Entity and hitbox.owner is Entity and (hitbox.owner as Entity).is_harmless():
 		return
 	if not hitbox.is_valid():

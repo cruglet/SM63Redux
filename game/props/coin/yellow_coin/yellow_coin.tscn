@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://clo423ijbljko"]
 
 [ext_resource type="Script" uid="uid://b8fpm2nqwlk2q" path="res://game/props/coin/yellow_coin/yellow_coin.gd" id="1_k3up7"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="2_1gmy6"]
 [ext_resource type="Script" uid="uid://cb672xli6i2ns" path="res://game/entity_data/components/gravity_component.gd" id="2_ijjnc"]
 [ext_resource type="Texture2D" uid="uid://b7wqc58gwogb6" path="res://assets/textures/item/collectible/yellow_coin_spin.png" id="3_aa8gu"]
 [ext_resource type="Script" uid="uid://gqndp1vy8xo2" path="res://game/entity_data/components/bouncy_component.gd" id="3_vu8ol"]
@@ -11,13 +10,13 @@
 [ext_resource type="Texture2D" uid="uid://du3uraiotivor" path="res://assets/textures/particle/item/yellow_coin_particle.png" id="5_k3up7"]
 [ext_resource type="AudioStream" uid="uid://0bs3yr3jh6j5" path="res://assets/sfx/item/yellow_coin_collect.wav" id="7_olrdk"]
 [ext_resource type="Script" uid="uid://bhoysiia8munh" path="res://util/2d/water_check_area.gd" id="11_2c2xh"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3up7"]
 atlas = ExtResource("3_aa8gu")
 region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_2c2xh"]
-diffuse_texture = SubResource("AtlasTexture_k3up7")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_olrdk"]
 atlas = ExtResource("3_aa8gu")
@@ -79,6 +78,12 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [sub_resource type="CircleShape2D" id="CircleShape2D_olrdk"]
 radius = 8.062258
 
+[sub_resource type="Resource" id="RigClip_Sprite_default"]
+script = ExtResource("rig_clip")
+resource_name = "default"
+name = &"default"
+fps = 12.0
+
 [node name="YellowCoin" type="CharacterBody2D" unique_id=187434736 node_paths=PackedStringArray("particle_emitter", "sfx_player", "entity_check_area", "gravity_component", "sprite", "water_check", "components_root")]
 collision_layer = 0
 collision_mask = 0
@@ -107,18 +112,18 @@ entity = NodePath("../..")
 script = ExtResource("4_8rta1")
 entity = NodePath("../..")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1781944590]
-texture = SubResource("CanvasTexture_2c2xh")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-script = ExtResource("2_1gmy6")
-canvas_texture = SubResource("CanvasTexture_2c2xh")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_u2fme")
-current_animation = "default"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+[node name="Sprite" type="Node2D" parent="." unique_id=1781944590]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_default")])
+current_animation = &"default"
+reset_animation = &"default"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_u2fme")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="EntityCheckArea" type="Area2D" parent="." unique_id=419717260]
 visible = false

@@ -4,6 +4,7 @@ extends PlayerState
 @export var stars: AnimatedParticles
 ## Dust burst emitted on impact.
 @export var dust: AnimatedParticles
+@export var impact_bank: SFXBank
 ## Time spent recovering after the slam before returning to idle.
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var recover_time: float = 0.3
 @export var shake_delay_frames: int = 2
@@ -17,6 +18,8 @@ var _shake_countdown: int = 0
 func _enter() -> void:
 	dust.burst()
 	stars.burst()
+	if impact_bank:
+		impact_bank.play_sfx_at(player.global_position, impact_bank.bank_group, player)
 	player.velocity.x = 0.0
 	player.lock_flipping = true
 	player.can_jump = false

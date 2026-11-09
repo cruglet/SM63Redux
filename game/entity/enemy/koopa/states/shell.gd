@@ -32,8 +32,10 @@ func _exit() -> void:
 
 
 func _tick(_delta: float) -> void:
-	if entity.is_on_wall():
-		entity.velocity.x *= -1.0
+	var speed: float = entity.last_move_velocity.x
+	var normal: float = entity.get_wall_normal().x if entity.is_on_wall() else 0.0
+	if normal * speed < 0.0:
+		entity.velocity.x = absf(speed) * signf(normal)
 	
 	if absf(entity.velocity.x) <= STOP_THRESHOLD:
 		entity.velocity.x = 0.0

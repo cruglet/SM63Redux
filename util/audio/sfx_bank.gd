@@ -44,7 +44,7 @@ static var all_banks: Array[SFXBank] = []
 @export var sprite_frame_indices: Array[int]
 
 var _entity: Entity
-var _sprite: SmartSprite2D
+var _sprite: SpriteRig2D
 
 
 var _current_index: int = 0
@@ -63,7 +63,7 @@ func _init() -> void:
 func play_sfx(
 		bus: StringName = bank_group,
 		entity: Entity = null,
-		sprite: SmartSprite2D = null,
+		sprite: SpriteRig2D = null,
 ) -> void:
 	_entity = entity
 	_sprite = sprite
@@ -98,7 +98,7 @@ func play_sfx_at(
 		at: Variant,
 		bus: StringName = bank_group,
 		entity: Entity = null,
-		sprite: SmartSprite2D = null,
+		sprite: SpriteRig2D = null,
 ) -> void:
 	_entity = entity
 	_sprite = sprite

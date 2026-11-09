@@ -43,7 +43,7 @@ display_server/driver.linuxbsd="wayland"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdss/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdss/plugin.cfg", "res://addons/redux_dev/plugin.cfg")
 
 [file_customization]
 

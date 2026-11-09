@@ -17,6 +17,7 @@ enum Form {
 
 const SHELL_DROP_OFFSET: float = 8.0
 const KICK_SPEED: float = 300.0
+const LOOSE_SPEED: float = 150.0
 const FORM_STATES: Dictionary[Form, StringName] = {
 	Form.KOOPA: &"Patrol",
 	Form.PARAKOOPA: &"Glide",
@@ -36,6 +37,7 @@ const FORM_STATES: Dictionary[Form, StringName] = {
 ## same hit.
 @export var walker_boxes: Array[Node]
 @export var shell_boxes: Array[Node]
+@export var carryable: Carryable
 
 
 func _ready() -> void:
@@ -43,12 +45,24 @@ func _ready() -> void:
 	_apply_form()
 
 
+func ignores_hit(hitbox: HitBox) -> bool:
+	return carryable != null and carryable.ignores_hit(hitbox)
+
+
+func is_loose_shell() -> bool:
+	return form == Form.SHELL and absf(velocity.x) < LOOSE_SPEED
+
+
 ## Every hit lands here, whichever box caught it; what it means depends on the
 ## form being worn.
 func _on_hurt_box_damaged(source_hitbox: HitBox) -> void:
 	match form:
 		Form.SHELL:
-			_kick(source_hitbox)
+			if source_hitbox.damage_type == HitBox.DamageType.SQUISH and not is_loose_shell():
+				velocity.x = 0.0
+				sfx_player.play()
+			else:
+				_kick(source_hitbox)
 		Form.PARAKOOPA:
 			_shed_wings()
 			if source_hitbox.damage_type == HitBox.DamageType.STRIKE:

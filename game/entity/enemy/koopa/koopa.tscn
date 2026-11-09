@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cobjo5kj7heeo"]
 
 [ext_resource type="Script" uid="uid://s77sl0w730u" path="res://game/entity/enemy/koopa/koopa.gd" id="koopa"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="smart_sprite"]
 [ext_resource type="Texture2D" uid="uid://bh5q4brjmpql0" path="res://assets/textures/entity/enemy/koopa/koopa_walk.png" id="tex_walk"]
 [ext_resource type="Texture2D" uid="uid://d2rb6fcbfwjmo" path="res://assets/textures/entity/enemy/koopa/parakoopa_flap.png" id="tex_fly"]
 [ext_resource type="Texture2D" uid="uid://6xw6a6v37qee" path="res://assets/textures/entity/enemy/koopa/koopa_shell_spin.png" id="tex_shell"]
@@ -14,13 +13,18 @@
 [ext_resource type="Script" uid="uid://cye3eo0tyv6vx" path="res://game/entity_data/components/friction_component.gd" id="friction"]
 [ext_resource type="Script" uid="uid://c2df6xnsl5aem" path="res://util/2d/particle_emitter.gd" id="particles"]
 [ext_resource type="Script" uid="uid://bhoysiia8munh" path="res://util/2d/water_check_area.gd" id="water_check"]
-[ext_resource type="AudioStream" uid="uid://bepvphyfaeuk5" path="res://assets/sfx/entity/koopa/shell_kick.ogg" id="sfx_kick"]
+[ext_resource type="AudioStream" uid="uid://bepvphyfaeuk5" path="res://assets/sfx/player/kick.ogg" id="sfx_kick"]
 [ext_resource type="Script" path="res://game/entity_data/state/state_machine.gd" id="state_machine"]
 [ext_resource type="Script" path="res://game/entity_data/state/state_effects.gd" id="state_effects"]
 [ext_resource type="Script" uid="uid://bd8l4ri83uu5a" path="res://game/entity/enemy/_shared/states/patrol.gd" id="state_patrol"]
 [ext_resource type="Script" path="res://game/entity/enemy/koopa/states/glide.gd" id="state_glide"]
 [ext_resource type="Script" path="res://game/entity/enemy/koopa/states/shell.gd" id="state_shell"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 
+[ext_resource type="Script" uid="uid://cfejoho51ig" path="res://util/entity/carryable.gd" id="carryable"]
+[ext_resource type="Material" path="res://util/entity/carry_outline.tres" id="carry_outline"]
 [sub_resource type="AtlasTexture" id="Walk_0"]
 atlas = ExtResource("tex_walk")
 region = Rect2(0, 0, 32, 32)
@@ -120,9 +124,6 @@ region = Rect2(192, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="Shell_7"]
 atlas = ExtResource("tex_shell")
 region = Rect2(224, 0, 32, 32)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_koopa"]
-diffuse_texture = SubResource("Walk_0")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_koopa"]
 animations = [{
@@ -281,7 +282,25 @@ animation = &"fly"
 script = ExtResource("state_effects")
 animation = &"shell"
 
-[node name="Koopa" type="CharacterBody2D" node_paths=PackedStringArray("sfx_player", "wing_emitter", "walker_boxes", "shell_boxes", "sprite", "components_root", "machine", "water_check")]
+[sub_resource type="Resource" id="RigClip_Sprite_walk"]
+script = ExtResource("rig_clip")
+resource_name = "walk"
+name = &"walk"
+fps = 8.0
+
+[sub_resource type="Resource" id="RigClip_Sprite_fly"]
+script = ExtResource("rig_clip")
+resource_name = "fly"
+name = &"fly"
+fps = 8.0
+
+[sub_resource type="Resource" id="RigClip_Sprite_shell"]
+script = ExtResource("rig_clip")
+resource_name = "shell"
+name = &"shell"
+fps = 10.0
+
+[node name="Koopa" type="CharacterBody2D" node_paths=PackedStringArray("sfx_player", "wing_emitter", "walker_boxes", "shell_boxes", "carryable", "sprite", "components_root", "machine", "water_check")]
 collision_layer = 8
 collision_mask = 514
 script = ExtResource("koopa")
@@ -290,23 +309,24 @@ wing_emitter = NodePath("WingEmitter")
 back_wing_texture = ExtResource("tex_wing_back")
 walker_boxes = [NodePath("WalkerHurtBox"), NodePath("WalkerHitBox"), NodePath("WalkerCollider")]
 shell_boxes = [NodePath("ShellHurtBox"), NodePath("ShellHitBox"), NodePath("ShellCollider")]
+carryable = NodePath("Carryable")
 sprite = NodePath("Sprite")
 components_root = NodePath("Components")
 machine = NodePath("StateMachine")
 water_check = NodePath("WaterCheckArea")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = SubResource("CanvasTexture_koopa")
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
-script = ExtResource("smart_sprite")
-canvas_texture = SubResource("CanvasTexture_koopa")
-animated = true
-diffuse_frames = SubResource("SpriteFrames_koopa")
-current_animation = "walk"
-current_frame = 0
-speed_scale = 1.0
-playing = false
+[node name="Sprite" type="Node2D" parent="."]
+script = ExtResource("rig_2d")
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Sprite_walk"), SubResource("RigClip_Sprite_fly"), SubResource("RigClip_Sprite_shell")])
+current_animation = &"walk"
+reset_animation = &"walk"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite"]
+use_parent_material = true
+script = ExtResource("rig_layer")
+frames = SubResource("SpriteFrames_koopa")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="Components" type="Node" parent="."]
 
@@ -348,6 +368,16 @@ debug_color = Color(0.7, 0, 0, 0.41960785)
 position = Vector2(-2.5, 15)
 shape = SubResource("Shape_WalkerCollider")
 
+[node name="FloorCheckR" type="RayCast2D" parent="."]
+position = Vector2(5.5, 4)
+target_position = Vector2(0, 22)
+collision_mask = 2
+
+[node name="FloorCheckL" type="RayCast2D" parent="."]
+position = Vector2(-10.5, 4)
+target_position = Vector2(0, 22)
+collision_mask = 2
+
 [node name="ShellHurtBox" type="Area2D" parent="."]
 script = ExtResource("hurtbox")
 components = Array[ExtResource("hurtbox_component")]([SubResource("Component_ShellKick")])
@@ -372,6 +402,15 @@ debug_color = Color(0.7, 0, 0, 0.41960785)
 position = Vector2(0, 4)
 shape = SubResource("Shape_ShellCollider")
 
+[node name="Carryable" type="Node" parent="." node_paths=PackedStringArray("entity", "visual")]
+script = ExtResource("carryable")
+entity = NodePath("..")
+visual = NodePath("../Sprite")
+kick_on_touch = true
+carry_expression = "is_loose_shell()"
+outline_material = ExtResource("carry_outline")
+hold_offset = Vector2(0, -4)
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("sfx_kick")
 bus = &"SFX"
@@ -381,10 +420,12 @@ script = ExtResource("state_machine")
 entity = NodePath("..")
 initial_state = NodePath("Patrol")
 
-[node name="Patrol" type="Node" parent="StateMachine"]
+[node name="Patrol" type="Node" parent="StateMachine" node_paths=PackedStringArray("floor_check_l", "floor_check_r")]
 script = ExtResource("state_patrol")
 effects = SubResource("Effects_Patrol")
 displacement = SubResource("Curve_Patrol")
+floor_check_l = NodePath("../../FloorCheckL")
+floor_check_r = NodePath("../../FloorCheckR")
 
 [node name="Glide" type="Node" parent="StateMachine"]
 script = ExtResource("state_glide")

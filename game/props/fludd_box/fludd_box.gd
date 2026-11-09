@@ -2,10 +2,10 @@ extends Prop
 
 const BOUNCE_VELOCITY: float = -200.0
 
-@export var spawn: PackedScene
-@export var sprite: SmartSprite2D
+@export var sprite: SpriteRig2D
 @export var open_sfx: AudioStreamPlayer2D
 @export var hurt_box: HurtBox
+@export var contents: Drop
 
 var _opened: bool = false
 
@@ -20,6 +20,6 @@ func _on_hurt_box_damaged(source_hitbox: HitBox) -> void:
 	player.velocity.y = BOUNCE_VELOCITY
 	open_sfx.play()
 	sprite.play(&"open")
-	Spawner.spawn_near(self, spawn.instantiate(), Vector2.ZERO, true)
+	contents.release()
 	await sprite.animation_finished
 	queue_free()

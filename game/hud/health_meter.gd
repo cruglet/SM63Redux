@@ -5,8 +5,8 @@ extends Control
 @export_range(0.0, 1.0) var critical_gradient_offset: float = 0.85
 @export var slices: ColorRect
 @export var background: TextureRect
-@export var power_sprite: SmartSprite2D
-@export var coin_sprite: SmartSprite2D
+@export var power_sprite: SpriteRig2D
+@export var coin_sprite: SpriteRig2D
 @export_group("Auto Hide")
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var hide_delay: float = 4.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var slide_time: float = 0.3
@@ -60,7 +60,7 @@ func _on_power_updated(power: int) -> void:
 	if _healing > 0:
 		return
 	
-	for sprite: SmartSprite2D in [power_sprite, coin_sprite]:
+	for sprite: SpriteRig2D in [power_sprite, coin_sprite]:
 		sprite.current_animation = "default"
 		sprite.current_frame = power
 
@@ -69,7 +69,7 @@ func _on_power_reset() -> void:
 	if _healing > 0:
 		return
 	
-	for sprite: SmartSprite2D in [power_sprite, coin_sprite]:
+	for sprite: SpriteRig2D in [power_sprite, coin_sprite]:
 		_healing += 1
 		sprite.animation_finished.connect(_on_heal_finished, CONNECT_ONE_SHOT)
 		sprite.play(&"heal")

@@ -2,11 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cx651ap757m0y" path="res://game/props/log_falling/log_falling.gd" id="1_w2h6g"]
 [ext_resource type="Texture2D" uid="uid://bcao06ecobm0x" path="res://assets/textures/objects/decoration/platform/falling_log.png" id="2_w2h6g"]
-[ext_resource type="Script" uid="uid://cvolonferossj" path="res://util/2d/smart_sprite_2d.gd" id="3_epf5h"]
 [ext_resource type="Script" uid="uid://dvxkxevaf2f45" path="res://util/2d/ride_area.gd" id="4_w2h6g"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_w2h6g"]
-diffuse_texture = ExtResource("2_w2h6g")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p6bj2"]
 resource_local_to_scene = true
@@ -24,14 +20,7 @@ sprite = NodePath("StaticBody2D/SmartSprite2D")
 collision_layer = 514
 
 [node name="SmartSprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1648511067]
-texture = SubResource("CanvasTexture_w2h6g")
-script = ExtResource("3_epf5h")
-canvas_texture = SubResource("CanvasTexture_w2h6g")
-diffuse_texture = ExtResource("2_w2h6g")
-current_animation = ""
-current_frame = 0
-speed_scale = 1.0
-playing = false
+texture = ExtResource("2_w2h6g")
 
 [node name="RideArea" type="Area2D" parent="StaticBody2D" unique_id=1938403119]
 collision_mask = 256

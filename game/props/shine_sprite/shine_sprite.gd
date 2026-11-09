@@ -1,6 +1,6 @@
 extends Prop
 
-@export var sprite: SmartSprite2D
+@export var sprite: SpriteRig2D
 @export var sfx_player: AudioStreamPlayer2D
 @export var particle_emitter: CPUParticles2D
 
@@ -20,9 +20,6 @@ func _on_area_2d_body_entered(colliding_body: Node2D) -> void:
 	sfx_player.stop()
 	particle_emitter.emitting = false
 	var level: Level = Level.of(self)
-	if level == null:
-		return
-	
-	level.collect_shine(get_property(&"scenario_id", 0))
-	if get_property(&"kickout", true):
-		level.request_kickout()
+	if level:
+		level.collect_shine(get_property(&"scenario_id", 0))
+	(colliding_body as Player).celebrate_shine(get_property(&"kickout", true))
