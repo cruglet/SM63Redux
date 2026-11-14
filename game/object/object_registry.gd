@@ -134,6 +134,7 @@ class Entry:
 	var unique: bool
 	var flags: int
 	var icon_tint: StringName
+	var icon_material: Material
 	var _shape_kind: int = -1
 	var _tint_default: Color = Color.WHITE
 	var _tint_ready: bool = false
@@ -156,6 +157,7 @@ class Entry:
 		unique = _read(definition, defaults, &"unique")
 		flags = _read(definition, defaults, &"flags")
 		icon_tint = _read(definition, defaults, &"icon_tint")
+		icon_material = _read(definition, defaults, &"icon_material")
 		defaults.free()
 		if display_name.is_empty():
 			display_name = String(id).capitalize()

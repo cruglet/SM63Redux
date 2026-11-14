@@ -71,8 +71,14 @@ metadata/water = true
 
 [node name="Polygon" type="CollisionPolygon2D" parent="Game/WaterArea"]
 
-[node name="Collision" type="Node" parent="Game" node_paths=PackedStringArray("shape", "area_polygons")]
+[node name="SurfaceBody" type="StaticBody2D" parent="Game"]
+collision_layer = 8192
+collision_mask = 0
+
+[node name="Collision" type="Node" parent="Game" node_paths=PackedStringArray("shape", "body", "area_polygons")]
 script = ExtResource("8_r")
-mode = 2
+mode = 1
 shape = NodePath("../../Shape")
+body = NodePath("../SurfaceBody")
 area_polygons = [NodePath("../WaterArea/Polygon")]
+semisolid_depth = 8.0

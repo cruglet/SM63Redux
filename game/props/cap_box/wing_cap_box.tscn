@@ -1,0 +1,64 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://c7ler7lqg61m1" path="res://game/props/breakable_box/breakable_box.tscn" id="1_base"]
+[ext_resource type="Texture2D" path="res://assets/textures/item/powerups/wing_cap_box.png" id="2_box"]
+[ext_resource type="PackedScene" path="res://game/props/cap_item/wing_cap.tscn" id="3_item"]
+[ext_resource type="Texture2D" path="res://assets/textures/particle/object/box/box_opening_particle.png" id="4_sparkle"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_0"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_1"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_2"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sparkle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="WingCapBox" instance=ExtResource("1_base")]
+textures = Array[Texture2D]([ExtResource("2_box")])
+
+[node name="Sprite" parent="."]
+texture = ExtResource("2_box")
+
+[node name="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_solid")
+
+[node name="Debris" parent="."]
+sprite_frames = SubResource("SpriteFrames_sparkle")
+amount = 6
+speed_min = 30.0
+speed_max = 80.0
+gravity = Vector2(0, 60)
+
+[node name="Contents" parent="." unique_id=1730914262]
+scene = ExtResource("3_item")
+count = 1

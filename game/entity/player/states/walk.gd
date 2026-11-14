@@ -75,7 +75,7 @@ func _next() -> StringName:
 		return &"Fall"
 	if absf(player.move_input) < stop_input_threshold and absf(player.velocity.x) < stop_speed:
 		return &"Idle"
-	if grounded and controls.is_just_pressed(&"crouch"):
+	if player.can_crouch() and controls.is_just_pressed(&"crouch"):
 		if absf(player.velocity.x) <= crouch_max_speed:
 			return &"Crouch"
 		if player.is_moving_with_facing():

@@ -31,6 +31,7 @@ enum Flag {
 @export var display_name: String
 @export var icon: Texture2D
 @export var icon_tint: StringName
+@export var icon_material: Material
 @export var category: StringName
 @export var group: StringName
 @export var biome: StringName

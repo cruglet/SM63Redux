@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://cc705hj263h4d"]
+
+[ext_resource type="PackedScene" uid="uid://c7ler7lqg61m1" path="res://game/props/breakable_box/breakable_box.tscn" id="1_base"]
+[ext_resource type="Texture2D" uid="uid://bsrl6dwxrervd" path="res://assets/textures/item/powerups/metal_cap_box.png" id="2_box"]
+[ext_resource type="Texture2D" uid="uid://c81i4kwicv8u7" path="res://assets/textures/particle/object/box/box_opening_particle.png" id="4_sparkle"]
+[ext_resource type="PackedScene" path="res://game/objects/item/caps/metal_cap.tscn" id="4_tm3xx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
+size = Vector2(26, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_0"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_1"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_2"]
+atlas = ExtResource("4_sparkle")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sparkle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MetalCapBox" unique_id=788033800 instance=ExtResource("1_base")]
+textures = Array[Texture2D]([ExtResource("2_box")])
+
+[node name="Sprite" parent="." index="0" unique_id=286401553]
+texture = ExtResource("2_box")
+
+[node name="HurtBox" parent="." index="1" unique_id=920770686]
+visible = false
+
+[node name="CollisionShape2D" parent="HurtBox" index="0" unique_id=113921858]
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="StaticBody2D" parent="." index="3" unique_id=664497308]
+visible = false
+
+[node name="CollisionShape2D" parent="StaticBody2D" index="0" unique_id=1498151830]
+shape = SubResource("RectangleShape2D_solid")
+
+[node name="Debris" parent="." index="5" unique_id=1781001774]
+sprite_frames = SubResource("SpriteFrames_sparkle")
+amount = 6
+speed_min = 30.0
+speed_max = 80.0
+gravity = Vector2(0, 60)
+
+[node name="Contents" parent="." index="6" unique_id=1730914262]
+scene = ExtResource("4_tm3xx")
+count = 1
+spread = 0.0

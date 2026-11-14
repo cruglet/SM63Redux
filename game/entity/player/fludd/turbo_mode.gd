@@ -41,6 +41,9 @@ func _enter() -> void:
 
 func _tick(delta: float) -> void:
 	_cap = move_toward(_cap, speed, rebuild_acceleration * delta)
+	player.set_water_surface_solid(
+			not player.ignores_water() and not player.controls.is_held(&"crouch")
+	)
 	player.ground_speed_override = _cap
 	player.air_speed_override = _cap
 	if not player.is_swimming():
@@ -57,6 +60,7 @@ func _exit() -> void:
 	if hitbox:
 		hitbox.disable()
 	_stop_aiming()
+	player.set_water_surface_solid(false)
 	player.friction_modifiers.clear_modifier(MODIFIER_KEY)
 	player.ground_speed_override = 0.0
 	player.air_speed_override = 0.0

@@ -15,9 +15,9 @@ func _next() -> StringName:
 	var slow: bool = absf(player.velocity.x) <= crouch_max_speed
 	if controls.is_held(&"spin"):
 		return &"Spin"
-	if grounded and slow and controls.is_held(&"crouch"):
+	if player.can_crouch() and slow and controls.is_held(&"crouch"):
 		return &"Crouch"
-	if grounded and not slow and controls.is_just_pressed(&"crouch"):
+	if player.can_crouch() and not slow and controls.is_just_pressed(&"crouch"):
 		return &"Floorslide"
 	if grounded and absf(player.move_input) > walk_input_threshold:
 		return &"Walk"

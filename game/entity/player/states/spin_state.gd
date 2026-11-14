@@ -32,7 +32,7 @@ var _slowed: bool = false
 func _enter() -> void:
 	_slowed = false
 	_suspended = gravity_suspend_time > 0.0 and not player.is_on_floor()
-	hitbox.enable(fast_time)
+	hitbox.enable()
 	sprite.speed_scale = _get_speed_scale()
 	if player.is_on_floor():
 		return
@@ -48,6 +48,7 @@ func _tick(_delta: float) -> void:
 		sprite.speed_scale = _get_speed_scale()
 		if time >= fast_time:
 			_slowed = true
+			hitbox.disable()
 			_play_slow_spin()
 	
 	if _suspended and time >= gravity_suspend_time:

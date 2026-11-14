@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://c4ckavsehdmet"]
+
+[ext_resource type="Script" uid="uid://j0dnqxobuphp" path="res://game/props/cap_item/cap_item.gd" id="1_f1hss"]
+[ext_resource type="AudioStream" uid="uid://skajv0eggseb" path="res://assets/sfx/object/fludd/fludd_pickup_collect.wav" id="2_vbbr0"]
+[ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="3_8m581"]
+[ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="4_0g4h7"]
+[ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="5_eivt3"]
+[ext_resource type="Texture2D" uid="uid://dfw5o1hdp7pw6" path="res://assets/textures/item/powerups/wing_cap_spin.png" id="6_6tvh4"]
+[ext_resource type="Script" uid="uid://cb672xli6i2ns" path="res://game/entity_data/components/gravity_component.gd" id="7_0sq8g"]
+[ext_resource type="Script" uid="uid://cf0fqotw8gu4p" path="res://util/2d/entity_check_area.gd" id="8_240u4"]
+
+[sub_resource type="Resource" id="Resource_05qrn"]
+resource_name = "spin"
+script = ExtResource("4_0g4h7")
+name = &"spin"
+fps = 12.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmafp"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(0, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7pa0"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(32, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k0ao"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(64, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ourd8"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(96, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vn44q"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(128, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utrqm"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(160, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vt5sv"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(192, 0, 32, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww4cx"]
+atlas = ExtResource("6_6tvh4")
+region = Rect2(224, 0, 32, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h04ok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmafp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7pa0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k0ao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ourd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vn44q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utrqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vt5sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww4cx")
+}],
+"loop": 1,
+"name": &"spin",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ayn7"]
+size = Vector2(10, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdxhk"]
+size = Vector2(20, 16)
+
+[node name="WingCap" type="CharacterBody2D" unique_id=429314974 node_paths=PackedStringArray("sprite", "components_root")]
+collision_layer = 0
+collision_mask = 514
+script = ExtResource("1_f1hss")
+cap = &"Wing"
+collect_sfx = ExtResource("2_vbbr0")
+sprite = NodePath("Sprite")
+components_root = NodePath("Components")
+
+[node name="Sprite" type="Node2D" parent="." unique_id=411960186]
+script = ExtResource("3_8m581")
+clips = Array[ExtResource("4_0g4h7")]([SubResource("Resource_05qrn")])
+current_animation = &"spin"
+autoplay = true
+reset_animation = &"spin"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite" unique_id=924547927]
+use_parent_material = true
+texture = ExtResource("6_6tvh4")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 14)
+script = ExtResource("5_eivt3")
+frames = SubResource("SpriteFrames_h04ok")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
+
+[node name="Components" type="Node" parent="." unique_id=1108808631]
+
+[node name="GravityComponent" type="Node" parent="Components" unique_id=783558914 node_paths=PackedStringArray("entity")]
+script = ExtResource("7_0sq8g")
+strength = 4.0
+entity = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1436567235]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_8ayn7")
+one_way_collision_margin = 8.0
+
+[node name="EntityCheckArea" type="Area2D" parent="." unique_id=286343797]
+script = ExtResource("8_240u4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntityCheckArea" unique_id=374588578]
+shape = SubResource("RectangleShape2D_wdxhk")
+
+[connection signal="player_entered" from="EntityCheckArea" to="." method="_on_entity_check_area_player_entered"]

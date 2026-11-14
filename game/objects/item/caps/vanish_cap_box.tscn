@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dpsvhpr6f2c7c"]
+
+[ext_resource type="Script" uid="uid://tyu7kjo0r4x6" path="res://game/object/game_object.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cdpqvrphgoi2l" path="res://assets/textures/item/powerups/vanish_cap_box.png" id="2"]
+[ext_resource type="PackedScene" uid="uid://b8b6300pw42u0" path="res://game/props/cap_box/vanish_cap_box.tscn" id="3"]
+[ext_resource type="Script" uid="uid://dy0tps7nno80h" path="res://game/object/snapshot_view.gd" id="4"]
+[ext_resource type="Script" uid="uid://doxs57rilwfdg" path="res://game/object/respawnable_component.gd" id="respawnable"]
+
+[sub_resource type="AtlasTexture" id="IconAtlas"]
+atlas = ExtResource("2")
+region = Rect2(-11, -11, 48, 48)
+
+[node name="VanishCapBox" type="Node2D" unique_id=1086677088 node_paths=PackedStringArray("game_root", "editor_root")]
+script = ExtResource("1")
+id = &"vanish_cap_box"
+display_name = "Vanish Cap Box"
+icon = SubResource("IconAtlas")
+category = &"Item"
+group = &"Caps"
+order = 70
+game_root = NodePath("Game")
+editor_root = NodePath("Editor")
+
+[node name="Game" parent="." unique_id=410553589 instance=ExtResource("3")]
+
+[node name="Respawnable" type="Node" parent="Game" unique_id=1165920037]
+script = ExtResource("respawnable")
+
+[node name="Editor" type="Node2D" parent="." unique_id=352527773 node_paths=PackedStringArray("source")]
+script = ExtResource("4")
+source = NodePath("../Game")
+prefer_icon = false

@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dxweu4co5jpak"]
+
+[ext_resource type="Script" uid="uid://tyu7kjo0r4x6" path="res://game/object/game_object.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://dphvmmr5scn2p" path="res://assets/textures/item/powerups/wing_cap_box.png" id="2"]
+[ext_resource type="PackedScene" path="res://game/props/cap_box/wing_cap_box.tscn" id="3"]
+[ext_resource type="Script" uid="uid://dy0tps7nno80h" path="res://game/object/snapshot_view.gd" id="4"]
+[ext_resource type="Script" uid="uid://doxs57rilwfdg" path="res://game/object/respawnable_component.gd" id="respawnable"]
+
+[sub_resource type="AtlasTexture" id="IconAtlas"]
+atlas = ExtResource("2")
+region = Rect2(-11, -11, 48, 48)
+
+[node name="WingCapBox" type="Node2D" unique_id=211602255 node_paths=PackedStringArray("game_root", "editor_root")]
+script = ExtResource("1")
+id = &"wing_cap_box"
+display_name = "Wing Cap Box"
+icon = SubResource("IconAtlas")
+category = &"Item"
+group = &"Caps"
+order = 50
+game_root = NodePath("Game")
+editor_root = NodePath("Editor")
+
+[node name="Game" parent="." unique_id=1046071384 instance=ExtResource("3")]
+
+[node name="Respawnable" type="Node" parent="Game" unique_id=925983330]
+script = ExtResource("respawnable")
+
+[node name="Editor" type="Node2D" parent="." unique_id=221901218 node_paths=PackedStringArray("source")]
+script = ExtResource("4")
+source = NodePath("../Game")
+prefer_icon = false

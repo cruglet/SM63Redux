@@ -1,0 +1,130 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/props/cap_item/cap_item.gd" id="1_7msos"]
+[ext_resource type="AudioStream" path="res://assets/sfx/object/fludd/fludd_pickup_collect.wav" id="2_lhfoe"]
+[ext_resource type="Script" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="3_mbg2h"]
+[ext_resource type="Script" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="4_uneq4"]
+[ext_resource type="Script" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="5_8h03w"]
+[ext_resource type="Texture2D" path="res://assets/textures/item/powerups/metal_cap_spin.png" id="6_cpsvh"]
+[ext_resource type="Script" path="res://game/entity_data/components/gravity_component.gd" id="7_rnu8e"]
+[ext_resource type="Script" path="res://util/2d/entity_check_area.gd" id="8_rgc2h"]
+[ext_resource type="Material" path="res://game/props/cap_item/metal_effect.tres" id="effect"]
+
+[sub_resource type="Resource" id="Resource_7k2cy"]
+resource_name = "spin"
+script = ExtResource("4_uneq4")
+name = &"spin"
+fps = 12.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d6ns"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(0, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2rxo"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(18, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6gfw"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(36, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5w1lh"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(54, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cuvoo"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(72, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21h4n"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(90, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_watop"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(108, 0, 18, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vpq2"]
+atlas = ExtResource("6_cpsvh")
+region = Rect2(126, 0, 18, 13)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x5vtg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d6ns")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2rxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6gfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5w1lh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cuvoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21h4n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_watop")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vpq2")
+}],
+"loop": 1,
+"name": &"spin",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fytqd"]
+size = Vector2(10, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ggtv2"]
+size = Vector2(20, 15)
+
+[node name="MetalCap" type="CharacterBody2D" unique_id=452084446 node_paths=PackedStringArray("sprite", "components_root")]
+collision_layer = 0
+collision_mask = 514
+script = ExtResource("1_7msos")
+cap = &"Metal"
+collect_sfx = ExtResource("2_lhfoe")
+sprite = NodePath("Sprite")
+components_root = NodePath("Components")
+
+[node name="Sprite" type="Node2D" parent="." unique_id=547135883]
+material = ExtResource("effect")
+script = ExtResource("3_mbg2h")
+clips = Array[ExtResource("4_uneq4")]([SubResource("Resource_7k2cy")])
+current_animation = &"spin"
+autoplay = true
+reset_animation = &"spin"
+metadata/_custom_type_script = "uid://0d7qjje8ik6b"
+
+[node name="Layer" type="Sprite2D" parent="Sprite" unique_id=1876664695]
+use_parent_material = true
+script = ExtResource("5_8h03w")
+frames = SubResource("SpriteFrames_x5vtg")
+metadata/_custom_type_script = "uid://y3tuooioal0x"
+
+[node name="Components" type="Node" parent="." unique_id=1824837424]
+
+[node name="GravityComponent" type="Node" parent="Components" unique_id=1985758318 node_paths=PackedStringArray("entity")]
+script = ExtResource("7_rnu8e")
+entity = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1093517298]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_fytqd")
+one_way_collision_margin = 8.0
+
+[node name="EntityCheckArea" type="Area2D" parent="." unique_id=1317202302]
+script = ExtResource("8_rgc2h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntityCheckArea" unique_id=944623179]
+shape = SubResource("RectangleShape2D_ggtv2")
+
+[connection signal="player_entered" from="EntityCheckArea" to="." method="_on_entity_check_area_player_entered"]

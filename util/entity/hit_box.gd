@@ -41,6 +41,8 @@ var override_disable_on_hit: bool = false
 @export var override_disable_target: HurtBoxComponent.DisableTarget = \
 		HurtBoxComponent.DisableTarget.HURTBOX
 
+var _toggle_count: int = 0
+
 
 func _init() -> void:
 	collision_layer = 1 << 4
@@ -69,6 +71,8 @@ func is_valid() -> bool:
 
 
 func enable(time: float = 0.0) -> void:
+	_toggle_count += 1
+	var toggle: int = _toggle_count
 	for c: Node in get_children():
 		if c is CollisionShape2D or c is CollisionPolygon2D:
 			c.set_deferred(&"disabled", false)
@@ -76,10 +80,12 @@ func enable(time: float = 0.0) -> void:
 	
 	if time:
 		await get_tree().create_timer(time).timeout
-		disable()
+		if toggle == _toggle_count:
+			disable()
 
 
 func disable() -> void:
+	_toggle_count += 1
 	for c: Node in get_children():
 		if c is CollisionShape2D or c is CollisionPolygon2D:
 			c.set_deferred(&"disabled", true)

@@ -9,3 +9,4 @@ var entry: ObjectRegistry.Entry
 func setup(object_entry: ObjectRegistry.Entry) -> void:
 	entry = object_entry
 	preview.texture = entry.get_icon()
+	preview.material = entry.icon_material

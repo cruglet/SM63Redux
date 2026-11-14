@@ -17,6 +17,7 @@ const TOPLINE_TOLERANCE: float = 4.0
 ## friction modifiers.
 @export_custom(PROPERTY_HINT_NONE, "suffix:s")
 var floor_friction_halflife: float = 0.1482
+@export_flags_2d_physics var water_surface_layers: int = 8192
 @export_group("Turbo Strike")
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var turbo_strike_min_speed: float = 300.0
@@ -356,7 +357,36 @@ func is_moving_against_facing() -> bool:
 
 
 func is_crouching() -> bool:
-	return controls.is_held(&"crouch") and is_on_floor()
+	return controls.is_held(&"crouch") and can_crouch()
+
+
+func can_crouch() -> bool:
+	return is_on_floor() and not is_on_water_surface()
+
+
+func set_water_surface_solid(solid: bool) -> void:
+	if solid:
+		collision_mask |= water_surface_layers
+		floor_raycast.collision_mask |= water_surface_layers
+	else:
+		collision_mask &= ~water_surface_layers
+		floor_raycast.collision_mask &= ~water_surface_layers
+
+
+func is_on_water_surface() -> bool:
+	if not is_on_floor():
+		return false
+	
+	var below: CollisionObject2D = floor_raycast.get_collider() as CollisionObject2D
+	if below and below.collision_layer & water_surface_layers:
+		return true
+	
+	for i: int in get_slide_collision_count():
+		var body: CollisionObject2D = get_slide_collision(i).get_collider() as CollisionObject2D
+		if body and body.collision_layer & water_surface_layers:
+			return true
+	
+	return false
 
 
 func can_chain_jumps() -> bool:

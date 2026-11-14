@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/object/game_object.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/textures/item/powerups/rainbow_star.png" id="2"]
+[ext_resource type="PackedScene" path="res://game/props/cap_item/rainbow_star.tscn" id="3"]
+[ext_resource type="Script" path="res://game/object/snapshot_view.gd" id="4"]
+[ext_resource type="Material" path="res://game/props/cap_item/rainbow_effect.tres" id="5"]
+
+[sub_resource type="AtlasTexture" id="IconAtlas"]
+atlas = ExtResource("2")
+region = Rect2(-13, -13, 48, 48)
+
+[node name="RainbowStar" type="Node2D" node_paths=PackedStringArray("game_root", "editor_root")]
+script = ExtResource("1")
+id = &"rainbow_star"
+display_name = "Rainbow Star"
+category = &"Item"
+group = &"Caps"
+order = 40
+flags = 31
+icon = SubResource("IconAtlas")
+icon_material = ExtResource("5")
+game_root = NodePath("Game")
+editor_root = NodePath("Editor")
+
+[node name="Game" parent="." instance=ExtResource("3")]
+
+[node name="Editor" type="Node2D" parent="." node_paths=PackedStringArray("source")]
+script = ExtResource("4")
+source = NodePath("../Game")
+prefer_icon = false
+animate = true

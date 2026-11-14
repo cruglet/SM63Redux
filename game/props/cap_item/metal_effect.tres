@@ -1,0 +1,41 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cif0uyfmi3apu"]
+
+[ext_resource type="Shader" uid="uid://6bsu7mty3sss" path="res://shader/sprite_cap_effects.gdshader" id="1_shader"]
+[ext_resource type="Texture2D" uid="uid://6dyhj5gymmq2" path="res://shader/cap_effects/metal_ramp.tres" id="2_ramp"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/metal_ramp = ExtResource("2_ramp")
+shader_parameter/metal_tint = Color(0.85, 0.9, 1, 1)
+shader_parameter/metal_contrast = 1.60000001639132
+shader_parameter/metal_sheen = 0.35
+shader_parameter/metal_sheen_width = 5.0
+shader_parameter/metal_sheen_interval = 180.0
+shader_parameter/metal_sheen_speed = 60.0
+shader_parameter/metal_sheen_slant = 0.6
+shader_parameter/invisible_tint = Color(0.6, 0.85, 1, 1)
+shader_parameter/invisible_tint_strength = 0.35
+shader_parameter/invisible_body_alpha = 0.7
+shader_parameter/invisible_stripe_alpha = 0.18
+shader_parameter/invisible_stripe_brightness = 0.3
+shader_parameter/invisible_stripe_spacing = 4.0
+shader_parameter/invisible_stripe_speed = 12.0
+shader_parameter/metal_accent = Color(0.61, 0.74, 1, 1)
+shader_parameter/metal_accent_strength = 0.3
+shader_parameter/metal_rim = 0.75
+shader_parameter/metal_light_direction = Vector2(-1, -1)
+shader_parameter/invisible_edge_color = Color(0.88, 0.96, 1, 1)
+shader_parameter/invisible_edge_alpha = 0.7
+shader_parameter/invisible_fringe_warm = Color(1, 0.35, 0.7, 1)
+shader_parameter/invisible_fringe_cool = Color(0.3, 0.7, 1, 1)
+shader_parameter/invisible_fringe_alpha = 0.35
+shader_parameter/invisible_fringe_offset = 1.0
+shader_parameter/rainbow_saturation = 0.85
+shader_parameter/rainbow_cycle_speed = 1.2
+shader_parameter/rainbow_spread = 0.03
+shader_parameter/rainbow_border_lightness = 0.0
+shader_parameter/metal_amount = 1.0
+shader_parameter/metal_facing = 1.0
+shader_parameter/invisible_amount = 0.0
+shader_parameter/rainbow_amount = 0.0
+shader_parameter/rainbow_border_enabled = false
