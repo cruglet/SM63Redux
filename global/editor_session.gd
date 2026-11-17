@@ -3,6 +3,8 @@ extends RefCounted
 
 var level: LevelData
 var area_uuid: StringName
+var spawn_uuid: StringName
+var ghost: GhostTrail
 var _held: Node
 
 

@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://d3e3c2uxp1rug" path="res://assets/textures/level_designer/ui_icons/front.svg" id="13_r"]
 [ext_resource type="Texture2D" uid="uid://cosmmki8kuy3b" path="res://assets/textures/level_designer/ui_icons/back.svg" id="14_r"]
 [ext_resource type="Texture2D" uid="uid://h1c6arheylxs" path="res://assets/textures/level_designer/ui_icons/delete.svg" id="15_r"]
+[ext_resource type="Texture2D" uid="uid://cdf06k1irrjl7" path="res://assets/textures/level_designer/ui_icons/ghost.svg" id="ghost_r"]
 [ext_resource type="Texture2D" uid="uid://dupps81nqleq" path="res://assets/textures/level_designer/ui_icons/prev.svg" id="16_r"]
 [ext_resource type="Texture2D" uid="uid://dc3oaou1gm27a" path="res://assets/textures/level_designer/ui_icons/next.svg" id="17_r"]
 [ext_resource type="Texture2D" uid="uid://chn4l2chy35bf" path="res://assets/textures/level_designer/ui_icons/reset_cam.svg" id="18_r"]
@@ -266,6 +267,41 @@ offset_bottom = 80.0
 grow_horizontal = 0
 alignment = 2
 
+[node name="SpawnBar" type="PanelContainer" parent="LayerVisualsHBox" unique_id=830720101]
+layout_mode = 2
+mouse_filter = 1
+metadata/gdss_classes = PackedStringArray("Bar")
+
+[node name="SpawnNav" type="HBoxContainer" parent="LayerVisualsHBox/SpawnBar" unique_id=830720102]
+layout_mode = 2
+
+[node name="PrevSpawn" type="Button" parent="LayerVisualsHBox/SpawnBar/SpawnNav" unique_id=830720103]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("16_r")
+expand_icon = true
+metadata/tooltip = "Previous Debug Spawn"
+metadata/tooltip_mode = 3
+metadata/gdss_classes = PackedStringArray("IconButton")
+
+[node name="SpawnName" type="Label" parent="LayerVisualsHBox/SpawnBar/SpawnNav" unique_id=830720104]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("22_jqau8")
+text = "Player Start"
+horizontal_alignment = 1
+
+[node name="NextSpawn" type="Button" parent="LayerVisualsHBox/SpawnBar/SpawnNav" unique_id=830720105]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("17_r")
+expand_icon = true
+metadata/tooltip = "Next Debug Spawn"
+metadata/tooltip_mode = 3
+metadata/gdss_classes = PackedStringArray("IconButton")
+
 [node name="LayerBar" type="PanelContainer" parent="LayerVisualsHBox" unique_id=830720014]
 layout_mode = 2
 mouse_filter = 1
@@ -343,6 +379,17 @@ button_pressed = true
 icon = ExtResource("grid_r")
 expand_icon = true
 metadata/tooltip = "Show Grid"
+metadata/tooltip_mode = 3
+metadata/gdss_classes = PackedStringArray("ViewportToggle")
+
+[node name="GhostButton" type="Button" parent="LayerVisualsHBox" unique_id=685225946]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+icon = ExtResource("ghost_r")
+expand_icon = true
+metadata/tooltip = "Show Player Ghost"
 metadata/tooltip_mode = 3
 metadata/gdss_classes = PackedStringArray("ViewportToggle")
 

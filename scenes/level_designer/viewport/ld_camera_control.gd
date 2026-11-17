@@ -104,7 +104,8 @@ func zoom_at(factor: float, screen_position: Vector2) -> void:
 
 
 func reset() -> void:
-	glide_to(_home(editor.level_handler.active_area), 1.0)
+	var spawn: GameObject = editor.level_handler.get_active_spawn()
+	glide_to(spawn.global_position if spawn else _home(editor.level_handler.active_area), 1.0)
 
 
 func depart() -> void:

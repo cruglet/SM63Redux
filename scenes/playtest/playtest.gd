@@ -18,6 +18,7 @@ func _ready() -> void:
 	level.exit_requested.connect(return_to_editor)
 	var session: EditorSession = Singleton.editor_session
 	if session.level:
+		level.spawn_override = session.spawn_uuid
 		level.load_data(session.level, session.area_uuid)
 
 

@@ -1,6 +1,8 @@
 class_name LD
 extends Node
 
+signal resumed
+
 const TITLE_SCREEN: String = "uid://dp3ocrpop234v"
 const ACTIVE_CLASS: String = "Active"
 const STATE_UPDATES_PER_FRAME: int = 1
@@ -82,6 +84,7 @@ func set_suspended(suspended: bool) -> void:
 	if not suspended:
 		_shown.clear()
 		camera.make_current()
+		resumed.emit()
 
 
 func accepts_shortcuts() -> bool:

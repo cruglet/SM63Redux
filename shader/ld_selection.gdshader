@@ -1,6 +1,7 @@
 shader_type canvas_item;
 
 uniform int state : hint_range(0, 2) = 0;
+uniform bool overlay = false;
 instance uniform int palette_index : hint_range(0, 16) = 0;
 uniform sampler2D palette_texture : filter_nearest, repeat_disable;
 uniform float outline_width : hint_range(0.0, 10.0) = 1.0;
@@ -42,16 +43,25 @@ vec3 swap_palette(vec3 rgb) {
 	return result;
 }
 
+vec4 tint(vec4 color, vec3 rgb, float amount, float fade) {
+	if (overlay) {
+		return vec4(rgb, amount * fade);
+	}
+	
+	return vec4(mix(color.rgb, rgb, amount), color.a);
+}
+
 void fragment() {
 	vec4 tex = texture(TEXTURE, UV);
-	vec4 color = vec4(swap_palette(tex.rgb), tex.a) * vertex_color;
+	vec4 color = overlay ? vec4(0.0) : vec4(swap_palette(tex.rgb), tex.a) * vertex_color;
 	if (state == 1) {
 		if (tex.a > 0.1) {
 			float wave = sin(TIME * hover_pulse_speed * TAU) * 0.5 + 0.5;
-			color.rgb = mix(
-				color.rgb,
+			color = tint(
+				color,
 				hover_tint.rgb,
-				mix(hover_tint_min, hover_tint_max, wave)
+				mix(hover_tint_min, hover_tint_max, wave),
+				vertex_color.a
 			);
 		}
 	} else if (state == 2) {
@@ -83,11 +93,7 @@ void fragment() {
 				selected_outline.a * pulse * vertex_color.a
 			);
 		} else if (inside) {
-			color.rgb = mix(
-				color.rgb,
-				selected_fill.rgb,
-				selected_fill.a * pulse
-			);
+			color = tint(color, selected_fill.rgb, selected_fill.a * pulse, vertex_color.a);
 		}
 	}
 	COLOR = color;

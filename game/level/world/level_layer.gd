@@ -142,6 +142,10 @@ func get_objects_root() -> Node2D:
 	return _objects_root
 
 
+func add_overlay(overlay: Node2D) -> void:
+	_parallax.add_child(overlay)
+
+
 func get_objects() -> Array[GameObject]:
 	var objects: Array[GameObject] = []
 	for child: Node in _objects_root.get_children():

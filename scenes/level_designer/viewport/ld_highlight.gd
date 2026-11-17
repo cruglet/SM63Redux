@@ -9,10 +9,13 @@ enum HighlightState {
 
 const SHADER: Shader = preload("res://shader/ld_selection.gdshader")
 const ORIGINAL: StringName = &"ld_original_material"
+const IS_OVERLAY: StringName = &"ld_is_highlight_overlay"
 
 var hovered: GameObject
 var _states: Dictionary = {}
 var _materials: Dictionary[HighlightState, ShaderMaterial] = {}
+var _overlay_materials: Dictionary[HighlightState, ShaderMaterial] = {}
+var _overlays: Dictionary = {}
 var _hover_dirty: bool = true
 
 
@@ -23,6 +26,8 @@ static func has_texture_visuals(object: GameObject) -> bool:
 static func _collect(root: Node) -> Array[CanvasItem]:
 	var items: Array[CanvasItem] = []
 	for child: Node in root.get_children():
+		if child.has_meta(IS_OVERLAY):
+			continue
 		if child is CanvasItem and not (child as CanvasItem).visible:
 			continue
 		
@@ -47,6 +52,7 @@ static func _is_textured(node: Node) -> bool:
 
 
 func _process(_delta: float) -> void:
+	_sync_overlays()
 	if not _hover_dirty:
 		return
 	
@@ -62,6 +68,7 @@ func _process(_delta: float) -> void:
 func _setup() -> void:
 	for state: HighlightState in [HighlightState.HOVERED, HighlightState.SELECTED]:
 		_materials[state] = _make_material(state, null)
+		_overlay_materials[state] = _make_material(state, null, true)
 	editor.object_handler.selection.changed.connect(_sync)
 	editor.object_handler.objects_changed.connect(_on_objects_changed)
 	editor.tool_handler.tool_changed.connect(_mark_hover.unbind(1))
@@ -76,6 +83,12 @@ func get_state(object: GameObject) -> HighlightState:
 func _hover_allowed() -> bool:
 	var input_surface: Control = editor.viewport_handler.input_surface
 	if not input_surface.get_global_rect().has_point(input_surface.get_global_mouse_position()):
+		return false
+	
+	var under_mouse: Control = input_surface.get_viewport().gui_get_hovered_control()
+	if not under_mouse:
+		return false
+	if under_mouse != input_surface and not input_surface.is_ancestor_of(under_mouse):
 		return false
 	
 	var tool: LDTool = editor.tool_handler.active_tool
@@ -126,6 +139,10 @@ func _apply(object: GameObject, state: HighlightState) -> void:
 		return
 	
 	for item: CanvasItem in _collect(object):
+		if item is Sprite2D:
+			_apply_overlay(item as Sprite2D, state)
+			continue
+		
 		if state == HighlightState.NONE:
 			if item.has_meta(ORIGINAL):
 				item.material = item.get_meta(ORIGINAL)
@@ -141,10 +158,53 @@ func _apply(object: GameObject, state: HighlightState) -> void:
 			item.material = _materials[state]
 
 
-func _make_material(state: HighlightState, palette_source: ShaderMaterial) -> ShaderMaterial:
+func _apply_overlay(sprite: Sprite2D, state: HighlightState) -> void:
+	var overlay: Sprite2D = _overlays.get(sprite)
+	if state == HighlightState.NONE:
+		if overlay:
+			overlay.queue_free()
+			_overlays.erase(sprite)
+		return
+	
+	if not overlay:
+		overlay = Sprite2D.new()
+		overlay.set_meta(IS_OVERLAY, true)
+		_copy_frame(sprite, overlay)
+		sprite.add_child(overlay)
+		_overlays[sprite] = overlay
+	overlay.material = _overlay_materials[state]
+
+
+func _sync_overlays() -> void:
+	for key: Variant in _overlays.keys():
+		if is_instance_valid(key):
+			_copy_frame(key, _overlays[key])
+		else:
+			_overlays.erase(key)
+
+
+func _copy_frame(sprite: Sprite2D, overlay: Sprite2D) -> void:
+	overlay.texture = sprite.texture
+	overlay.centered = sprite.centered
+	overlay.offset = sprite.offset
+	overlay.flip_h = sprite.flip_h
+	overlay.flip_v = sprite.flip_v
+	overlay.hframes = sprite.hframes
+	overlay.vframes = sprite.vframes
+	overlay.frame = sprite.frame
+	overlay.region_enabled = sprite.region_enabled
+	overlay.region_rect = sprite.region_rect
+
+
+func _make_material(
+		state: HighlightState,
+		palette_source: ShaderMaterial,
+		overlay: bool = false,
+) -> ShaderMaterial:
 	var material: ShaderMaterial = ShaderMaterial.new()
 	material.shader = SHADER
 	material.set_shader_parameter(&"state", state)
+	material.set_shader_parameter(&"overlay", overlay)
 	if palette_source:
 		material.set_shader_parameter(
 				&"palette_texture",

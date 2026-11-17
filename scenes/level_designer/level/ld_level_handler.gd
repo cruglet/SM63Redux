@@ -6,8 +6,11 @@ signal area_changed(area: LevelArea)
 signal layer_changed(layer: LevelLayer)
 signal structure_changed
 signal background_changed(area: LevelArea)
+signal spawn_changed
 
 const PLAYER_ID: StringName = &"player_mario"
+const SPAWN_ID: StringName = &"debug_spawn"
+const SPAWNS_KEY: String = "debug_spawns"
 const LAYER_PROPERTIES: Array[StringName] = [
 	&"layer_name",
 	&"distance",
@@ -117,6 +120,7 @@ func set_active_area(area: LevelArea) -> void:
 	area_changed.emit(area)
 	var layer: LevelLayer = area.get_layer(area.active_layer)
 	set_active_layer(layer if layer else area.get_layers().front())
+	spawn_changed.emit()
 
 
 func set_active_layer(layer: LevelLayer) -> void:
@@ -201,6 +205,44 @@ func get_selectable_objects() -> Array[GameObject]:
 			func(object: GameObject) -> bool:
 				return active_area.get_layer_of(object).is_effective_visible()
 	)
+
+
+func get_spawns(area: LevelArea = active_area) -> Array[GameObject]:
+	return area.get_all_objects().filter(
+			func(object: GameObject) -> bool: return object.id == SPAWN_ID
+	)
+
+
+func get_active_spawn(area: LevelArea = active_area) -> GameObject:
+	var spawns: Dictionary = editor_state.get(SPAWNS_KEY, {})
+	var spawn_uuid: String = spawns.get(String(area.uuid), "")
+	var object: GameObject = area.find_object(spawn_uuid) if not spawn_uuid.is_empty() else null
+	return object if object and object.id == SPAWN_ID else null
+
+
+func set_active_spawn(spawn: GameObject) -> void:
+	var spawns: Dictionary = editor_state.get_or_add(SPAWNS_KEY, {})
+	if spawn:
+		spawns[String(active_area.uuid)] = String(spawn.uuid)
+	else:
+		spawns.erase(String(active_area.uuid))
+	spawn_changed.emit()
+
+
+func step_spawn(direction: int) -> void:
+	var spawns: Array[GameObject] = get_spawns()
+	var at: int = clampi(spawns.find(get_active_spawn()) + 1 + direction, 0, spawns.size())
+	set_active_spawn(spawns[at - 1] if at > 0 else null)
+
+
+func get_spawn_label(spawn: GameObject) -> String:
+	if spawn == null:
+		return "Player Start"
+	
+	var spawn_name: String = spawn.get_value(&"spawn_name")
+	if not spawn_name.is_empty():
+		return spawn_name
+	return "Spawn %d" % (get_spawns().find(spawn) + 1)
 
 
 func get_anchor_layer(area: LevelArea = active_area) -> LevelLayer:

@@ -14,6 +14,7 @@ enum Context {
 }
 
 const ATTACH_BATCH: int = 64
+const DEBUG_SPAWN_ID: StringName = &"debug_spawn"
 
 @export var world: Node2D
 @export var culler: LevelCuller
@@ -24,6 +25,7 @@ const ATTACH_BATCH: int = 64
 @export var background: LevelBackground
 @export var context: Context = Context.CAMPAIGN
 
+var spawn_override: StringName = &""
 var _data: LevelData
 var _area: LevelArea
 var _area_data: AreaData
@@ -33,6 +35,7 @@ var _coins: Dictionary[StringName, Dictionary] = {}
 var _pending: Array[GameObject] = []
 var _pending_layers: Array[LevelLayer] = []
 var _world_frozen: bool = false
+var _debug_spawns: Dictionary[StringName, Vector2] = {}
 
 
 static func of(node: Node) -> Level:
@@ -118,8 +121,15 @@ func prepare(data: LevelData, area_uuid: StringName = &"") -> void:
 	_area = LevelArea.build(_area_data, GameObject.Context.GAME)
 	_pending.clear()
 	_pending_layers.clear()
+	_debug_spawns.clear()
 	for layer: LevelLayer in _area.get_layers():
 		for object: GameObject in layer.get_objects():
+			if object.id == DEBUG_SPAWN_ID:
+				_debug_spawns[object.uuid] = object.position
+				layer.remove_object(object)
+				object.free()
+				continue
+			
 			layer.get_objects_root().remove_child(object)
 			_pending.append(object)
 			_pending_layers.append(layer)
@@ -144,6 +154,7 @@ func attach(batch: int = ATTACH_BATCH) -> void:
 			_track(object)
 	
 	if _player:
+		_apply_spawn_override()
 		_bind_player()
 	
 	loaded.emit()
@@ -218,6 +229,11 @@ func _track(object: GameObject) -> void:
 	
 	if object.game_root is Node2D:
 		culler.track(object.game_root)
+
+
+func _apply_spawn_override() -> void:
+	if _debug_spawns.has(spawn_override):
+		_player.object.position = _debug_spawns[spawn_override]
 
 
 func _bind_player() -> void:

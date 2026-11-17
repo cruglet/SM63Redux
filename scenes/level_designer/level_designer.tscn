@@ -29,6 +29,7 @@
 [ext_resource type="Script" path="res://scenes/level_designer/level/ld_layer_panel.gd" id="13_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/level/ld_area_panel.gd" id="14_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/level/ld_layer_navigation.gd" id="15_r"]
+[ext_resource type="Script" uid="uid://chun1s0uvd80q" path="res://scenes/level_designer/level/ld_spawn_navigation.gd" id="spawn_nav"]
 [ext_resource type="Script" path="res://scenes/level_designer/object/ld_object_handler.gd" id="16_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/object/ld_selection.gd" id="17_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/object/ld_clipboard.gd" id="18_r"]
@@ -61,6 +62,7 @@
 [ext_resource type="Script" path="res://scenes/level_designer/file/ld_file_handler.gd" id="45_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/file/ld_autosave.gd" id="46_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/playtest/ld_playtest_handler.gd" id="47_r"]
+[ext_resource type="Script" uid="uid://ck81ve7ygphjg" path="res://scenes/level_designer/playtest/ld_player_ghost.gd" id="player_ghost"]
 [ext_resource type="Script" path="res://scenes/level_designer/interface/ld_interface_handler.gd" id="48_r"]
 [ext_resource type="Script" path="res://scenes/level_designer/interface/ld_settings_panel.gd" id="49_r"]
 [ext_resource type="Resource" path="res://scenes/level_designer/tool/widget/styles/vertex.tres" id="x1"]
@@ -282,6 +284,12 @@ script = ExtResource("15_r")
 previous_button = NodePath("../../Interface/HUD/LayerVisualsHBox/LayerBar/LayerNav/PrevLayer")
 next_button = NodePath("../../Interface/HUD/LayerVisualsHBox/LayerBar/LayerNav/NextLayer")
 layer_label = NodePath("../../Interface/HUD/LayerVisualsHBox/LayerBar/LayerNav/LayerName")
+
+[node name="SpawnNavigation" type="Node" parent="LevelHandler" node_paths=PackedStringArray("previous_button", "next_button", "spawn_label")]
+script = ExtResource("spawn_nav")
+previous_button = NodePath("../../Interface/HUD/LayerVisualsHBox/SpawnBar/SpawnNav/PrevSpawn")
+next_button = NodePath("../../Interface/HUD/LayerVisualsHBox/SpawnBar/SpawnNav/NextSpawn")
+spawn_label = NodePath("../../Interface/HUD/LayerVisualsHBox/SpawnBar/SpawnNav/SpawnName")
 
 [node name="ObjectHandler" type="Node" parent="." node_paths=PackedStringArray("selection", "clipboard", "browser", "inspector", "text_editor")]
 script = ExtResource("16_r")
@@ -585,6 +593,10 @@ autostart = true
 [node name="PlaytestHandler" type="Node" parent="." node_paths=PackedStringArray("playtest_button")]
 script = ExtResource("47_r")
 playtest_button = NodePath("../Interface/HUD/TestButton")
+
+[node name="PlayerGhost" type="Node" parent="PlaytestHandler" node_paths=PackedStringArray("toggle_button")]
+script = ExtResource("player_ghost")
+toggle_button = NodePath("../../Interface/HUD/LayerVisualsHBox/GhostButton")
 
 [node name="InterfaceHandler" type="Node" parent="." node_paths=PackedStringArray("hud", "window")]
 script = ExtResource("48_r")

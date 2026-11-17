@@ -41,6 +41,8 @@ func _enter_playtest() -> void:
 	var session: EditorSession = Singleton.editor_session
 	session.level = editor.level_handler.capture()
 	session.area_uuid = editor.level_handler.active_area.uuid
+	var spawn: GameObject = editor.level_handler.get_active_spawn()
+	session.spawn_uuid = spawn.uuid if spawn else &""
 	editor.file_handler.autosave.save_now()
 	GDSS.clear_state(playtest_button)
 	playtest_button.release_focus()

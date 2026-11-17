@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bxvc5b2qfwmxl"
-path="res://.godot/imported/ld_preview.png-b8abc30d7c40739cff0d365d2e5d938d.ctex"
+path="res://.godot/imported/spawnpoint.png-059e72eb6249defd72a12da13a32d3fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/entity/player/mario/ld_preview.png"
-dest_files=["res://.godot/imported/ld_preview.png-b8abc30d7c40739cff0d365d2e5d938d.ctex"]
+source_file="res://assets/textures/entity/player/mario/spawnpoint.png"
+dest_files=["res://.godot/imported/spawnpoint.png-059e72eb6249defd72a12da13a32d3fa.ctex"]
 
 [params]
 

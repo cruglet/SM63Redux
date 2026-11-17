@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bi81p0acw8mn5" path="res://scenes/playtest/playtest.gd" id="1_playtest"]
 [ext_resource type="PackedScene" uid="uid://clpelpscd74y6" path="res://game/level/level.tscn" id="2_level"]
+[ext_resource type="Script" uid="uid://drqi3xfsdisx8" path="res://game/entity/player/ghost/player_ghost_recorder.gd" id="3_ghost"]
 
 [node name="Playtest" type="Node" unique_id=856723805 node_paths=PackedStringArray("level", "return_button")]
 script = ExtResource("1_playtest")
@@ -9,3 +10,7 @@ level = NodePath("Level")
 return_button = NodePath("")
 
 [node name="Level" parent="." unique_id=1100343167 instance=ExtResource("2_level")]
+
+[node name="GhostRecorder" type="Node" parent="." unique_id=856723806 node_paths=PackedStringArray("level")]
+script = ExtResource("3_ghost")
+level = NodePath("../Level")

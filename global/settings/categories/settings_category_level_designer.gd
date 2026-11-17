@@ -10,6 +10,7 @@ const OFF: String = "Off"
 @export var tooltip_delay: SettingsTypeFloat
 @export var editor_music: SettingsTypeList
 @export var loop_music: SettingsTypeBoolean
+@export var player_ghost_length: SettingsTypeFloat
 
 
 func _ready() -> void:
