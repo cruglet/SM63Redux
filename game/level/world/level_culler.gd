@@ -5,6 +5,7 @@ extends Node
 @export var frames_between_updates: int = 4
 
 var _objects: Array[Node2D] = []
+var _visuals: Dictionary[GameObject, bool] = {}
 var _frame: int = 0
 
 
@@ -26,6 +27,12 @@ func _physics_process(_delta: float) -> void:
 	
 	if living.size() != _objects.size():
 		_objects = living
+	
+	for object: GameObject in _visuals.keys():
+		var culled: bool = not view.intersects(_canvas_bounds(object))
+		if culled != _visuals.get(object):
+			_visuals.set(object, culled)
+			_apply_culled(object, culled)
 
 
 func track(object: Node2D) -> void:
@@ -37,6 +44,31 @@ func track(object: Node2D) -> void:
 	_objects.append(object)
 	for collider: CollisionObject2D in colliders:
 		collider.disable_mode = CollisionObject2D.DISABLE_MODE_KEEP_ACTIVE
+
+
+func track_visuals(object: GameObject) -> void:
+	if _visuals.has(object):
+		return
+	
+	_visuals.set(object, false)
+	object.tree_exiting.connect(_release.bind(object), CONNECT_ONE_SHOT)
+
+
+func _release(object: GameObject) -> void:
+	_apply_culled(object, false)
+	_visuals.erase(object)
+
+
+func _apply_culled(object: GameObject, culled: bool) -> void:
+	RenderingServer.canvas_item_set_visible(object.get_canvas_item(), object.visible and not culled)
+
+
+func _canvas_bounds(object: GameObject) -> Rect2:
+	var anchor: Node2D = object
+	if is_instance_valid(object.game_root) and object.game_root is Node2D:
+		anchor = object.game_root
+	
+	return anchor.get_global_transform_with_canvas() * object.get_local_bounds()
 
 
 func _visible_world_rect() -> Rect2:

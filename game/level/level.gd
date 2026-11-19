@@ -219,8 +219,12 @@ func _set_counter(kind: StringName, group: StringName, counter: Vector2i) -> voi
 
 
 func _track(object: GameObject) -> void:
+	if not object.cullable:
+		return
+	
+	culler.track_visuals(object)
 	var entity: Entity = object.game_root as Entity
-	if not object.cullable or entity and not entity.cull_when_offscreen:
+	if entity and not entity.cull_when_offscreen:
 		return
 	
 	var layer: LevelLayer = _area.get_layer_of(object)
@@ -266,7 +270,6 @@ func _renders_silhouette(layer: LevelLayer) -> bool:
 
 func _attach_silhouette(object: GameObject) -> void:
 	for occluder: CanvasItem in object.get_occluders():
-		occluder.clip_children = CanvasItem.CLIP_CHILDREN_AND_DRAW
 		var view: SilhouetteView = SilhouetteView.new()
 		view.source = silhouette_source
 		view.material = silhouette_material
