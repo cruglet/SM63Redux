@@ -38,6 +38,9 @@
 [ext_resource type="Script" uid="uid://0d7qjje8ik6b" path="res://addons/redux_dev/rig_2d/sprite_rig_2d.gd" id="rig_2d"]
 [ext_resource type="Script" uid="uid://br632xljl6s8f" path="res://addons/redux_dev/rig_2d/rig_clip.gd" id="rig_clip"]
 [ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
+[ext_resource type="Script" path="res://game/hud/shine_get_banner.gd" id="shine_banner"]
+[ext_resource type="FontFile" uid="uid://c4fspc7t5o2ac" path="res://assets/font/hud/pixel_sm64r.fnt" id="font_sm64r"]
+[ext_resource type="FontFile" uid="uid://ckb5oju85qb65" path="res://assets/font/hud/pixel_sm64r_white.fnt" id="font_sm64r_white"]
 
 [sub_resource type="Texture2D" id="ClippingTexture2D_wing"]
 script = ExtResource("22_e6gmi")
@@ -402,7 +405,7 @@ name = &"heal"
 fps = 13.0
 loop = false
 
-[node name="PlayerHUD" type="CanvasLayer" unique_id=1932105440 node_paths=PackedStringArray("health_meter", "fludd_meter", "coin_counters")]
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1932105440 node_paths=PackedStringArray("health_meter", "fludd_meter", "coin_counters", "shine_banner")]
 script = ExtResource("1_reblr")
 health_meter = NodePath("HealthContainer")
 fludd_meter = NodePath("FLUDDContainer")
@@ -411,6 +414,7 @@ coin_counters = {
 &"red": NodePath("CollectibleContainer/VBoxContainer/RedCoinContainer"),
 &"yellow": NodePath("CollectibleContainer/VBoxContainer/YellowCoinContainer")
 }
+shine_banner = NodePath("ShineGetBanner")
 
 [node name="CollectibleContainer" type="Control" parent="." unique_id=1142767291]
 layout_mode = 3
@@ -885,3 +889,16 @@ grow_horizontal = 2
 
 [node name="FluddNozzleIcon" type="AnimatedSprite2D" parent="FLUDDContainer/Tank/Control" unique_id=381679037]
 sprite_frames = SubResource("SpriteFrames_nygxd")
+
+[node name="ShineGetBanner" type="Control" parent="." unique_id=1932105441]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("shine_banner")
+font = ExtResource("font_sm64r")
+title_font = ExtResource("font_sm64r_white")

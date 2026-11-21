@@ -189,11 +189,12 @@ resource_name = "spin"
 name = &"spin"
 fps = 8.0
 
-[node name="ShineSprite" type="Node2D" unique_id=1870793460 node_paths=PackedStringArray("sprite", "sfx_player", "particle_emitter")]
+[node name="ShineSprite" type="Node2D" unique_id=1870793460 node_paths=PackedStringArray("sprite", "sfx_player", "particle_emitter", "light")]
 script = ExtResource("1_22unf")
 sprite = NodePath("Sprite")
 sfx_player = NodePath("AudioStreamPlayer2D")
 particle_emitter = NodePath("ParticleEmitter")
+light = NodePath("Sprite/PointLight2D")
 
 [node name="ParticleEmitter" type="CPUParticles2D" parent="." unique_id=1636801736]
 show_behind_parent = true

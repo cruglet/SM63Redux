@@ -1,7 +1,7 @@
 extends Node
 
 const LEVEL_DESIGNER: String = "uid://b6ofp5p155oy2"
-const KICKOUT_DELAY: float = 2.0
+const KICKOUT_DELAY: float = 0.5
 const RELEASE_DELAY: float = 0.08
 const LAUNCHED_STATE: String = "launched"
 

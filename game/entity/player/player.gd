@@ -194,8 +194,9 @@ func get_debug_text() -> String:
 	return text
 
 
-func celebrate_shine(kickout: bool) -> void:
+func celebrate_shine(kickout: bool, shine: Node2D = null) -> void:
 	shine_get.kickout = kickout
+	shine_get.shine = shine
 	machine.change_state(&"ShineGet")
 
 

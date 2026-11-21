@@ -52,6 +52,10 @@ var _limit_max: Vector2 = Vector2.INF
 var _stopper: CharacterBody2D
 var _view_box: RectangleShape2D
 var _target_zoom: float = 0.0
+var _smoothed_zoom: float = 1.0
+var _zoom_scale: float = 1.0
+var _pan: Vector2 = Vector2.ZERO
+var _zoom_tween: Tween
 var _shake_strength: float = 0.0
 var _shake_duration: float = 0.0
 var _shake_elapsed: float = 0.0
@@ -60,6 +64,7 @@ var _shake_elapsed: float = 0.0
 func _ready() -> void:
 	process_physics_priority = PHYSICS_PRIORITY
 	_target_zoom = zoom.x
+	_smoothed_zoom = zoom.x
 	_view_box = RectangleShape2D.new()
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	collision.shape = _view_box
@@ -73,7 +78,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	zoom = Vector2.ONE * lerpf(zoom.x, _target_zoom, 1.0 - exp(-zoom_smoothing_speed * delta))
+	_smoothed_zoom = lerpf(_smoothed_zoom, _target_zoom, 1.0 - exp(-zoom_smoothing_speed * delta))
+	zoom = Vector2.ONE * _smoothed_zoom * _zoom_scale
 	if not is_instance_valid(target):
 		return
 	
@@ -99,7 +105,7 @@ func _process(delta: float) -> void:
 			resolved.y if _blocked.y > 0.0 else _desired.y,
 	)
 	global_position = free.clamp(_limit_min, _limit_max)
-	offset = _shake_offset(delta)
+	offset = _shake_offset(delta) + _pan
 
 
 func _physics_process(_delta: float) -> void:
@@ -145,6 +151,18 @@ func follow(body: CharacterBody2D) -> void:
 	global_position = _desired
 	offset = Vector2.ZERO
 	reset_smoothing()
+
+
+func tween_view(scale: float, pan: Vector2, duration: float, curve: Curve = null) -> void:
+	if _zoom_tween:
+		_zoom_tween.kill()
+	_zoom_tween = create_tween()
+	_zoom_tween.tween_method(
+			_apply_view.bind(_zoom_scale, scale, _pan, pan, curve),
+			0.0,
+			1.0,
+			duration,
+	)
 
 
 func shake(strength: float, duration: float) -> void:
@@ -195,6 +213,19 @@ func _vertical_bias() -> float:
 		)
 	
 	return _lead.y
+
+
+func _apply_view(
+		progress: float,
+		from_scale: float,
+		to_scale: float,
+		from_pan: Vector2,
+		to_pan: Vector2,
+		curve: Curve,
+) -> void:
+	var weight: float = curve.sample(progress) if curve else progress
+	_zoom_scale = lerpf(from_scale, to_scale, weight)
+	_pan = from_pan.lerp(to_pan, weight)
 
 
 func _shake_offset(delta: float) -> Vector2:

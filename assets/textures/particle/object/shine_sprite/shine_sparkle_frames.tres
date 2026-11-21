@@ -1,0 +1,74 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dyuefsynjjf6y"]
+
+[ext_resource type="Texture2D" uid="uid://dhlplg0v0vihh" path="res://assets/textures/particle/object/shine_sprite/shine_sprite_particle.png" id="1_sparkle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_0"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(0, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_1"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(7, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_2"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(14, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_3"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(21, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_4"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(28, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_5"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(35, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_6"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(42, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_7"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(49, 0, 7, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sparkle_8"]
+atlas = ExtResource("1_sparkle")
+region = Rect2(56, 0, 7, 11)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sparkle_8")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 14.0
+}]

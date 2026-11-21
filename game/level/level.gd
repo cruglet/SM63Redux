@@ -35,6 +35,7 @@ var _coins: Dictionary[StringName, Dictionary] = {}
 var _pending: Array[GameObject] = []
 var _pending_layers: Array[LevelLayer] = []
 var _world_frozen: bool = false
+var _soft_paused: bool = false
 var _debug_spawns: Dictionary[StringName, Vector2] = {}
 
 
@@ -77,8 +78,14 @@ func collect_shine(scenario: int) -> void:
 	shine_collected.emit(scenario)
 
 
-func request_kickout() -> void:
-	kickout_requested.emit()
+func request_kickout() -> bool:
+	if not kickout_requested.get_connections().is_empty():
+		kickout_requested.emit()
+		return true
+	if can_exit():
+		request_exit()
+		return true
+	return false
 
 
 func can_retry() -> bool:
@@ -101,6 +108,16 @@ func set_world_frozen(frozen: bool) -> void:
 	_world_frozen = frozen
 	if _pending.is_empty():
 		_apply_world_frozen()
+
+
+func set_soft_paused(paused: bool) -> void:
+	_soft_paused = paused
+	if _pending.is_empty():
+		_apply_world_frozen()
+
+
+func is_soft_paused() -> bool:
+	return _soft_paused
 
 
 func is_world_frozen() -> bool:
@@ -203,7 +220,14 @@ func get_player() -> Player:
 
 
 func _apply_world_frozen() -> void:
-	world.process_mode = Node.PROCESS_MODE_DISABLED if _world_frozen else Node.PROCESS_MODE_INHERIT
+	var frozen: bool = _world_frozen or _soft_paused
+	world.process_mode = Node.PROCESS_MODE_DISABLED if frozen else Node.PROCESS_MODE_INHERIT
+	if _player:
+		_player.object.process_mode = (
+				Node.PROCESS_MODE_ALWAYS
+				if _soft_paused and not _world_frozen
+				else Node.PROCESS_MODE_INHERIT
+		)
 
 
 func _get_counter(kind: StringName, group: StringName) -> Vector2i:
