@@ -19,6 +19,7 @@ signal celebration_ended
 @export var face_animation: StringName = &"idle"
 @export_group("Jingle")
 @export var jingle_player: AudioStreamPlayer
+@export var cap_music: CapMusic
 @export var stay_jingle: AudioStream
 @export var leave_jingle: AudioStream
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var stay_duration: float = 4.2
@@ -48,6 +49,10 @@ func _enter() -> void:
 	jingle_player.stop()
 	player.lock_flipping = true
 	hurt_box.disable()
+	_set_camera_locked(true)
+	_set_pause_locked(true)
+	player.set_interactions_locked(true)
+	cap_music.process_mode = Node.PROCESS_MODE_DISABLED
 	hurt_box.stop_blink()
 	sprite.speed_scale = 1.0
 	machine.animation_player.play(&"RESET")
@@ -65,6 +70,10 @@ func _exit() -> void:
 	hurt_box.enable(invulnerable_after)
 	player.lock_flipping = false
 	sprite.speed_scale = 1.0
+	_set_camera_locked(false)
+	_set_pause_locked(false)
+	player.set_interactions_locked(false)
+	cap_music.process_mode = Node.PROCESS_MODE_INHERIT
 	controls.consume(&"jump")
 	machine.animation_player.stop()
 	if is_instance_valid(shine):
@@ -197,6 +206,18 @@ func _try_land() -> bool:
 func _get_camera() -> LevelCamera:
 	var level: Level = Level.of(player)
 	return level.camera if level else null
+
+
+func _set_camera_locked(locked: bool) -> void:
+	var camera: LevelCamera = _get_camera()
+	if camera:
+		camera.controls_locked = locked
+
+
+func _set_pause_locked(locked: bool) -> void:
+	var level: Level = Level.of(player)
+	if level:
+		level.pause_locked = locked
 
 
 func _set_soft_paused(paused: bool) -> void:

@@ -45,6 +45,8 @@ var turbo_strike_min_speed: float = 300.0
 @export var silhouette_targets: Array[Sprite2D]
 @export var ground_pound_fall: GroundPoundFallState
 @export var shine_get: ShineGetState
+@export var hitboxes: Node2D
+@export var detection_area: Area2D
 @export var base_collision: CollisionShape2D
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var squish_bounce_speed: float = 200.0
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var held_squish_bounce_speed: float = 412.5
@@ -67,6 +69,7 @@ var can_walk: bool = true
 var can_dive: bool = true
 ## Allows a ground pound to start from the air.
 var can_ground_pound: bool = true
+var interactions_locked: bool = false
 ## How many jumps of the current chain have been performed.
 var jump_chain: int = 0
 ## Time left on the ground before the jump chain resets.
@@ -81,6 +84,7 @@ var gravity_modifiers: ModifierStack = ModifierStack.new()
 var friction_modifiers: ModifierStack = ModifierStack.new()
 var debug_forces: Dictionary[StringName, Vector2] = {}
 
+var _body_layer: int = 0
 var _collision: CollisionShape2D
 
 
@@ -90,7 +94,7 @@ func _physics_process(delta: float) -> void:
 	if fludd.is_turbo_active() and is_zero_approx(move_input):
 		move_input = float(get_facing())
 	
-	caps.tick(delta)
+	caps.tick(delta, not machine.is_active(&"ShineGet"))
 	gravity_modifiers.tick(delta)
 	friction_modifiers.tick(delta)
 	machine.tick(delta)
@@ -192,6 +196,18 @@ func get_debug_text() -> String:
 	if not is_equal_approx(Singleton.debug_time.get_scale(), 1.0):
 		text += "Time: %sx\n" % Singleton.debug_time.get_scale()
 	return text
+
+
+func set_interactions_locked(locked: bool) -> void:
+	if locked == interactions_locked:
+		return
+	
+	interactions_locked = locked
+	if locked:
+		_body_layer = collision_layer
+	collision_layer = 0 if locked else _body_layer
+	hitboxes.process_mode = Node.PROCESS_MODE_DISABLED if locked else Node.PROCESS_MODE_INHERIT
+	detection_area.set_deferred(&"monitorable", not locked)
 
 
 func celebrate_shine(kickout: bool, shine: Node2D = null) -> void:

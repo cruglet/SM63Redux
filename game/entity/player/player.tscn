@@ -6999,7 +6999,7 @@ shader_parameter/thickness = 1
 shader_parameter/brightness = 1.0
 shader_parameter/fill_alpha = 0.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1740348366 node_paths=PackedStringArray("floor_raycast", "fludd", "carry", "caps", "silhouette_targets", "ground_pound_fall", "shine_get", "base_collision", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
+[node name="Player" type="CharacterBody2D" unique_id=1740348366 node_paths=PackedStringArray("floor_raycast", "fludd", "carry", "caps", "silhouette_targets", "ground_pound_fall", "shine_get", "hitboxes", "detection_area", "base_collision", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
 collision_mask = 2050
 floor_snap_length = 7.0
 script = ExtResource("1_b7m82")
@@ -7011,6 +7011,8 @@ submerged_bus_effects = Array[AudioEffect]([SubResource("AudioEffectLowPassFilte
 silhouette_targets = [NodePath("Visuals/Doll/WingBack"), NodePath("Visuals/Doll/BodyBack"), NodePath("Visuals/Doll/Fludd"), NodePath("Visuals/Doll/Legs"), NodePath("Visuals/Doll/Body"), NodePath("Visuals/Doll/WingFront"), NodePath("Visuals/Doll/FrontArm")]
 ground_pound_fall = NodePath("StateMachine/GroundPound/GroundPoundFall")
 shine_get = NodePath("StateMachine/ShineGet")
+hitboxes = NodePath("Hitboxes")
+detection_area = NodePath("Regions/DetectionShape")
 base_collision = NodePath("BaseCollision")
 splash_scene = ExtResource("water_splash")
 sprite = NodePath("Visuals/Doll")
@@ -7018,7 +7020,6 @@ components_root = NodePath("Components")
 collision_shapes = [NodePath("BaseCollision"), NodePath("GroundPoundCollision"), NodePath("DiveCollision")]
 machine = NodePath("StateMachine")
 water_check = NodePath("Regions/WaterCheck")
-step_height = 8.0
 metadata/_custom_type_script = "uid://c0jtt8j5mk6sr"
 
 [node name="SprayStream" parent="." unique_id=1268559864 node_paths=PackedStringArray("nozzle", "carrier") instance=ExtResource("spray_stream")]
@@ -7817,13 +7818,14 @@ dust = NodePath("../../../GroundPoundDust")
 impact_bank = SubResource("Resource_slam_bank")
 effects = SubResource("Resource_rylnt")
 
-[node name="ShineGet" type="Node" parent="StateMachine" unique_id=1127730842 node_paths=PackedStringArray("hurt_box", "shine_root", "shine_holder", "visuals", "jingle_player")]
+[node name="ShineGet" type="Node" parent="StateMachine" unique_id=1127730842 node_paths=PackedStringArray("hurt_box", "shine_root", "shine_holder", "visuals", "jingle_player", "cap_music")]
 script = ExtResource("state_shine_get")
 hurt_box = NodePath("../../Hitboxes/HurtBox")
 shine_root = NodePath("../../ShineRoot")
 shine_holder = NodePath("../../ShineRoot/Holder")
 visuals = NodePath("../../Visuals")
 jingle_player = NodePath("../../ShineJingle")
+cap_music = NodePath("../../CapMusic")
 stay_jingle = ExtResource("music_shine_get")
 leave_jingle = ExtResource("music_shine_get_leave")
 celebration_zoom_time = 2.4

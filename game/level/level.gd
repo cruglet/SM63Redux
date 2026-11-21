@@ -26,6 +26,7 @@ const DEBUG_SPAWN_ID: StringName = &"debug_spawn"
 @export var context: Context = Context.CAMPAIGN
 
 var spawn_override: StringName = &""
+var pause_locked: bool = false
 var _data: LevelData
 var _area: LevelArea
 var _area_data: AreaData

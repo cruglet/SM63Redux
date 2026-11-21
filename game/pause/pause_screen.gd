@@ -99,6 +99,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"pause"):
 		assert(is_instance_valid(_inst))
 		get_viewport().set_input_as_handled()
+		if not _is_open and _level and _level.pause_locked:
+			return
 		if not _is_open:
 			open()
 		else:

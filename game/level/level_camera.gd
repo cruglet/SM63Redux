@@ -39,6 +39,8 @@ var fall_threshold: float = 250.0
 @export_flags_2d_physics var stopper_mask: int = 4096
 @export_custom(PROPERTY_HINT_NONE, "suffix:px") var stopper_inset: float = 1.0
 
+var controls_locked: bool = false
+
 var _previous: Vector2
 var _current: Vector2
 var _lead: Vector2
@@ -125,6 +127,8 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if controls_locked:
+		return
 	if event.is_action_pressed(&"camera_zoom_in"):
 		_target_zoom = clampf(_target_zoom + zoom_step, zoom_min, zoom_max)
 	elif event.is_action_pressed(&"camera_zoom_out"):

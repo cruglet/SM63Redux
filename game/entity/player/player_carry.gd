@@ -59,14 +59,15 @@ var _underlying: StringName = &""
 func tick(delta: float) -> void:
 	_grace = maxf(_grace - delta, 0.0)
 	_tick_kick(delta)
-	var target: Carryable = find_target() if not held and can_grab() else null
+	var free: bool = not held and not player.interactions_locked
+	var target: Carryable = find_target() if free and can_grab() else null
 	for node: Node in get_tree().get_nodes_in_group(Carryable.GROUP):
 		(node as Carryable).highlighted = node == target
 	if held:
 		_tick_held()
 	elif target and player.controls.is_held(&"use_fludd"):
 		grab(target)
-	else:
+	elif free:
 		_try_touch_kick()
 
 
