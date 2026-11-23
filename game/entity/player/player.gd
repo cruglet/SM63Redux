@@ -129,7 +129,7 @@ func is_harmless() -> bool:
 
 
 func ignores_hit(hitbox: HitBox) -> bool:
-	return carry.ignores(hitbox.owner)
+	return carry.ignores(hitbox.owner) or carry.would_catch(hitbox.owner)
 
 
 func bounce_off_squish() -> void:

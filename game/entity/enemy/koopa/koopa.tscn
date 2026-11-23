@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cobjo5kj7heeo"]
 
 [ext_resource type="Script" uid="uid://s77sl0w730u" path="res://game/entity/enemy/koopa/koopa.gd" id="koopa"]
+[ext_resource type="Script" uid="uid://df82mcnubnp0h" path="res://util/2d/animated_particles.gd" id="animated_particles"]
+[ext_resource type="SpriteFrames" path="res://assets/textures/particle/player/kick_particle_frames.tres" id="kick_frames"]
 [ext_resource type="Texture2D" uid="uid://bh5q4brjmpql0" path="res://assets/textures/entity/enemy/koopa/koopa_walk.png" id="tex_walk"]
 [ext_resource type="Texture2D" uid="uid://d2rb6fcbfwjmo" path="res://assets/textures/entity/enemy/koopa/parakoopa_flap.png" id="tex_fly"]
 [ext_resource type="Texture2D" uid="uid://6xw6a6v37qee" path="res://assets/textures/entity/enemy/koopa/koopa_shell_spin.png" id="tex_shell"]
@@ -227,10 +229,12 @@ knockback = Vector2(350, 50)
 [sub_resource type="Resource" id="Component_WalkerSquish"]
 script = ExtResource("hurtbox_component")
 accepted_hitbox_ids = PackedStringArray("feet", "ground_pound")
+expression = "entity.is_landed_on_from_above(hitbox, hurtbox)"
 
 [sub_resource type="Resource" id="Component_ShellKick"]
 script = ExtResource("hurtbox_component")
 accepted_hitbox_ids = PackedStringArray("feet", "spin", "dive", "ground_pound", "turbo")
+expression = "entity.is_landed_on_from_above(hitbox, hurtbox)"
 
 [sub_resource type="RectangleShape2D" id="Shape_WalkerHurtTop"]
 size = Vector2(20, 5)
@@ -300,7 +304,7 @@ resource_name = "shell"
 name = &"shell"
 fps = 10.0
 
-[node name="Koopa" type="CharacterBody2D" node_paths=PackedStringArray("sfx_player", "wing_emitter", "walker_boxes", "shell_boxes", "carryable", "sprite", "components_root", "machine", "water_check")]
+[node name="Koopa" type="CharacterBody2D" node_paths=PackedStringArray("sfx_player", "wing_emitter", "walker_boxes", "shell_boxes", "carryable", "kick_particles", "sprite", "components_root", "machine", "water_check")]
 collision_layer = 8
 collision_mask = 514
 script = ExtResource("koopa")
@@ -310,6 +314,7 @@ back_wing_texture = ExtResource("tex_wing_back")
 walker_boxes = [NodePath("WalkerHurtBox"), NodePath("WalkerHitBox"), NodePath("WalkerCollider")]
 shell_boxes = [NodePath("ShellHurtBox"), NodePath("ShellHitBox"), NodePath("ShellCollider")]
 carryable = NodePath("Carryable")
+kick_particles = NodePath("KickParticles")
 sprite = NodePath("Sprite")
 components_root = NodePath("Components")
 machine = NodePath("StateMachine")
@@ -402,12 +407,14 @@ debug_color = Color(0.7, 0, 0, 0.41960785)
 position = Vector2(0, 4)
 shape = SubResource("Shape_ShellCollider")
 
-[node name="Carryable" type="Node" parent="." node_paths=PackedStringArray("entity", "visual")]
+[node name="Carryable" type="Node" parent="." node_paths=PackedStringArray("entity", "visual", "contact_shape")]
 script = ExtResource("carryable")
 entity = NodePath("..")
 visual = NodePath("../Sprite")
 kick_on_touch = true
-carry_expression = "is_loose_shell()"
+contact_shape = NodePath("../ShellHurtBox/CollisionShape2D")
+drop_velocity = Vector2(40, -60)
+carry_expression = "is_shell()"
 outline_material = ExtResource("carry_outline")
 hold_offset = Vector2(0, -4)
 
@@ -464,6 +471,13 @@ script = ExtResource("water_check")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WaterCheckArea"]
 position = Vector2(-2, 2)
 shape = SubResource("Shape_WaterCheck")
+
+[node name="KickParticles" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("animated_particles")
+sprite_frames = ExtResource("kick_frames")
+amount = 1
+spread = 0.0
 
 [connection signal="damaged" from="WalkerHurtBox" to="." method="_on_hurt_box_damaged"]
 [connection signal="damaged" from="ShellHurtBox" to="." method="_on_hurt_box_damaged"]

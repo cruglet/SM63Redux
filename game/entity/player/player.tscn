@@ -177,6 +177,7 @@
 [ext_resource type="Script" uid="uid://cdop1kyo5yive" path="res://game/entity/player/states/glide_state.gd" id="glide_state"]
 [ext_resource type="Script" uid="uid://btn6teb10fw8a" path="res://game/entity/player/caps/invincible_cap.gd" id="invincible_cap"]
 [ext_resource type="Script" uid="uid://vy87wi60y7de" path="res://game/entity/player/caps/invisible_cap.gd" id="invisible_cap"]
+[ext_resource type="SpriteFrames" uid="uid://d064swmhhgfwd" path="res://assets/textures/particle/player/kick_particle_frames.tres" id="kick_frames"]
 [ext_resource type="Texture2D" uid="uid://dc0omabbjd4u4" path="res://assets/textures/entity/player/mario/dive_back.png" id="layer_db"]
 [ext_resource type="Texture2D" uid="uid://dbygj5gvs04um" path="res://assets/textures/entity/player/mario/fly_down_back.png" id="layer_dbk"]
 [ext_resource type="Texture2D" uid="uid://ca23jbhulao1k" path="res://assets/textures/entity/player/mario/fly_down_front.png" id="layer_df"]
@@ -202,6 +203,7 @@
 [ext_resource type="AudioStream" uid="uid://bjyv103sqscm4" path="res://assets/music/power_star.ogg" id="music_star"]
 [ext_resource type="AudioStream" uid="uid://dtk0ay1sfqhd1" path="res://assets/music/vanish_cap.ogg" id="music_vanish"]
 [ext_resource type="AudioStream" uid="uid://drvjidvud508p" path="res://assets/music/wing_cap.ogg" id="music_wing"]
+[ext_resource type="Script" uid="uid://dtokthm7asbha" path="res://game/entity/player/player_carry.gd" id="player_carry"]
 [ext_resource type="AudioStream" uid="uid://bk01cygcl3fi5" path="res://assets/sfx/player/ground_pound/ground_pound_cloud.wav" id="pound_cloud"]
 [ext_resource type="AudioStream" uid="uid://cq81bua8fjxv7" path="res://assets/sfx/player/ground_pound/ground_pound_grass.wav" id="pound_grass"]
 [ext_resource type="AudioStream" uid="uid://bpig1nynumifi" path="res://assets/sfx/player/ground_pound/ground_pound_sand.wav" id="pound_sand"]
@@ -218,9 +220,15 @@
 [ext_resource type="Texture2D" uid="uid://dmrsqqmjqynik" path="res://assets/textures/entity/player/mario/crouch_up_hold_front_arm.png" id="rig_crouch_up_hold_front_arm"]
 [ext_resource type="Texture2D" uid="uid://dintjc4b6ush3" path="res://assets/textures/entity/player/mario/crouch_up_hold_heavy.png" id="rig_crouch_up_hold_heavy"]
 [ext_resource type="Texture2D" uid="uid://b5gir8hr33q8h" path="res://assets/textures/entity/player/mario/crouch_up_hold_heavy_front_arm.png" id="rig_crouch_up_hold_heavy_front_arm"]
+[ext_resource type="Texture2D" uid="uid://d3w0o2xabgrne" path="res://assets/textures/entity/player/mario/drop.png" id="rig_drop"]
+[ext_resource type="Texture2D" uid="uid://bxro6h3mkvov8" path="res://assets/textures/entity/player/mario/drop_front_arm.png" id="rig_drop_arm"]
 [ext_resource type="Texture2D" uid="uid://by1a7ea6vlyoq" path="res://assets/textures/entity/player/mario/fall_down.png" id="rig_fall_down"]
 [ext_resource type="Texture2D" uid="uid://dy7mxu4lorr20" path="res://assets/textures/entity/player/mario/fall_l_down.png" id="rig_fall_l_down"]
 [ext_resource type="Texture2D" uid="uid://cyfwpbuys6s13" path="res://assets/textures/entity/player/mario/fall_r_down.png" id="rig_fall_r_down"]
+[ext_resource type="Texture2D" uid="uid://bhjo8mdexw8lf" path="res://assets/textures/entity/player/mario/hold_front_arm.png" id="rig_hold_arm"]
+[ext_resource type="Texture2D" uid="uid://chn47t5dne4cc" path="res://assets/textures/entity/player/mario/hold_expressions.png" id="rig_hold_expr"]
+[ext_resource type="Texture2D" uid="uid://b3ke68dwnqta0" path="res://assets/textures/entity/player/mario/hold_heavy_front_arm.png" id="rig_hold_heavy_arm"]
+[ext_resource type="Texture2D" uid="uid://da6so0njq4se8" path="res://assets/textures/entity/player/mario/hold_heavy_expressions.png" id="rig_hold_heavy_expr"]
 [ext_resource type="Texture2D" uid="uid://u0w6cfithae7" path="res://assets/textures/entity/player/mario/idle_animation_a_down.png" id="rig_idle_animation_a_down"]
 [ext_resource type="Texture2D" uid="uid://cu6uatywx0caq" path="res://assets/textures/entity/player/mario/idle_animation_a_hold.png" id="rig_idle_animation_a_hold"]
 [ext_resource type="Texture2D" uid="uid://bn7g76h66v0tr" path="res://assets/textures/entity/player/mario/idle_animation_a_hold_front_arm.png" id="rig_idle_animation_a_hold_front_arm"]
@@ -230,6 +238,8 @@
 [ext_resource type="Texture2D" uid="uid://ln7xlt6y6fmh" path="res://assets/textures/entity/player/mario/jumpr_down.png" id="rig_jumpr_down"]
 [ext_resource type="Texture2D" uid="uid://bmnmnj3uq23ir" path="res://assets/textures/entity/player/mario/jumpr_front_arm.png" id="rig_jumpr_front_arm"]
 [ext_resource type="Script" uid="uid://blbj41lspurpy" path="res://addons/redux_dev/rig_2d/rig_key.gd" id="rig_key"]
+[ext_resource type="Texture2D" uid="uid://cou7soxkc7veu" path="res://assets/textures/entity/player/mario/kick.png" id="rig_kick"]
+[ext_resource type="Texture2D" uid="uid://2u3wmaknk7o0" path="res://assets/textures/entity/player/mario/kick_front_arm.png" id="rig_kick_arm"]
 [ext_resource type="Script" uid="uid://y3tuooioal0x" path="res://addons/redux_dev/rig_2d/rig_layer.gd" id="rig_layer"]
 [ext_resource type="Texture2D" uid="uid://pw4c3uvc0fgw" path="res://assets/textures/entity/player/mario/run_down.png" id="rig_run_down"]
 [ext_resource type="Texture2D" uid="uid://cqga3lkwi1uoe" path="res://assets/textures/entity/player/mario/stomp_down.png" id="rig_stomp_down"]
@@ -238,23 +248,14 @@
 [ext_resource type="Script" uid="uid://b0ids2kyyxps5" path="res://addons/redux_dev/rig_2d/rig_variant.gd" id="rig_variant"]
 [ext_resource type="Texture2D" uid="uid://14hy2ixuu67y" path="res://assets/textures/entity/player/mario/walk_down.png" id="rig_walk_down"]
 [ext_resource type="PackedScene" uid="uid://b4foyjvcjua2u" path="res://game/entity/player/fludd/rocket_boom.tscn" id="rocket_boom"]
+[ext_resource type="AudioStream" uid="uid://bepvphyfaeuk5" path="res://assets/sfx/player/kick.ogg" id="sfx_kick"]
 [ext_resource type="SpriteFrames" uid="uid://dyuefsynjjf6y" path="res://assets/textures/particle/object/shine_sprite/shine_sparkle_frames.tres" id="shine_sparkle_frames"]
 [ext_resource type="Script" uid="uid://cwdgtyt2wh132" path="res://game/entity/player/fludd/spray_profile.gd" id="spray_profile"]
 [ext_resource type="PackedScene" uid="uid://cffnjxsg0savt" path="res://game/entity/player/fludd/spray_stream.tscn" id="spray_stream"]
+[ext_resource type="Script" uid="uid://cckx807u0h7q3" path="res://game/entity/player/states/carry_release.gd" id="state_carry_release"]
 [ext_resource type="Script" uid="uid://dnxccjuoxev5c" path="res://game/entity/player/states/shine_get_state.gd" id="state_shine_get"]
 [ext_resource type="Script" uid="uid://u1fjimhoqd42" path="res://game/entity/player/states/sleep.gd" id="state_sleep"]
-[ext_resource type="AudioStream" uid="uid://bepvphyfaeuk5" path="res://assets/sfx/player/kick.ogg" id="sfx_kick"]
-[ext_resource type="Script" uid="uid://dtokthm7asbha" path="res://game/entity/player/player_carry.gd" id="player_carry"]
-[ext_resource type="Script" uid="uid://cckx807u0h7q3" path="res://game/entity/player/states/carry_release.gd" id="state_carry_release"]
 [ext_resource type="AudioStream" uid="uid://bj0cobpbrbyek" path="res://assets/sfx/player/footstep/ice/step_ice_squeak.wav" id="step_ice_squeak"]
-[ext_resource type="Texture2D" uid="uid://chn47t5dne4cc" path="res://assets/textures/entity/player/mario/hold_expressions.png" id="rig_hold_expr"]
-[ext_resource type="Texture2D" uid="uid://da6so0njq4se8" path="res://assets/textures/entity/player/mario/hold_heavy_expressions.png" id="rig_hold_heavy_expr"]
-[ext_resource type="Texture2D" uid="uid://bhjo8mdexw8lf" path="res://assets/textures/entity/player/mario/hold_front_arm.png" id="rig_hold_arm"]
-[ext_resource type="Texture2D" uid="uid://b3ke68dwnqta0" path="res://assets/textures/entity/player/mario/hold_heavy_front_arm.png" id="rig_hold_heavy_arm"]
-[ext_resource type="Texture2D" uid="uid://d3w0o2xabgrne" path="res://assets/textures/entity/player/mario/drop.png" id="rig_drop"]
-[ext_resource type="Texture2D" uid="uid://bxro6h3mkvov8" path="res://assets/textures/entity/player/mario/drop_front_arm.png" id="rig_drop_arm"]
-[ext_resource type="Texture2D" uid="uid://cou7soxkc7veu" path="res://assets/textures/entity/player/mario/kick.png" id="rig_kick"]
-[ext_resource type="Texture2D" uid="uid://2u3wmaknk7o0" path="res://assets/textures/entity/player/mario/kick_front_arm.png" id="rig_kick_arm"]
 [ext_resource type="Texture2D" uid="uid://clljdgiormqjs" path="res://assets/textures/entity/player/mario/shine_get.png" id="tex_shine_get"]
 [ext_resource type="Texture2D" uid="uid://b5p5yremyhtqy" path="res://assets/textures/entity/player/mario/sleep_end.png" id="tex_sleep_end"]
 [ext_resource type="Texture2D" uid="uid://cnfxdvcmj5dj4" path="res://assets/textures/entity/player/mario/sleep_loop.png" id="tex_sleep_loop"]
@@ -403,12 +404,6 @@ script = ExtResource("rig_clip")
 name = &"idle"
 fps = 7.0
 
-[sub_resource type="Resource" id="Resource_nx3nd"]
-resource_name = "clip"
-script = ExtResource("rig_clip")
-name = &"clip"
-fps = 7.0
-
 [sub_resource type="Resource" id="RigClip_Visuals_Doll_idle_low_hp"]
 resource_name = "idle_low_hp"
 script = ExtResource("rig_clip")
@@ -514,11 +509,11 @@ name = &"sleep_end"
 fps = 12.0
 loop = false
 
-[sub_resource type="Resource" id="RigClip_Visuals_Doll_kick"]
-resource_name = "kick"
+[sub_resource type="Resource" id="RigClip_Visuals_Doll_shine_get"]
+resource_name = "shine_get"
 script = ExtResource("rig_clip")
-name = &"kick"
-fps = 24.0
+name = &"shine_get"
+fps = 12.0
 loop = false
 
 [sub_resource type="Resource" id="RigClip_Visuals_Doll_throw"]
@@ -528,190 +523,12 @@ name = &"throw"
 fps = 14.0
 loop = false
 
-[sub_resource type="Resource" id="RigClip_Visuals_Doll_shine_get"]
-resource_name = "shine_get"
+[sub_resource type="Resource" id="RigClip_Visuals_Doll_kick"]
+resource_name = "kick"
 script = ExtResource("rig_clip")
-name = &"shine_get"
-fps = 12.0
+name = &"kick"
+fps = 24.0
 loop = false
-
-[sub_resource type="Resource" id="RigKey_hold_kick_0"]
-script = ExtResource("rig_key")
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_kick_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(11, 10)
-
-[sub_resource type="Resource" id="RigKey_hold_kick_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(12, 12)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_0"]
-script = ExtResource("rig_key")
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_3"]
-script = ExtResource("rig_key")
-frame = 3
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_4"]
-script = ExtResource("rig_key")
-frame = 4
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_5"]
-script = ExtResource("rig_key")
-frame = 5
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_6"]
-script = ExtResource("rig_key")
-frame = 6
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_walk_loop_7"]
-script = ExtResource("rig_key")
-frame = 7
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_0"]
-script = ExtResource("rig_key")
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_3"]
-script = ExtResource("rig_key")
-frame = 3
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_4"]
-script = ExtResource("rig_key")
-frame = 4
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_5"]
-script = ExtResource("rig_key")
-frame = 5
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_6"]
-script = ExtResource("rig_key")
-frame = 6
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_run_loop_7"]
-script = ExtResource("rig_key")
-frame = 7
-position = Vector2(10, 7)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_0"]
-script = ExtResource("rig_key")
-position = Vector2(10, 9)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_3"]
-script = ExtResource("rig_key")
-frame = 3
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_4"]
-script = ExtResource("rig_key")
-frame = 4
-position = Vector2(10, 9)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_5"]
-script = ExtResource("rig_key")
-frame = 5
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_6"]
-script = ExtResource("rig_key")
-frame = 6
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_run_fast_7"]
-script = ExtResource("rig_key")
-frame = 7
-position = Vector2(10, 8)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_0"]
-script = ExtResource("rig_key")
-position = Vector2(-1, -17)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(-4, -9)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(-4, -6)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_3"]
-script = ExtResource("rig_key")
-frame = 3
-position = Vector2(-4, -5)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_up_0"]
-script = ExtResource("rig_key")
-position = Vector2(-4, -9)
-
-[sub_resource type="Resource" id="RigKey_hold_crouch_up_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(-1, -17)
-
-[sub_resource type="Resource" id="RigKey_hold_throw_0"]
-script = ExtResource("rig_key")
-position = Vector2(-4, -18)
-
-[sub_resource type="Resource" id="RigKey_hold_throw_1"]
-script = ExtResource("rig_key")
-frame = 1
-position = Vector2(6, -12)
-
-[sub_resource type="Resource" id="RigKey_hold_throw_2"]
-script = ExtResource("rig_key")
-frame = 2
-position = Vector2(10, 6)
-
-[sub_resource type="Resource" id="RigKey_hold_throw_3"]
-script = ExtResource("rig_key")
-frame = 3
-position = Vector2(10, 6)
 
 [sub_resource type="Resource" id="RigKey_wing_bonk_0"]
 script = ExtResource("rig_key")
@@ -892,6 +709,20 @@ position = Vector2(2, -12)
 script = ExtResource("rig_key")
 position = Vector2(2, -12)
 
+[sub_resource type="Resource" id="RigKey_wing_kick_0"]
+script = ExtResource("rig_key")
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_kick_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_kick_4"]
+script = ExtResource("rig_key")
+frame = 4
+position = Vector2(2, -12)
+
 [sub_resource type="Resource" id="RigKey_wing_run_fast_0"]
 script = ExtResource("rig_key")
 position = Vector2(2, -11)
@@ -1044,6 +875,118 @@ script = ExtResource("rig_key")
 frame = 21
 position = Vector2(-1, -8)
 
+[sub_resource type="Resource" id="RigKey_wing_sleep_end_0"]
+script = ExtResource("rig_key")
+position = Vector2(2, -7)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_end_6"]
+script = ExtResource("rig_key")
+frame = 6
+position = Vector2(2, -8)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_end_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(2, -10)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_end_8"]
+script = ExtResource("rig_key")
+frame = 8
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_end_9"]
+script = ExtResource("rig_key")
+frame = 9
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_loop_0"]
+script = ExtResource("rig_key")
+position = Vector2(2, -7)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_loop_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(3, -6)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_loop_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(2, -7)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_0"]
+script = ExtResource("rig_key")
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(2, -10)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_4"]
+script = ExtResource("rig_key")
+frame = 4
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_5"]
+script = ExtResource("rig_key")
+frame = 5
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_6"]
+script = ExtResource("rig_key")
+frame = 6
+position = Vector2(2, -13)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(1, -13)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_13"]
+script = ExtResource("rig_key")
+frame = 13
+position = Vector2(2, -13)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_14"]
+script = ExtResource("rig_key")
+frame = 14
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_15"]
+script = ExtResource("rig_key")
+frame = 15
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_16"]
+script = ExtResource("rig_key")
+frame = 16
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_17"]
+script = ExtResource("rig_key")
+frame = 17
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_18"]
+script = ExtResource("rig_key")
+frame = 18
+position = Vector2(2, -10)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_19"]
+script = ExtResource("rig_key")
+frame = 19
+position = Vector2(2, -8)
+
+[sub_resource type="Resource" id="RigKey_wing_sleep_start_20"]
+script = ExtResource("rig_key")
+frame = 20
+position = Vector2(2, -7)
+
 [sub_resource type="Resource" id="RigKey_wing_spin_fast_0"]
 script = ExtResource("rig_key")
 position = Vector2(-1, -12)
@@ -1082,6 +1025,20 @@ position = Vector2(1, -13)
 [sub_resource type="Resource" id="RigKey_wing_swim_idle_0"]
 script = ExtResource("rig_key")
 position = Vector2(1, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_throw_0"]
+script = ExtResource("rig_key")
+position = Vector2(2, -12)
+
+[sub_resource type="Resource" id="RigKey_wing_throw_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(2, -11)
+
+[sub_resource type="Resource" id="RigKey_wing_throw_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(2, -12)
 
 [sub_resource type="Resource" id="RigKey_wing_triple_jump_0"]
 script = ExtResource("rig_key")
@@ -1601,37 +1558,37 @@ region = Rect2(64, 0, 32, 16)
 atlas = ExtResource("layer_wib")
 region = Rect2(0, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin7"]
 atlas = ExtResource("layer_wsb")
-region = Rect2(64, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin3"]
-atlas = ExtResource("layer_wsb")
-region = Rect2(96, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin4"]
-atlas = ExtResource("layer_wsb")
-region = Rect2(128, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin5"]
-atlas = ExtResource("layer_wsb")
-region = Rect2(160, 0, 32, 16)
+region = Rect2(224, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin6"]
 atlas = ExtResource("layer_wsb")
 region = Rect2(192, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin5"]
 atlas = ExtResource("layer_wsb")
-region = Rect2(224, 0, 32, 16)
+region = Rect2(160, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin4"]
 atlas = ExtResource("layer_wsb")
-region = Rect2(0, 0, 32, 16)
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin3"]
+atlas = ExtResource("layer_wsb")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin2"]
+atlas = ExtResource("layer_wsb")
+region = Rect2(64, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin1"]
 atlas = ExtResource("layer_wsb")
 region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingbspin0"]
+atlas = ExtResource("layer_wsb")
+region = Rect2(0, 0, 32, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wingb_rig"]
 animations = [{
@@ -1840,33 +1797,33 @@ region = Rect2(64, 0, 64, 64)
 atlas = ExtResource("32_ketxm")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ko4c2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbjyd"]
 atlas = ExtResource("33_3h1ly")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_khj77"]
-atlas = ExtResource("33_3h1ly")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wjw0"]
-atlas = ExtResource("33_3h1ly")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37lcl"]
 atlas = ExtResource("33_3h1ly")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mbjyd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wjw0"]
 atlas = ExtResource("33_3h1ly")
-region = Rect2(256, 0, 64, 64)
+region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1band"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_khj77"]
 atlas = ExtResource("33_3h1ly")
-region = Rect2(384, 0, 64, 64)
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ko4c2"]
+atlas = ExtResource("33_3h1ly")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_763ns"]
 atlas = ExtResource("33_3h1ly")
 region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1band"]
+atlas = ExtResource("33_3h1ly")
+region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fludd_hover"]
 animations = [{
@@ -2058,33 +2015,33 @@ region = Rect2(320, 0, 64, 64)
 atlas = ExtResource("36_5ygwk")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_4"]
 atlas = ExtResource("37_fx7qh")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_1"]
-atlas = ExtResource("37_fx7qh")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_2"]
-atlas = ExtResource("37_fx7qh")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_3"]
 atlas = ExtResource("37_fx7qh")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_2"]
 atlas = ExtResource("37_fx7qh")
-region = Rect2(256, 0, 64, 64)
+region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_1"]
 atlas = ExtResource("37_fx7qh")
-region = Rect2(384, 0, 64, 64)
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_0"]
+atlas = ExtResource("37_fx7qh")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_7"]
 atlas = ExtResource("37_fx7qh")
 region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_rocket_spin_6"]
+atlas = ExtResource("37_fx7qh")
+region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fludd_rocket"]
 animations = [{
@@ -2275,33 +2232,33 @@ region = Rect2(320, 0, 64, 64)
 atlas = ExtResource("40_dhqxs")
 region = Rect2(0, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_4"]
 atlas = ExtResource("41_h6qgx")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_1"]
-atlas = ExtResource("41_h6qgx")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_2"]
-atlas = ExtResource("41_h6qgx")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_3"]
 atlas = ExtResource("41_h6qgx")
 region = Rect2(192, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_2"]
 atlas = ExtResource("41_h6qgx")
-region = Rect2(256, 0, 64, 64)
+region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_1"]
 atlas = ExtResource("41_h6qgx")
-region = Rect2(384, 0, 64, 64)
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_0"]
+atlas = ExtResource("41_h6qgx")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_7"]
 atlas = ExtResource("41_h6qgx")
 region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nz_turbo_spin_6"]
+atlas = ExtResource("41_h6qgx")
+region = Rect2(384, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mmss"]
 atlas = ExtResource("42_j002l")
@@ -3142,6 +3099,22 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("20_6b4i6")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_0_0"]
+atlas = ExtResource("rig_kick")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_1_0"]
+atlas = ExtResource("rig_kick")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_2_0"]
+atlas = ExtResource("rig_kick")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_3_0"]
+atlas = ExtResource("rig_kick")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_runfast0"]
 atlas = ExtResource("layer_rf")
 region = Rect2(0, 0, 64, 64)
@@ -3586,6 +3559,22 @@ region = Rect2(128, 0, 64, 64)
 atlas = ExtResource("25_ae0hi")
 region = Rect2(192, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_0_0"]
+atlas = ExtResource("rig_drop")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_1_0"]
+atlas = ExtResource("rig_drop")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_2_0"]
+atlas = ExtResource("rig_drop")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_3_0"]
+atlas = ExtResource("rig_drop")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_ie8qq"]
 atlas = ExtResource("26_sldje")
 region = Rect2(0, 0, 64, 64)
@@ -3653,218 +3642,6 @@ region = Rect2(384, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7h3q2"]
 atlas = ExtResource("27_dtinm")
 region = Rect2(448, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_1"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(0, -1, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_2"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(0, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_3"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(448, -3, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_2"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(448, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(448, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_1_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_3_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_4_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_6_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(384, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_10_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(640, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_9_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(576, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_8_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(512, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_2_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_5_0"]
-atlas = ExtResource("rig_hold_expr")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_1"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(0, -1, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_2"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(0, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_3"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(448, -3, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_2"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(448, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(448, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_1_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_3_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_4_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_6_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(384, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_10_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(640, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_9_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(576, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_8_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(512, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_2_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_5_0"]
-atlas = ExtResource("rig_hold_heavy_expr")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_0"]
-atlas = ExtResource("rig_hold_arm")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_1"]
-atlas = ExtResource("rig_hold_arm")
-region = Rect2(0, -1, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_2"]
-atlas = ExtResource("rig_hold_arm")
-region = Rect2(0, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_3"]
-atlas = ExtResource("rig_hold_arm")
-region = Rect2(0, -3, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_0"]
-atlas = ExtResource("rig_hold_heavy_arm")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_1"]
-atlas = ExtResource("rig_hold_heavy_arm")
-region = Rect2(0, -1, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_2"]
-atlas = ExtResource("rig_hold_heavy_arm")
-region = Rect2(0, -2, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_3"]
-atlas = ExtResource("rig_hold_heavy_arm")
-region = Rect2(0, -3, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_0_0"]
-atlas = ExtResource("rig_drop")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_1_0"]
-atlas = ExtResource("rig_drop")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_2_0"]
-atlas = ExtResource("rig_drop")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_3_0"]
-atlas = ExtResource("rig_drop")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_0_0"]
-atlas = ExtResource("rig_drop_arm")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_1_0"]
-atlas = ExtResource("rig_drop_arm")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_2_0"]
-atlas = ExtResource("rig_drop_arm")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_3_0"]
-atlas = ExtResource("rig_drop_arm")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_0_0"]
-atlas = ExtResource("rig_kick")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_1_0"]
-atlas = ExtResource("rig_kick")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_2_0"]
-atlas = ExtResource("rig_kick")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_3_0"]
-atlas = ExtResource("rig_kick")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_0_0"]
-atlas = ExtResource("rig_kick_arm")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_1_0"]
-atlas = ExtResource("rig_kick_arm")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_2_0"]
-atlas = ExtResource("rig_kick_arm")
-region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_681d1"]
 animations = [{
@@ -4113,6 +3890,26 @@ animations = [{
 "loop": 0,
 "name": &"jump_r",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kick_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kick_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kick_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kick_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kick_3_0")
+}],
+"loop": 0,
+"name": &"kick",
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -4509,6 +4306,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_3_0")
+}],
+"loop": 0,
+"name": &"throw",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ie8qq")
 }],
 "loop": 1,
@@ -4572,43 +4386,6 @@ animations = [{
 "loop": 1,
 "name": &"walk_loop",
 "speed": 14.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_2_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_3_0")
-}],
-"loop": 0,
-"name": &"throw",
-"speed": 14.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kick_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kick_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kick_2_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kick_2_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kick_3_0")
-}],
-"loop": 0,
-"name": &"kick",
-"speed": 24.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crouch_hold_0"]
@@ -4635,6 +4412,26 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("rig_crouch_up_hold")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_4_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_1_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_3_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_6_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(448, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_0"]
 atlas = ExtResource("rig_idle_animation_a_hold")
 region = Rect2(0, 0, 64, 64)
@@ -4658,6 +4455,46 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_5"]
 atlas = ExtResource("rig_idle_animation_a_hold")
 region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_5_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_3"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(448, -3, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_7_2"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(448, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_2"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(0, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_1"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(0, -1, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_0_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_2_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_10_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_9_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_expr_8_0"]
+atlas = ExtResource("rig_hold_expr")
+region = Rect2(512, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_body_hold"]
 animations = [{
@@ -4691,6 +4528,42 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_4_0")
+}],
+"loop": 1,
+"name": &"fall_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_3_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_4_0")
+}],
+"loop": 1,
+"name": &"fall_start_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_6_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_7_0")
+}],
+"loop": 1,
+"name": &"fall_start_r",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_animation_a_hold_0")
 }, {
 "duration": 1.0,
@@ -4714,60 +4587,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
+"texture": SubResource("AtlasTexture_hold_expr_5_0")
 }],
 "loop": 1,
-"name": &"walk_loop",
+"name": &"idle_low_hp",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_2")
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_0_1")
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
 }],
 "loop": 1,
-"name": &"run_loop",
+"name": &"jump_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
+}],
+"loop": 1,
+"name": &"jump_r",
 "speed": 12.0
 }, {
 "frames": [{
@@ -4801,77 +4646,39 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
-}],
-"loop": 1,
-"name": &"jump_l",
-"speed": 12.0
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
-}],
-"loop": 1,
-"name": &"jump_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_3_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_4_0")
-}],
-"loop": 1,
-"name": &"fall_start_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_6_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_7_0")
-}],
-"loop": 1,
-"name": &"fall_start_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_4_0")
-}],
-"loop": 1,
-"name": &"fall_loop",
-"speed": 12.0
-}, {
-"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_expr_0_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_10_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_9_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_8_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
 }],
 "loop": 1,
-"name": &"swim_idle",
+"name": &"run_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_1_0")
+}],
+"loop": 1,
+"name": &"stomp",
 "speed": 12.0
 }, {
 "frames": [{
@@ -4896,18 +4703,48 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_1_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_10_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_9_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_8_0")
 }],
 "loop": 1,
-"name": &"stomp",
+"name": &"swim_idle",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_expr_5_0")
+"texture": SubResource("AtlasTexture_hold_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_expr_0_1")
 }],
 "loop": 1,
-"name": &"idle_low_hp",
+"name": &"walk_loop",
 "speed": 12.0
 }]
 
@@ -4942,6 +4779,26 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("rig_crouch_up_hold_heavy")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_4_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_1_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_3_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_6_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(448, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_heavy_0"]
 atlas = ExtResource("rig_idle_animation_a_hold_heavy")
 region = Rect2(0, 0, 64, 64)
@@ -4965,6 +4822,46 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_heavy_5"]
 atlas = ExtResource("rig_idle_animation_a_hold_heavy")
 region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_5_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_3"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(448, -3, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_7_2"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(448, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_2"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(0, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_1"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(0, -1, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_0_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_2_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_10_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_9_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_expr_8_0"]
+atlas = ExtResource("rig_hold_heavy_expr")
+region = Rect2(512, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_body_hold_heavy"]
 animations = [{
@@ -4998,6 +4895,42 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_4_0")
+}],
+"loop": 1,
+"name": &"fall_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_3_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_4_0")
+}],
+"loop": 1,
+"name": &"fall_start_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_6_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_7_0")
+}],
+"loop": 1,
+"name": &"fall_start_r",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_animation_a_hold_heavy_0")
 }, {
 "duration": 1.0,
@@ -5021,60 +4954,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_5_0")
 }],
 "loop": 1,
-"name": &"walk_loop",
+"name": &"idle_low_hp",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
 }],
 "loop": 1,
-"name": &"run_loop",
+"name": &"jump_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+}],
+"loop": 1,
+"name": &"jump_r",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5108,77 +5013,39 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
-}],
-"loop": 1,
-"name": &"jump_l",
-"speed": 12.0
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
-}],
-"loop": 1,
-"name": &"jump_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_3_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_4_0")
-}],
-"loop": 1,
-"name": &"fall_start_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_6_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_7_0")
-}],
-"loop": 1,
-"name": &"fall_start_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_4_0")
-}],
-"loop": 1,
-"name": &"fall_loop",
-"speed": 12.0
-}, {
-"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_10_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_9_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_8_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
 }],
 "loop": 1,
-"name": &"swim_idle",
+"name": &"run_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+}],
+"loop": 1,
+"name": &"stomp",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5203,18 +5070,48 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_1_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_10_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_9_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_8_0")
 }],
 "loop": 1,
-"name": &"stomp",
+"name": &"swim_idle",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_expr_5_0")
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_expr_0_1")
 }],
 "loop": 1,
-"name": &"idle_low_hp",
+"name": &"walk_loop",
 "speed": 12.0
 }]
 
@@ -5225,15 +5122,183 @@ axis = &"hold"
 value = &"heavy"
 frames = SubResource("SpriteFrames_body_hold_heavy")
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_2qfp3"]
-animations = []
+[sub_resource type="Resource" id="RigKey_hold_crouch_0"]
+script = ExtResource("rig_key")
+position = Vector2(-1, -17)
 
-[sub_resource type="Resource" id="Resource_0l0d7"]
-resource_name = "variant=on"
-script = ExtResource("rig_variant")
-axis = &"variant"
-value = &"on"
-frames = SubResource("SpriteFrames_2qfp3")
+[sub_resource type="Resource" id="RigKey_hold_crouch_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(-4, -9)
+
+[sub_resource type="Resource" id="RigKey_hold_crouch_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(-4, -6)
+
+[sub_resource type="Resource" id="RigKey_hold_crouch_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(-4, -5)
+
+[sub_resource type="Resource" id="RigKey_hold_crouch_up_0"]
+script = ExtResource("rig_key")
+position = Vector2(-4, -9)
+
+[sub_resource type="Resource" id="RigKey_hold_crouch_up_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(-1, -17)
+
+[sub_resource type="Resource" id="RigKey_hold_kick_0"]
+script = ExtResource("rig_key")
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_kick_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(11, 10)
+
+[sub_resource type="Resource" id="RigKey_hold_kick_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(12, 12)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_0"]
+script = ExtResource("rig_key")
+position = Vector2(10, 9)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_4"]
+script = ExtResource("rig_key")
+frame = 4
+position = Vector2(10, 9)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_5"]
+script = ExtResource("rig_key")
+frame = 5
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_6"]
+script = ExtResource("rig_key")
+frame = 6
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_run_fast_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_0"]
+script = ExtResource("rig_key")
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_4"]
+script = ExtResource("rig_key")
+frame = 4
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_5"]
+script = ExtResource("rig_key")
+frame = 5
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_6"]
+script = ExtResource("rig_key")
+frame = 6
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_run_loop_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_throw_0"]
+script = ExtResource("rig_key")
+position = Vector2(-4, -18)
+
+[sub_resource type="Resource" id="RigKey_hold_throw_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(6, -12)
+
+[sub_resource type="Resource" id="RigKey_hold_throw_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_throw_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_0"]
+script = ExtResource("rig_key")
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_1"]
+script = ExtResource("rig_key")
+frame = 1
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_2"]
+script = ExtResource("rig_key")
+frame = 2
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_3"]
+script = ExtResource("rig_key")
+frame = 3
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_4"]
+script = ExtResource("rig_key")
+frame = 4
+position = Vector2(10, 6)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_5"]
+script = ExtResource("rig_key")
+frame = 5
+position = Vector2(10, 7)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_6"]
+script = ExtResource("rig_key")
+frame = 6
+position = Vector2(10, 8)
+
+[sub_resource type="Resource" id="RigKey_hold_walk_loop_7"]
+script = ExtResource("rig_key")
+frame = 7
+position = Vector2(10, 7)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wingfflap0"]
 atlas = ExtResource("layer_waf")
@@ -5251,37 +5316,37 @@ region = Rect2(64, 0, 32, 16)
 atlas = ExtResource("layer_wif")
 region = Rect2(0, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin7"]
 atlas = ExtResource("layer_wsf")
-region = Rect2(64, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin3"]
-atlas = ExtResource("layer_wsf")
-region = Rect2(96, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin4"]
-atlas = ExtResource("layer_wsf")
-region = Rect2(128, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin5"]
-atlas = ExtResource("layer_wsf")
-region = Rect2(160, 0, 32, 16)
+region = Rect2(224, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin6"]
 atlas = ExtResource("layer_wsf")
 region = Rect2(192, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin5"]
 atlas = ExtResource("layer_wsf")
-region = Rect2(224, 0, 32, 16)
+region = Rect2(160, 0, 32, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin4"]
 atlas = ExtResource("layer_wsf")
-region = Rect2(0, 0, 32, 16)
+region = Rect2(128, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin3"]
+atlas = ExtResource("layer_wsf")
+region = Rect2(96, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin2"]
+atlas = ExtResource("layer_wsf")
+region = Rect2(64, 0, 32, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin1"]
 atlas = ExtResource("layer_wsf")
 region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wingfspin0"]
+atlas = ExtResource("layer_wsf")
+region = Rect2(0, 0, 32, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wingf_rig"]
 animations = [{
@@ -5415,6 +5480,34 @@ animations = [{
 atlas = ExtResource("rig_jumpr_front_arm")
 region = Rect2(0, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_0_0"]
+atlas = ExtResource("rig_kick_arm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_1_0"]
+atlas = ExtResource("rig_kick_arm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kick_arm_2_0"]
+atlas = ExtResource("rig_kick_arm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_0_0"]
+atlas = ExtResource("rig_drop_arm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_1_0"]
+atlas = ExtResource("rig_drop_arm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_2_0"]
+atlas = ExtResource("rig_drop_arm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drop_arm_3_0"]
+atlas = ExtResource("rig_drop_arm")
+region = Rect2(192, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_front_arm"]
 animations = [{
 "frames": [{
@@ -5427,23 +5520,6 @@ animations = [{
 "loop": 0,
 "name": &"jump_r",
 "speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_arm_1_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_arm_2_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_drop_arm_3_0")
-}],
-"loop": 0,
-"name": &"throw",
-"speed": 14.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -5464,6 +5540,23 @@ animations = [{
 "loop": 0,
 "name": &"kick",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_arm_1_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_arm_2_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drop_arm_3_0")
+}],
+"loop": 0,
+"name": &"throw",
+"speed": 14.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crouch_hold_front_arm_0"]
@@ -5490,6 +5583,10 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("rig_crouch_up_hold_front_arm")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_0"]
+atlas = ExtResource("rig_hold_arm")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_front_arm_0"]
 atlas = ExtResource("rig_idle_animation_a_hold_front_arm")
 region = Rect2(0, 0, 64, 64)
@@ -5513,6 +5610,18 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_front_arm_5"]
 atlas = ExtResource("rig_idle_animation_a_hold_front_arm")
 region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_3"]
+atlas = ExtResource("rig_hold_arm")
+region = Rect2(0, -3, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_2"]
+atlas = ExtResource("rig_hold_arm")
+region = Rect2(0, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_arm_0_1"]
+atlas = ExtResource("rig_hold_arm")
+region = Rect2(0, -1, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_arm_hold"]
 animations = [{
@@ -5546,6 +5655,42 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_start_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_start_r",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_animation_a_hold_front_arm_0")
 }, {
 "duration": 1.0,
@@ -5570,59 +5715,31 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
 }],
 "loop": 1,
-"name": &"walk_loop",
+"name": &"idle_low_hp",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_1")
 }],
 "loop": 1,
-"name": &"run_loop",
+"name": &"jump_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}],
+"loop": 1,
+"name": &"jump_r",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5656,52 +5773,31 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
+"texture": SubResource("AtlasTexture_hold_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
 }],
 "loop": 1,
-"name": &"jump_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}],
-"loop": 1,
-"name": &"jump_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}],
-"loop": 1,
-"name": &"fall_start_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}],
-"loop": 1,
-"name": &"fall_start_r",
+"name": &"run_loop",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5709,24 +5805,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
 }],
 "loop": 1,
-"name": &"fall_loop",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_arm_0_0")
-}],
-"loop": 1,
-"name": &"swim_idle",
+"name": &"stomp",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5752,17 +5831,47 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
 }],
 "loop": 1,
-"name": &"stomp",
+"name": &"swim_idle",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_arm_0_1")
 }],
 "loop": 1,
-"name": &"idle_low_hp",
+"name": &"walk_loop",
 "speed": 12.0
 }]
 
@@ -5797,6 +5906,10 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("rig_crouch_up_hold_heavy_front_arm")
 region = Rect2(64, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_0"]
+atlas = ExtResource("rig_hold_heavy_arm")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_heavy_front_arm_0"]
 atlas = ExtResource("rig_idle_animation_a_hold_heavy_front_arm")
 region = Rect2(0, 0, 64, 64)
@@ -5820,6 +5933,18 @@ region = Rect2(256, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idle_animation_a_hold_heavy_front_arm_5"]
 atlas = ExtResource("rig_idle_animation_a_hold_heavy_front_arm")
 region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_3"]
+atlas = ExtResource("rig_hold_heavy_arm")
+region = Rect2(0, -3, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_2"]
+atlas = ExtResource("rig_hold_heavy_arm")
+region = Rect2(0, -2, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hold_heavy_arm_0_1"]
+atlas = ExtResource("rig_hold_heavy_arm")
+region = Rect2(0, -1, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_arm_hold_heavy"]
 animations = [{
@@ -5853,6 +5978,42 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_loop",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_start_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}],
+"loop": 1,
+"name": &"fall_start_r",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_idle_animation_a_hold_heavy_front_arm_0")
 }, {
 "duration": 1.0,
@@ -5877,59 +6038,31 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
 }],
 "loop": 1,
-"name": &"walk_loop",
+"name": &"idle_low_hp",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
 }],
 "loop": 1,
-"name": &"run_loop",
+"name": &"jump_l",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}],
+"loop": 1,
+"name": &"jump_r",
 "speed": 12.0
 }, {
 "frames": [{
@@ -5963,52 +6096,31 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
 }],
 "loop": 1,
-"name": &"jump_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}],
-"loop": 1,
-"name": &"jump_r",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}],
-"loop": 1,
-"name": &"fall_start_l",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}],
-"loop": 1,
-"name": &"fall_start_r",
+"name": &"run_loop",
 "speed": 12.0
 }, {
 "frames": [{
@@ -6016,24 +6128,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
 }],
 "loop": 1,
-"name": &"fall_loop",
-"speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
-}],
-"loop": 1,
-"name": &"swim_idle",
+"name": &"stomp",
 "speed": 12.0
 }, {
 "frames": [{
@@ -6059,17 +6154,47 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
 }],
 "loop": 1,
-"name": &"stomp",
+"name": &"swim_idle",
 "speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hold_heavy_arm_0_1")
 }],
 "loop": 1,
-"name": &"idle_low_hp",
+"name": &"walk_loop",
 "speed": 12.0
 }]
 
@@ -6160,6 +6285,12 @@ size = Vector2(8, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_invincible"]
 size = Vector2(14, 26)
+
+[sub_resource type="RectangleShape2D" id="Shape_FeetKick"]
+size = Vector2(10, 12)
+
+[sub_resource type="RectangleShape2D" id="Shape_HeadKick"]
+size = Vector2(10, 6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3h1ly"]
 size = Vector2(12, 23)
@@ -7082,7 +7213,7 @@ instance_shader_parameters/metal_facing = 1.0
 [node name="Doll" type="Node2D" parent="Visuals" unique_id=1587082698]
 position = Vector2(2, -7)
 script = ExtResource("rig_2d")
-clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Visuals_Doll_bonk"), SubResource("RigClip_Visuals_Doll_crouch"), SubResource("RigClip_Visuals_Doll_crouch_up"), SubResource("RigClip_Visuals_Doll_death"), SubResource("RigClip_Visuals_Doll_dive"), SubResource("RigClip_Visuals_Doll_double_jump"), SubResource("RigClip_Visuals_Doll_double_jump_fall"), SubResource("RigClip_Visuals_Doll_fall_loop"), SubResource("RigClip_Visuals_Doll_fall_start_l"), SubResource("RigClip_Visuals_Doll_fall_start_r"), SubResource("RigClip_Visuals_Doll_floor_slide"), SubResource("RigClip_Visuals_Doll_fly_down"), SubResource("RigClip_Visuals_Doll_fly_up"), SubResource("Resource_qppe4"), SubResource("RigClip_Visuals_Doll_ground_pound_fall"), SubResource("RigClip_Visuals_Doll_ground_pound_slam"), SubResource("RigClip_Visuals_Doll_ground_pound_start"), SubResource("RigClip_Visuals_Doll_idle"), SubResource("Resource_nx3nd"), SubResource("RigClip_Visuals_Doll_idle_low_hp"), SubResource("RigClip_Visuals_Doll_jump_l"), SubResource("RigClip_Visuals_Doll_jump_r"), SubResource("RigClip_Visuals_Doll_run_fast"), SubResource("RigClip_Visuals_Doll_run_loop"), SubResource("RigClip_Visuals_Doll_spin_fast"), SubResource("RigClip_Visuals_Doll_spin_loop"), SubResource("RigClip_Visuals_Doll_stomp"), SubResource("RigClip_Visuals_Doll_swim"), SubResource("RigClip_Visuals_Doll_swim_fast"), SubResource("RigClip_Visuals_Doll_swim_idle"), SubResource("RigClip_Visuals_Doll_triple_jump"), SubResource("RigClip_Visuals_Doll_turbo_run"), SubResource("RigClip_Visuals_Doll_walk_loop"), SubResource("RigClip_Visuals_Doll_sleep_start"), SubResource("RigClip_Visuals_Doll_sleep_loop"), SubResource("RigClip_Visuals_Doll_sleep_end"), SubResource("RigClip_Visuals_Doll_shine_get"), SubResource("RigClip_Visuals_Doll_throw"), SubResource("RigClip_Visuals_Doll_kick")])
+clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Visuals_Doll_bonk"), SubResource("RigClip_Visuals_Doll_crouch"), SubResource("RigClip_Visuals_Doll_crouch_up"), SubResource("RigClip_Visuals_Doll_death"), SubResource("RigClip_Visuals_Doll_dive"), SubResource("RigClip_Visuals_Doll_double_jump"), SubResource("RigClip_Visuals_Doll_double_jump_fall"), SubResource("RigClip_Visuals_Doll_fall_loop"), SubResource("RigClip_Visuals_Doll_fall_start_l"), SubResource("RigClip_Visuals_Doll_fall_start_r"), SubResource("RigClip_Visuals_Doll_floor_slide"), SubResource("RigClip_Visuals_Doll_fly_down"), SubResource("RigClip_Visuals_Doll_fly_up"), SubResource("Resource_qppe4"), SubResource("RigClip_Visuals_Doll_ground_pound_fall"), SubResource("RigClip_Visuals_Doll_ground_pound_slam"), SubResource("RigClip_Visuals_Doll_ground_pound_start"), SubResource("RigClip_Visuals_Doll_idle"), SubResource("RigClip_Visuals_Doll_idle_low_hp"), SubResource("RigClip_Visuals_Doll_jump_l"), SubResource("RigClip_Visuals_Doll_jump_r"), SubResource("RigClip_Visuals_Doll_run_fast"), SubResource("RigClip_Visuals_Doll_run_loop"), SubResource("RigClip_Visuals_Doll_spin_fast"), SubResource("RigClip_Visuals_Doll_spin_loop"), SubResource("RigClip_Visuals_Doll_stomp"), SubResource("RigClip_Visuals_Doll_swim"), SubResource("RigClip_Visuals_Doll_swim_fast"), SubResource("RigClip_Visuals_Doll_swim_idle"), SubResource("RigClip_Visuals_Doll_triple_jump"), SubResource("RigClip_Visuals_Doll_turbo_run"), SubResource("RigClip_Visuals_Doll_walk_loop"), SubResource("RigClip_Visuals_Doll_sleep_start"), SubResource("RigClip_Visuals_Doll_sleep_loop"), SubResource("RigClip_Visuals_Doll_sleep_end"), SubResource("RigClip_Visuals_Doll_shine_get"), SubResource("RigClip_Visuals_Doll_throw"), SubResource("RigClip_Visuals_Doll_kick")])
 current_animation = &"idle"
 reset_animation = &"idle"
 metadata/_custom_type_script = "uid://0d7qjje8ik6b"
@@ -7090,6 +7221,7 @@ metadata/_custom_type_script = "uid://0d7qjje8ik6b"
 [node name="WingAnchor" type="Marker2D" parent="Visuals/Doll" unique_id=1851321039]
 position = Vector2(2, -12)
 script = ExtResource("rig_anchor")
+rest_position = Vector2(2, -12)
 keys = Dictionary[StringName, Array]({
 &"bonk": [SubResource("RigKey_wing_bonk_0"), SubResource("RigKey_wing_bonk_1")],
 &"crouch": [SubResource("RigKey_wing_crouch_0"), SubResource("RigKey_wing_crouch_1"), SubResource("RigKey_wing_crouch_2")],
@@ -7112,15 +7244,20 @@ keys = Dictionary[StringName, Array]({
 &"idle_low_hp": [SubResource("RigKey_wing_idle_low_hp_0"), SubResource("RigKey_wing_idle_low_hp_1"), SubResource("RigKey_wing_idle_low_hp_2"), SubResource("RigKey_wing_idle_low_hp_3"), SubResource("RigKey_wing_idle_low_hp_4"), SubResource("RigKey_wing_idle_low_hp_5")],
 &"jump_l": [SubResource("RigKey_wing_jump_l_0")],
 &"jump_r": [SubResource("RigKey_wing_jump_r_0")],
+&"kick": [SubResource("RigKey_wing_kick_0"), SubResource("RigKey_wing_kick_1"), SubResource("RigKey_wing_kick_4")],
 &"run_fast": [SubResource("RigKey_wing_run_fast_0"), SubResource("RigKey_wing_run_fast_1"), SubResource("RigKey_wing_run_fast_2"), SubResource("RigKey_wing_run_fast_3"), SubResource("RigKey_wing_run_fast_4"), SubResource("RigKey_wing_run_fast_5"), SubResource("RigKey_wing_run_fast_6"), SubResource("RigKey_wing_run_fast_7")],
 &"run_loop": [SubResource("RigKey_wing_run_loop_0"), SubResource("RigKey_wing_run_loop_1"), SubResource("RigKey_wing_run_loop_2"), SubResource("RigKey_wing_run_loop_3"), SubResource("RigKey_wing_run_loop_4"), SubResource("RigKey_wing_run_loop_5"), SubResource("RigKey_wing_run_loop_6"), SubResource("RigKey_wing_run_loop_7")],
 &"shine_get": [SubResource("RigKey_wing_shine_get_0"), SubResource("RigKey_wing_shine_get_1"), SubResource("RigKey_wing_shine_get_2"), SubResource("RigKey_wing_shine_get_3"), SubResource("RigKey_wing_shine_get_4"), SubResource("RigKey_wing_shine_get_5"), SubResource("RigKey_wing_shine_get_6"), SubResource("RigKey_wing_shine_get_13"), SubResource("RigKey_wing_shine_get_14"), SubResource("RigKey_wing_shine_get_15"), SubResource("RigKey_wing_shine_get_16"), SubResource("RigKey_wing_shine_get_17"), SubResource("RigKey_wing_shine_get_19"), SubResource("RigKey_wing_shine_get_20"), SubResource("RigKey_wing_shine_get_21")],
+&"sleep_end": [SubResource("RigKey_wing_sleep_end_0"), SubResource("RigKey_wing_sleep_end_6"), SubResource("RigKey_wing_sleep_end_7"), SubResource("RigKey_wing_sleep_end_8"), SubResource("RigKey_wing_sleep_end_9")],
+&"sleep_loop": [SubResource("RigKey_wing_sleep_loop_0"), SubResource("RigKey_wing_sleep_loop_1"), SubResource("RigKey_wing_sleep_loop_7")],
+&"sleep_start": [SubResource("RigKey_wing_sleep_start_0"), SubResource("RigKey_wing_sleep_start_2"), SubResource("RigKey_wing_sleep_start_3"), SubResource("RigKey_wing_sleep_start_4"), SubResource("RigKey_wing_sleep_start_5"), SubResource("RigKey_wing_sleep_start_6"), SubResource("RigKey_wing_sleep_start_7"), SubResource("RigKey_wing_sleep_start_13"), SubResource("RigKey_wing_sleep_start_14"), SubResource("RigKey_wing_sleep_start_15"), SubResource("RigKey_wing_sleep_start_16"), SubResource("RigKey_wing_sleep_start_17"), SubResource("RigKey_wing_sleep_start_18"), SubResource("RigKey_wing_sleep_start_19"), SubResource("RigKey_wing_sleep_start_20")],
 &"spin_fast": [SubResource("RigKey_wing_spin_fast_0")],
 &"spin_loop": [SubResource("RigKey_wing_spin_loop_0")],
 &"stomp": [SubResource("RigKey_wing_stomp_0")],
 &"swim": [SubResource("RigKey_wing_swim_0")],
 &"swim_fast": [SubResource("RigKey_wing_swim_fast_0"), SubResource("RigKey_wing_swim_fast_1"), SubResource("RigKey_wing_swim_fast_2"), SubResource("RigKey_wing_swim_fast_3")],
 &"swim_idle": [SubResource("RigKey_wing_swim_idle_0")],
+&"throw": [SubResource("RigKey_wing_throw_0"), SubResource("RigKey_wing_throw_1"), SubResource("RigKey_wing_throw_3")],
 &"triple_jump": [SubResource("RigKey_wing_triple_jump_0")],
 &"turbo_run": [SubResource("RigKey_wing_turbo_run_0"), SubResource("RigKey_wing_turbo_run_1"), SubResource("RigKey_wing_turbo_run_2"), SubResource("RigKey_wing_turbo_run_3"), SubResource("RigKey_wing_turbo_run_4"), SubResource("RigKey_wing_turbo_run_5"), SubResource("RigKey_wing_turbo_run_6"), SubResource("RigKey_wing_turbo_run_7")],
 &"walk_loop": [SubResource("RigKey_wing_walk_loop_0"), SubResource("RigKey_wing_walk_loop_1"), SubResource("RigKey_wing_walk_loop_2"), SubResource("RigKey_wing_walk_loop_3"), SubResource("RigKey_wing_walk_loop_4"), SubResource("RigKey_wing_walk_loop_5"), SubResource("RigKey_wing_walk_loop_6"), SubResource("RigKey_wing_walk_loop_7")]
@@ -7248,7 +7385,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 script = ExtResource("rig_layer")
 frames = SubResource("SpriteFrames_681d1")
-variants = Array[ExtResource("rig_variant")]([SubResource("RigVariant_Visuals_Doll_Body_Hold"), SubResource("RigVariant_Visuals_Doll_Body_HoldHeavy"), SubResource("Resource_0l0d7")])
+variants = Array[ExtResource("rig_variant")]([SubResource("RigVariant_Visuals_Doll_Body_Hold"), SubResource("RigVariant_Visuals_Doll_Body_HoldHeavy")])
 metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="HoldAnchor" type="Marker2D" parent="Visuals/Doll" unique_id=1860539151]
@@ -7256,13 +7393,13 @@ position = Vector2(10, 6)
 script = ExtResource("rig_anchor")
 rest_position = Vector2(10, 6)
 keys = Dictionary[StringName, Array]({
-&"walk_loop": [SubResource("RigKey_hold_walk_loop_0"), SubResource("RigKey_hold_walk_loop_1"), SubResource("RigKey_hold_walk_loop_2"), SubResource("RigKey_hold_walk_loop_3"), SubResource("RigKey_hold_walk_loop_4"), SubResource("RigKey_hold_walk_loop_5"), SubResource("RigKey_hold_walk_loop_6"), SubResource("RigKey_hold_walk_loop_7")],
-&"run_loop": [SubResource("RigKey_hold_run_loop_0"), SubResource("RigKey_hold_run_loop_1"), SubResource("RigKey_hold_run_loop_2"), SubResource("RigKey_hold_run_loop_3"), SubResource("RigKey_hold_run_loop_4"), SubResource("RigKey_hold_run_loop_5"), SubResource("RigKey_hold_run_loop_6"), SubResource("RigKey_hold_run_loop_7")],
-&"run_fast": [SubResource("RigKey_hold_run_fast_0"), SubResource("RigKey_hold_run_fast_1"), SubResource("RigKey_hold_run_fast_2"), SubResource("RigKey_hold_run_fast_3"), SubResource("RigKey_hold_run_fast_4"), SubResource("RigKey_hold_run_fast_5"), SubResource("RigKey_hold_run_fast_6"), SubResource("RigKey_hold_run_fast_7")],
 &"crouch": [SubResource("RigKey_hold_crouch_0"), SubResource("RigKey_hold_crouch_1"), SubResource("RigKey_hold_crouch_2"), SubResource("RigKey_hold_crouch_3")],
 &"crouch_up": [SubResource("RigKey_hold_crouch_up_0"), SubResource("RigKey_hold_crouch_up_1")],
 &"kick": [SubResource("RigKey_hold_kick_0"), SubResource("RigKey_hold_kick_1"), SubResource("RigKey_hold_kick_2")],
-&"throw": [SubResource("RigKey_hold_throw_0"), SubResource("RigKey_hold_throw_1"), SubResource("RigKey_hold_throw_2"), SubResource("RigKey_hold_throw_3")]
+&"run_fast": [SubResource("RigKey_hold_run_fast_0"), SubResource("RigKey_hold_run_fast_1"), SubResource("RigKey_hold_run_fast_2"), SubResource("RigKey_hold_run_fast_3"), SubResource("RigKey_hold_run_fast_4"), SubResource("RigKey_hold_run_fast_5"), SubResource("RigKey_hold_run_fast_6"), SubResource("RigKey_hold_run_fast_7")],
+&"run_loop": [SubResource("RigKey_hold_run_loop_0"), SubResource("RigKey_hold_run_loop_1"), SubResource("RigKey_hold_run_loop_2"), SubResource("RigKey_hold_run_loop_3"), SubResource("RigKey_hold_run_loop_4"), SubResource("RigKey_hold_run_loop_5"), SubResource("RigKey_hold_run_loop_6"), SubResource("RigKey_hold_run_loop_7")],
+&"throw": [SubResource("RigKey_hold_throw_0"), SubResource("RigKey_hold_throw_1"), SubResource("RigKey_hold_throw_2"), SubResource("RigKey_hold_throw_3")],
+&"walk_loop": [SubResource("RigKey_hold_walk_loop_0"), SubResource("RigKey_hold_walk_loop_1"), SubResource("RigKey_hold_walk_loop_2"), SubResource("RigKey_hold_walk_loop_3"), SubResource("RigKey_hold_walk_loop_4"), SubResource("RigKey_hold_walk_loop_5"), SubResource("RigKey_hold_walk_loop_6"), SubResource("RigKey_hold_walk_loop_7")]
 })
 metadata/_custom_type_script = "uid://biq4ldyyn2utb"
 
@@ -7369,9 +7506,9 @@ volume_db = -6.0
 bus = &"Player"
 
 [node name="Hitboxes" type="Node2D" parent="." unique_id=1707897165]
-visible = false
 
 [node name="Spin" type="Area2D" parent="Hitboxes" unique_id=1462816752]
+visible = false
 position = Vector2(2, -10)
 collision_layer = 16
 collision_mask = 32
@@ -7391,6 +7528,7 @@ disabled = true
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
 [node name="Dive" type="Area2D" parent="Hitboxes" unique_id=1005232432]
+visible = false
 position = Vector2(2, -10)
 collision_layer = 16
 collision_mask = 32
@@ -7411,6 +7549,7 @@ disabled = true
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
 [node name="Turbo" type="Area2D" parent="Hitboxes" unique_id=514277768]
+visible = false
 position = Vector2(2, -10)
 collision_layer = 16
 collision_mask = 32
@@ -7430,6 +7569,7 @@ disabled = true
 debug_color = Color(0.9, 0.5, 0, 0.42)
 
 [node name="Feet" type="Area2D" parent="Hitboxes" unique_id=1546638905]
+visible = false
 position = Vector2(2, -10)
 collision_layer = 16
 collision_mask = 32
@@ -7479,6 +7619,7 @@ shape = SubResource("RectangleShape2D_2swmp")
 debug_color = Color(0.6901961, 0.7019608, 0, 0.41960785)
 
 [node name="Invincible" type="Area2D" parent="Hitboxes" unique_id=1844119228]
+visible = false
 collision_layer = 16
 collision_mask = 32
 monitoring = false
@@ -7494,6 +7635,22 @@ knockback_vector = Vector2(150, -135)
 position = Vector2(2, -3.5)
 shape = SubResource("RectangleShape2D_invincible")
 disabled = true
+
+[node name="KickBoxes" type="Area2D" parent="Hitboxes" unique_id=1707897166]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="FeetKickBox" type="CollisionShape2D" parent="Hitboxes/KickBoxes" unique_id=1707897167]
+position = Vector2(2, 3)
+shape = SubResource("Shape_FeetKick")
+debug_color = Color(0.2, 0.8, 1, 0.42)
+
+[node name="HeadKickBox" type="CollisionShape2D" parent="Hitboxes/KickBoxes" unique_id=1707897168]
+position = Vector2(2, 4)
+shape = SubResource("Shape_HeadKick")
+debug_color = Color(0.2, 0.8, 1, 0.42)
 
 [node name="Regions" type="Node2D" parent="." unique_id=168579217]
 visible = false
@@ -7546,6 +7703,15 @@ z_index = 1
 position = Vector2(2, 6)
 script = ExtResource("56_kups7")
 sprite_frames = SubResource("SpriteFrames_sj7k7")
+amount = 1
+spread = 0.0
+angles = PackedFloat32Array()
+metadata/_custom_type_script = "uid://df82mcnubnp0h"
+
+[node name="KickParticles" type="Node2D" parent="." unique_id=1251783191]
+z_index = 1
+script = ExtResource("56_kups7")
+sprite_frames = ExtResource("kick_frames")
 amount = 1
 spread = 0.0
 angles = PackedFloat32Array()
@@ -7682,9 +7848,9 @@ air_control = SubResource("Resource_hjdmk")
 
 [node name="Dive" type="Node" parent="StateMachine/Dry/Airborne" unique_id=742182963 node_paths=PackedStringArray("hitbox", "collision_shape")]
 script = ExtResource("71_0d8i1")
-collision_shape = NodePath("../../../../DiveCollision")
 hitbox = NodePath("../../../../Hitboxes/Dive")
 air_control = SubResource("Resource_q6670")
+collision_shape = NodePath("../../../../DiveCollision")
 effects = SubResource("Resource_la3n7")
 
 [node name="IdleJump" type="Node" parent="StateMachine/Dry/Airborne" unique_id=1856681889]
@@ -7758,9 +7924,9 @@ effects = SubResource("Resource_xi4k6")
 
 [node name="Floorslide" type="Node" parent="StateMachine/Dry" unique_id=1771606833 node_paths=PackedStringArray("hitbox", "collision_shape")]
 script = ExtResource("100_opa2o")
-collision_shape = NodePath("../../../DiveCollision")
 hitbox = NodePath("../../../Hitboxes/Dive")
 max_fall_speed = 498.33
+collision_shape = NodePath("../../../DiveCollision")
 effects = SubResource("Resource_1jrtl")
 
 [node name="Strike" type="Node" parent="StateMachine/Dry" unique_id=2065167791]
@@ -7796,8 +7962,8 @@ effects = SubResource("Resource_bg4ui")
 
 [node name="GroundPound" type="Node" parent="StateMachine" unique_id=1836909439 node_paths=PackedStringArray("hitbox", "collision_shape")]
 script = ExtResource("111_x7jwh")
-collision_shape = NodePath("../../GroundPoundCollision")
 hitbox = NodePath("../../Hitboxes/GroundPound")
+collision_shape = NodePath("../../GroundPoundCollision")
 effects = SubResource("Resource_xejek")
 
 [node name="GroundPoundStart" type="Node" parent="StateMachine/GroundPound" unique_id=652752325]
@@ -7988,12 +8154,16 @@ base = ExtResource("192_37lcl")
 [node name="ShineJingle" type="AudioStreamPlayer" parent="." unique_id=1558942557]
 bus = &"Music"
 
-[node name="Carry" type="Node" parent="." unique_id=1127730845 node_paths=PackedStringArray("player", "hold_anchor", "heavy_hold_anchor")]
+[node name="Carry" type="Node" parent="." unique_id=1127730845 node_paths=PackedStringArray("player", "hold_anchor", "heavy_hold_anchor", "feet_box", "head_box", "catch_box", "kick_particles")]
 script = ExtResource("player_carry")
 player = NodePath("..")
 hold_anchor = NodePath("../Visuals/Doll/HoldAnchor")
 heavy_hold_anchor = NodePath("../Visuals/Doll/HeavyHoldAnchor")
+feet_box = NodePath("../Hitboxes/KickBoxes/FeetKickBox")
+head_box = NodePath("../Hitboxes/KickBoxes/HeadKickBox")
+catch_box = NodePath("../Hitboxes/HurtBox/CollisionShape2D")
 kick_sound = ExtResource("sfx_kick")
+kick_particles = NodePath("../KickParticles")
 
 [connection signal="landed" from="Hitboxes/Feet" to="." method="_on_feet_landed"]
 [connection signal="water_entered" from="Regions/WaterCheck" to="." method="_on_water_entered"]

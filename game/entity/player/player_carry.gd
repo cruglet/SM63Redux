@@ -12,27 +12,36 @@ enum Release {
 @export var hold_anchor: Node2D
 @export var heavy_hold_anchor: Node2D
 @export var reach: Rect2 = Rect2(-4.0, -28.0, 32.0, 40.0)
-@export var touch_reach: Rect2 = Rect2(0.0, -20.0, 16.0, 28.0)
+@export var feet_box: CollisionShape2D
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var touch_kick_speed: float = 20.0
+@export var head_box: CollisionShape2D
+@export var catch_box: CollisionShape2D
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var under_kick_speed: float = 20.0
 @export var kick_animation: StringName = &"kick"
 @export var kick_release_frame: int = 1
 @export var throw_state: StringName = &"Throw"
 @export var kick_sound: AudioStream
+@export var kick_particles: AnimatedParticles
 @export_range(0.0, 1.0, 0.05) var upkick_momentum: float = 0.35
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var release_grace: float = 0.2
+@export_custom(PROPERTY_HINT_NONE, "suffix:s") var regrab_delay: float = 0.35
 @export_group("States")
 @export var grab_states: Array[StringName] = [
 	&"Idle",
 	&"Walk",
-	&"Crouch",
 	&"Fall",
 	&"Jump",
+	&"DoubleJump",
 	&"IdleJump",
 	&"SwimIdle",
 	&"Swim",
 	&"SwimWalk",
 ]
 @export var drop_states: Array[StringName] = [&"Strike", &"DeathHit", &"DeathFall", &"ShineGet"]
+@export var held_animations: Dictionary[StringName, StringName] = {
+	&"double_jump": &"jump_l",
+	&"double_jump_fall": &"fall_loop",
+}
 @export var redirected_states: Dictionary[StringName, StringName] = {
 	&"Dive": &"",
 	&"Spin": &"",
@@ -52,12 +61,14 @@ var held: Carryable
 var _pending: Release = Release.KICK
 var _released: Entity
 var _grace: float = 0.0
+var _regrab: float = 0.0
 var _kick_time: float = -1.0
 var _underlying: StringName = &""
 
 
 func tick(delta: float) -> void:
 	_grace = maxf(_grace - delta, 0.0)
+	_regrab = maxf(_regrab - delta, 0.0)
 	_tick_kick(delta)
 	var free: bool = not held and not player.interactions_locked
 	var target: Carryable = find_target() if free and can_grab() else null
@@ -79,6 +90,16 @@ func is_kicking() -> bool:
 	return _kick_time >= 0.0
 
 
+func would_catch(node: Node) -> bool:
+	if held:
+		return false
+	
+	for carryable: Carryable in _get_carryables():
+		if carryable.entity == node and _wants_catch(carryable):
+			return _shape_rect(catch_box).intersects(carryable.get_contact_rect())
+	return false
+
+
 func ignores(node: Node) -> bool:
 	if held and node == held.entity:
 		return true
@@ -96,6 +117,9 @@ func find_target() -> Carryable:
 	var best: Carryable
 	var best_distance: float = INF
 	for carryable: Carryable in _get_carryables():
+		if _regrab > 0.0 and is_instance_valid(_released) and carryable.entity == _released:
+			continue
+		
 		var offset: Vector2 = carryable.entity.global_position - player.global_position
 		offset.x *= player.get_facing()
 		if reach.has_point(offset) and offset.length_squared() < best_distance:
@@ -110,6 +134,7 @@ func grab(carryable: Carryable) -> void:
 	held.released.connect(_on_released, CONNECT_ONE_SHOT)
 	held.pick_up(heavy_hold_anchor if held.heavy else hold_anchor, player)
 	player.sprite.set_variant(&"hold", &"heavy" if held.heavy else &"light")
+	_substitute_animation()
 
 
 func release(kind: Release) -> void:
@@ -118,20 +143,21 @@ func release(kind: Release) -> void:
 	
 	var facing: Vector2 = Vector2(player.get_facing(), 1.0)
 	var from: Vector2 = player.global_position
+	var contact: Vector2 = held.get_contact_rect().get_center()
 	_ignore(held.entity)
 	
 	match kind:
 		Release.KICK:
-			_play_kick()
+			_play_kick(contact)
 			held.throw(held.kick_velocity * facing, from)
 		Release.UPKICK:
-			_play_kick()
+			_play_kick(contact)
 			var carried: Vector2 = Vector2(player.velocity.x * upkick_momentum, 0.0)
 			held.throw(held.upkick_velocity * facing + carried, from)
 		Release.THROW:
 			held.throw(held.throw_velocity * facing, from)
 		Release.DROP:
-			held.drop(player.velocity + held.drop_velocity * facing, from)
+			held.drop(held.drop_velocity * facing, from)
 
 
 func release_pending() -> void:
@@ -150,6 +176,12 @@ func redirect(from: State, to: StringName) -> StringName:
 	return from.name if target.is_empty() else target
 
 
+func _substitute_animation() -> void:
+	var substitute: StringName = held_animations.get(player.sprite.current_animation, &"")
+	if not substitute.is_empty():
+		player.sprite.play(substitute)
+
+
 func _tick_held() -> void:
 	var state: StringName = player.machine.get_state_name()
 	if drop_states.has(state):
@@ -157,6 +189,7 @@ func _tick_held() -> void:
 		return
 	
 	held.follow()
+	_substitute_animation()
 	if is_kicking() or state == throw_state or player.controls.is_held(&"use_fludd"):
 		return
 	
@@ -185,21 +218,49 @@ func _choose_release() -> Release:
 
 
 func _try_touch_kick() -> void:
+	var feet: Rect2 = _shape_rect(feet_box)
+	var head: Rect2 = _shape_rect(head_box)
 	for carryable: Carryable in _get_carryables():
 		if not carryable.kick_on_touch or ignores(carryable.entity):
 			continue
 		
-		var offset: Vector2 = carryable.entity.global_position - player.global_position
-		var direction: float = signf(offset.x)
-		offset.x = absf(offset.x)
-		if not touch_reach.has_point(offset) or player.velocity.x * direction < touch_kick_speed:
+		var body: Rect2 = carryable.get_contact_rect()
+		if _wants_catch(carryable) and _shape_rect(catch_box).intersects(body):
+			grab(carryable)
+			return
+		
+		var direction: float = signf(body.get_center().x - feet.get_center().x)
+		var closing: Vector2 = player.velocity - carryable.entity.velocity
+		if head.intersects(body) and closing.y < -under_kick_speed:
+			var side: float = direction if direction != 0.0 else float(player.get_facing())
+			_ignore(carryable.entity)
+			_play_kick(head.intersection(body).get_center())
+			carryable.kick(carryable.kick_velocity * Vector2(side, 1.0), player)
+			return
+		
+		if (
+				not feet.intersects(body)
+				or feet.end.y <= body.get_center().y
+				or closing.x * direction < touch_kick_speed
+		):
 			continue
 		
 		_ignore(carryable.entity)
-		_play_kick()
+		_play_kick(feet.intersection(body).get_center())
 		carryable.kick(carryable.kick_velocity * Vector2(direction, 1.0), player)
-		_start_kick()
+		if is_equal_approx(direction, float(player.get_facing())):
+			_start_kick()
 		return
+
+
+func _wants_catch(carryable: Carryable) -> bool:
+	if _regrab > 0.0 and is_instance_valid(_released) and carryable.entity == _released:
+		return false
+	return can_grab() and player.controls.is_held(&"use_fludd")
+
+
+func _shape_rect(box: CollisionShape2D) -> Rect2:
+	return box.global_transform * box.shape.get_rect()
 
 
 func _start_kick() -> void:
@@ -243,11 +304,15 @@ func _get_carryables() -> Array[Carryable]:
 func _ignore(entity: Entity) -> void:
 	_released = entity
 	_grace = release_grace
+	_regrab = regrab_delay
 
 
-func _play_kick() -> void:
+func _play_kick(at: Vector2) -> void:
 	if kick_sound:
-		SFX.play(kick_sound, &"Player")
+		SFX.play(kick_sound)
+	if kick_particles:
+		kick_particles.global_position = at
+		kick_particles.burst()
 
 
 func _on_released() -> void:

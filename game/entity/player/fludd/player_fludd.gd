@@ -231,6 +231,13 @@ func is_turbo_active() -> bool:
 	return mode != null and mode.nozzle == Nozzle.TURBO
 
 
+func collect_nozzle(nozzle: Nozzle) -> void:
+	held_nozzles.set(nozzle, true)
+	fuel = FUEL_MAX
+	if not player.carry.is_holding():
+		equipped_nozzle = nozzle
+
+
 func switch_nozzle() -> bool:
 	var previous: Nozzle = equipped_nozzle
 	var candidate: int = equipped_nozzle

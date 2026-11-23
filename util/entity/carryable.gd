@@ -12,6 +12,7 @@ const GROUP: StringName = &"carryables"
 @export var visual: Node2D
 @export var heavy: bool = false
 @export var kick_on_touch: bool = false
+@export var contact_shape: CollisionShape2D
 @export_custom(PROPERTY_HINT_EXPRESSION, "") var carry_expression: String
 @export var outline_material: Material
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var carrier_grace: float = 0.2
@@ -89,6 +90,17 @@ func can_carry() -> bool:
 	
 	var result: Variant = _expression.execute([], entity)
 	return not _expression.has_execute_failed() and bool(result)
+
+
+func get_contact_rect() -> Rect2:
+	if contact_shape and contact_shape.shape:
+		return contact_shape.global_transform * contact_shape.shape.get_rect()
+	
+	for child: Node in entity.get_children():
+		var shape: CollisionShape2D = child as CollisionShape2D
+		if shape and shape.shape and not shape.disabled:
+			return shape.global_transform * shape.shape.get_rect()
+	return Rect2(entity.global_position, Vector2.ZERO)
 
 
 func is_carried() -> bool:

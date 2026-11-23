@@ -38,15 +38,31 @@ const FORM_STATES: Dictionary[Form, StringName] = {
 @export var walker_boxes: Array[Node]
 @export var shell_boxes: Array[Node]
 @export var carryable: Carryable
+@export var kick_particles: AnimatedParticles
+
+var settle_on_landing: bool = false
 
 
 func _ready() -> void:
 	super()
 	_apply_form()
+	if carryable:
+		carryable.dropped.connect(_on_carryable_dropped)
+		carryable.thrown.connect(_on_carryable_thrown)
 
 
 func ignores_hit(hitbox: HitBox) -> bool:
 	return carryable != null and carryable.ignores_hit(hitbox)
+
+
+func is_landed_on_from_above(source_hitbox: HitBox, hurt_box: HurtBox) -> bool:
+	if source_hitbox.damage_type != HitBox.DamageType.SQUISH:
+		return true
+	return _area_center(source_hitbox).y < _area_center(hurt_box).y
+
+
+func is_shell() -> bool:
+	return form == Form.SHELL
 
 
 func is_loose_shell() -> bool:
@@ -61,6 +77,7 @@ func _on_hurt_box_damaged(source_hitbox: HitBox) -> void:
 			if source_hitbox.damage_type == HitBox.DamageType.SQUISH and not is_loose_shell():
 				velocity.x = 0.0
 				sfx_player.play()
+				_burst_kick_particles(source_hitbox)
 			else:
 				_kick(source_hitbox)
 		Form.PARAKOOPA:
@@ -129,7 +146,31 @@ func _kick(source_hitbox: HitBox) -> void:
 		direction = -1.0 if sprite.flip_h else 1.0
 	
 	velocity.x = KICK_SPEED * direction
+	settle_on_landing = false
 	sfx_player.play()
+	_burst_kick_particles(source_hitbox)
+
+
+func _burst_kick_particles(source_hitbox: HitBox) -> void:
+	if kick_particles:
+		kick_particles.global_position = source_hitbox.global_position.lerp(global_position, 0.5)
+		kick_particles.burst()
+
+
+func _area_center(area: Area2D) -> Vector2:
+	for child: Node in area.get_children():
+		var shape: CollisionShape2D = child as CollisionShape2D
+		if shape and shape.shape and not shape.disabled:
+			return (shape.global_transform * shape.shape.get_rect()).get_center()
+	return area.global_position
+
+
+func _on_carryable_dropped() -> void:
+	settle_on_landing = true
+
+
+func _on_carryable_thrown(_velocity: Vector2) -> void:
+	settle_on_landing = false
 
 
 ## Copies the idle in-scene emitter into the level as a one-shot wing puff.
