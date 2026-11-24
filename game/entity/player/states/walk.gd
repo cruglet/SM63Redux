@@ -1,40 +1,27 @@
 extends PlayerState
 
 @export_group("Transitions")
-## Input strength below which walking can stop.
 @export var stop_input_threshold: float = 0.1
-## Speed below which walking stops without input.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var stop_speed: float = 0.5
-## Speed below which crouch starts a crouch instead of a floorslide.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var crouch_max_speed: float = 50.0
-## How long a jump press stays valid after it was pressed.
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var jump_buffer: float = 0.25
 @export_group("Gait")
-## Input strength needed for the walk animation.
 @export var walk_input_threshold: float = 0.1
-## Input strength needed for the run animation.
 @export var run_input_threshold: float = 0.7
-## Speed below which the walk animation is used without input.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var animation_stop_speed: float = 30.0
-## Speed the animation speed curve is normalized against.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var animation_reference_speed: float = 220.0
-## Animation speed over normalized running speed.
 @export var animation_speed_curve: Curve
 @export var turbo_animation: StringName = &"turbo_run"
 @export var top_speed_animation: StringName = &"run_fast"
 @export_range(0.0, 1.0, 0.01) var top_speed_ratio: float = 0.95
 @export_group("Footsteps")
-## Sounds played on footstep frames.
 @export var footstep_bank: SFXBank
-## Dust burst emitted on footstep frames.
 @export var footstep_particles: AnimatedParticles
-## Speed needed before footsteps emit dust.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var footstep_particle_min_speed: float = 20.0
-## Animation frames that trigger a footstep, per animation.
 @export var footstep_frames: Dictionary[StringName, PackedInt32Array] = {
 	&"walk_loop": PackedInt32Array([0, 4]),
 	&"run_loop": PackedInt32Array([0, 4]),

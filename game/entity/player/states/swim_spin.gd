@@ -1,11 +1,7 @@
 extends SpinState
 
-## Submerged state whose sink speed and steering the spin's vertical swim
-## follows.
 @export var submerged: SubmergedState
-## Minimum spin length before releasing spin can end it.
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var exit_delay: float = 0.6
-## Fraction of the sink speed risen and sunk at while spinning.
 @export_range(0.0, 1.0) var speed_ratio: float = 0.5
 
 

@@ -14,9 +14,7 @@ const ACTIONS: Array[StringName] = [
 ]
 const AXIS_THRESHOLD: float = 0.2
 
-## Horizontal movement axis, -1 for left and 1 for right.
 var move: float = 0.0
-## Vertical swim axis, -1 for up and 1 for down.
 var swim: float = 0.0
 var glide: float = 0.0
 var quiet_time: float = 0.0

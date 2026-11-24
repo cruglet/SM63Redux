@@ -136,7 +136,7 @@ func settle_shine_face(duration: float) -> void:
 	
 	var length: int = rig.get_clip_length(rig.current_animation)
 	var remaining: int = posmod(-rig.current_frame, length)
-	if remaining < length / 2:
+	if remaining * 2 < length:
 		remaining += length
 	_settling_rig = rig
 	rig.speed_scale = remaining / (duration * rig.get_clip_fps(rig.current_animation))

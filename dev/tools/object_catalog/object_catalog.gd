@@ -265,7 +265,7 @@ func _fit_window() -> void:
 	window.content_scale_factor = \
 			clampf(DisplayServer.screen_get_scale(window.current_screen), 1.0, 2.0)
 	window.size = window_size
-	window.position = usable.position + (usable.size - window_size) / 2
+	window.position = usable.position + Vector2i(Vector2(usable.size - window_size) / 2.0)
 
 
 func _reload() -> void:

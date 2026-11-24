@@ -295,14 +295,14 @@ class Context:
 	
 	
 	func get_call_type(callee: String, argument: int) -> int:
-		var call: RegExMatch = RegEx.create_from_string(
+		var call_match: RegExMatch = RegEx.create_from_string(
 				"(?:(?<![\\w.)\\]])(\\w+)\\s*\\.\\s*)?(\\w+)\\s*$"
 		).search(callee)
-		if call == null:
+		if call_match == null:
 			return -1
 		
-		var method: String = call.get_string(2)
-		var receiver: String = call.get_string(1)
+		var method: String = call_match.get_string(2)
+		var receiver: String = call_match.get_string(1)
 		var trimmed: String = callee.strip_edges(false, true)
 		var dotted: bool = trimmed.trim_suffix(method).ends_with(".")
 		var signature: PackedInt32Array = \

@@ -12,12 +12,11 @@ size = Vector2(10, 3)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ljcff"]
 size = Vector2(20, 12)
 
-[node name="FluddNozzleHover" type="CharacterBody2D" unique_id=762472111 node_paths=PackedStringArray("sprite", "components_root")]
+[node name="FluddNozzleHover" type="CharacterBody2D" unique_id=762472111 node_paths=PackedStringArray("components_root")]
 collision_layer = 0
 collision_mask = 514
 script = ExtResource("1_saqq8")
 grant_nozzle = 1
-sprite = NodePath("SmartSprite2D")
 components_root = NodePath("Components/GravityComponent")
 
 [node name="SmartSprite2D" type="Sprite2D" parent="." unique_id=857828210]

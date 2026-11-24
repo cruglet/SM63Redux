@@ -1,10 +1,7 @@
 class_name BaseJumpState
 extends PlayerState
 
-## The jump chain in order; each jump uses the next entry while its chain window
-## is open.
 @export var jumps: Array[JumpState]
-## Dust burst emitted on takeoff.
 @export var particles: AnimatedParticles
 
 var chain: int = 0

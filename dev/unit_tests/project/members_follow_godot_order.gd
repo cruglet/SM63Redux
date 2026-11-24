@@ -91,14 +91,14 @@ static func _rank(
 	var variable: RegExMatch = \
 			RegEx.create_from_string("^(static\\s+)?var\\s+(\\w+)").search(member)
 	if variable:
-		var privacy: int = 1 if variable.get_string(2).begins_with("_") else 0
+		var variable_privacy: int = 1 if variable.get_string(2).begins_with("_") else 0
 		if not variable.get_string(1).is_empty():
-			return _section("static variables") + privacy
+			return _section("static variables") + variable_privacy
 		if "@onready" in statement:
-			return _section("@onready variables") + privacy
+			return _section("@onready variables") + variable_privacy
 		if "@export" in statement:
 			return _section("@export variables")
-		return _section("variables") + privacy
+		return _section("variables") + variable_privacy
 	
 	var function: RegExMatch = \
 			RegEx.create_from_string("^(static\\s+)?func\\s+(\\w+)").search(member)
@@ -125,7 +125,7 @@ static func _label(rank: int, member: String) -> String:
 	var name: RegExMatch = RegEx.create_from_string(
 			"^(?:static\\s+)?(?:var|func|signal|const|enum|class)\\s+(\\w+)"
 	).search(member)
-	var section: String = SECTIONS[rank / 10]
+	var section: String = SECTIONS.get(floori(rank / 10.0))
 	var private: bool = rank % 10 == 1 and section in [
 			"static variables",
 			"variables",

@@ -46,8 +46,11 @@ func _on_water_entered() -> void:
 
 func _on_water_exited() -> void:
 	_splash()
-	for _effect: AudioEffect in bus_effects:
-		AudioServer.remove_bus_effect(0, 0)
+	for effect: AudioEffect in bus_effects:
+		for i: int in range(AudioServer.get_bus_effect_count(0) - 1, -1, -1):
+			if AudioServer.get_bus_effect(0, i) == effect:
+				AudioServer.remove_bus_effect(0, i)
+				break
 
 
 func _splash() -> void:

@@ -1,7 +1,6 @@
 class_name GroundPoundState
 extends PlayerState
 
-## Hitbox active for the whole ground pound.
 @export var hitbox: HitBox
 @export var fall: GroundPoundFallState
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var cancel_cooldown: float = 0.4

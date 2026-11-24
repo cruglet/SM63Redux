@@ -157,12 +157,12 @@ func follow(body: CharacterBody2D) -> void:
 	reset_smoothing()
 
 
-func tween_view(scale: float, pan: Vector2, duration: float, curve: Curve = null) -> void:
+func tween_view(view_scale: float, pan: Vector2, duration: float, curve: Curve = null) -> void:
 	if _zoom_tween:
 		_zoom_tween.kill()
 	_zoom_tween = create_tween()
 	_zoom_tween.tween_method(
-			_apply_view.bind(_zoom_scale, scale, _pan, pan, curve),
+			_apply_view.bind(_zoom_scale, view_scale, _pan, pan, curve),
 			0.0,
 			1.0,
 			duration,

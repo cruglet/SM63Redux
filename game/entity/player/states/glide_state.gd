@@ -67,10 +67,8 @@ func _render_tick(delta: float) -> void:
 	sprite.local_rotation = rad_to_deg(_body_rotation)
 	
 	var animation: StringName
-	# If holding up
 	if controls.glide < 0.0:
 		animation = up_animation
-	# If holding down or descending
 	elif controls.glide > 0.0 or player.velocity.y > 0:
 		animation = down_animation
 	else:

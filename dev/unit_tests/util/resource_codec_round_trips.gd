@@ -25,10 +25,10 @@ static func run_test() -> void:
 	assert(is_equal_approx((shapes[2] as CircleShape2D).radius, 9.0))
 	
 	var saved: Resource = load("res://dev/unit_tests/_unit_tester.tres")
-	var reference: Dictionary = ResourceCodec.encode(saved)
-	assert(reference.keys() == [ResourceCodec.UID_KEY])
-	assert((reference[ResourceCodec.UID_KEY] as String).begins_with("uid://"))
-	assert(ResourceCodec.decode(reference) == saved)
+	var saved_encoding: Dictionary = ResourceCodec.encode(saved)
+	assert(saved_encoding.keys() == [ResourceCodec.UID_KEY])
+	assert((saved_encoding[ResourceCodec.UID_KEY] as String).begins_with("uid://"))
+	assert(ResourceCodec.decode(saved_encoding) == saved)
 	assert(
 			ResourceCodec.decode(
 					{

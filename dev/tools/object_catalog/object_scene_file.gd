@@ -128,11 +128,11 @@ func duplicate_as(new_path: String, new_id: StringName, new_name: String) -> Obj
 func _ensure_ext_resource(type: String, resource_path: String) -> String:
 	var last: int = -1
 	for i: int in _lines.size():
-		var line: String = _lines[i]
-		if line.begins_with("[ext_resource "):
+		var existing: String = _lines[i]
+		if existing.begins_with("[ext_resource "):
 			last = i
-			if line.contains("path=\"%s\"" % resource_path):
-				return line.get_slice(" id=\"", 1).get_slice("\"", 0)
+			if existing.contains("path=\"%s\"" % resource_path):
+				return existing.get_slice(" id=\"", 1).get_slice("\"", 0)
 	
 	var id: String = _unique_id("icon_texture")
 	var line: String = "[ext_resource type=\"%s\" path=\"%s\" id=\"%s\"]" % [

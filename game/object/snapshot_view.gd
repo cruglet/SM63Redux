@@ -22,11 +22,11 @@ func capture(object: GameObject) -> void:
 	var inverse: Transform2D = GameObject.relative_transform(origin, self).affine_inverse()
 	_pose_rigs(source)
 	for item: Node2D in _collect(source):
-		var copy: Node2D = (
-				_copy_rig(item as SpriteRig2D)
-				if item is SpriteRig2D
-				else _copy_sprite(item as Sprite2D)
-		)
+		var copy: Node2D
+		if item is SpriteRig2D:
+			copy = _copy_rig(item as SpriteRig2D)
+		else:
+			copy = _copy_sprite(item as Sprite2D)
 		copy.transform = inverse * GameObject.relative_transform(origin, item)
 		add_child(copy)
 
