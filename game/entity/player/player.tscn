@@ -7882,14 +7882,14 @@ particles = NodePath("../../../../JumpParticles")
 
 [node name="Jump" type="Node" parent="StateMachine/Dry/Airborne/BaseJump" unique_id=2105690536]
 script = ExtResource("89_h5pm1")
-chain_window = 0.08
+chain_window = 0.12
 effects = SubResource("Resource_2qfp3")
 
 [node name="DoubleJump" type="Node" parent="StateMachine/Dry/Airborne/BaseJump" unique_id=473863514]
 script = ExtResource("89_h5pm1")
 strength = 412.5
 cut_multiplier = 0.85
-chain_window = 0.08
+chain_window = 0.12
 effects = SubResource("Resource_yyr3d")
 
 [node name="TripleJump" type="Node" parent="StateMachine/Dry/Airborne/BaseJump" unique_id=128165842]

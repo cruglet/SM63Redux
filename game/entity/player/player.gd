@@ -69,6 +69,7 @@ var can_walk: bool = true
 var can_dive: bool = true
 ## Allows a ground pound to start from the air.
 var can_ground_pound: bool = true
+var pound_cooldown: float = 0.0
 var interactions_locked: bool = false
 ## How many jumps of the current chain have been performed.
 var jump_chain: int = 0
@@ -90,6 +91,7 @@ var _collision: CollisionShape2D
 
 func _physics_process(delta: float) -> void:
 	controls.poll(delta)
+	pound_cooldown = maxf(pound_cooldown - delta, 0.0)
 	move_input = controls.move
 	if fludd.is_turbo_active() and is_zero_approx(move_input):
 		move_input = float(get_facing())
@@ -415,6 +417,7 @@ func wants_ground_pound() -> bool:
 			not is_on_floor()
 			and controls.is_held(&"ground_pound")
 			and can_ground_pound
+			and pound_cooldown <= 0.0
 			and not carry.is_holding()
 	)
 
@@ -446,12 +449,8 @@ func is_pound_impacting() -> bool:
 	)
 
 
-func request_pound_cancel() -> void:
+func pierce_pound() -> void:
 	if not machine.is_active(&"GroundPound"):
-		return
-	
-	if not controls.is_held(&"ground_pound"):
-		machine.change_state(&"Fall")
 		return
 	
 	if not machine.is_active(&"GroundPoundFall"):

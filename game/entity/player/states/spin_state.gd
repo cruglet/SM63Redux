@@ -63,7 +63,7 @@ func _exit() -> void:
 
 
 func _next() -> StringName:
-	if player.is_on_floor() and controls.is_buffered(&"jump", jump_buffer):
+	if player.is_on_floor() and controls.take_buffered(&"jump", jump_buffer):
 		return &"BaseJump"
 	if not controls.is_held(&"spin") and time >= active_time:
 		if player.has_landed():

@@ -82,7 +82,7 @@ func _next() -> StringName:
 			return &"Floorslide"
 	if controls.is_held(&"spin"):
 		return &"Spin"
-	if grounded and player.can_jump and controls.is_buffered(&"jump", jump_buffer):
+	if grounded and player.can_jump and controls.take_buffered(&"jump", jump_buffer):
 		return &"BaseJump"
 	return &""
 

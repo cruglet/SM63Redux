@@ -17,4 +17,4 @@ func _on_hurt_box_damaged(source_hitbox: HitBox) -> void:
 	
 	var player: Player = source_hitbox.owner as Player
 	if player:
-		player.request_pound_cancel()
+		player.pierce_pound()

@@ -9,6 +9,8 @@ const ACTIONS: Array[StringName] = [
 	&"spin",
 	&"use_fludd",
 	&"switch_nozzle",
+	&"glide_up",
+	&"swim_up",
 ]
 const AXIS_THRESHOLD: float = 0.2
 
@@ -54,8 +56,12 @@ func is_just_pressed(action: StringName) -> bool:
 	return _press_ages.get(action, INF) == 0.0
 
 
-func is_buffered(action: StringName, window: float) -> bool:
-	return is_held(action) and was_pressed_within(action, window)
+func take_buffered(action: StringName, window: float) -> bool:
+	if not was_pressed_within(action, window):
+		return false
+	
+	consume(action)
+	return true
 
 
 func was_pressed_within(action: StringName, window: float) -> bool:

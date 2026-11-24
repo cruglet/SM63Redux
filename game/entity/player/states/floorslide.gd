@@ -104,7 +104,7 @@ func _next() -> StringName:
 	if (
 			grounded
 			and player.is_moving_against_facing()
-			and controls.is_buffered(&"jump", jump_buffer)
+			and controls.take_buffered(&"jump", jump_buffer)
 	):
 		return &"Backflip"
 	if grounded and controls.is_held(&"jump") and player.get_facing_velocity() > rollout_min_speed:

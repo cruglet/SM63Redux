@@ -23,7 +23,7 @@ func _next() -> StringName:
 		return &"Walk"
 	if not grounded and player.velocity.y >= 0.0:
 		return &"Fall"
-	if grounded and player.can_jump and controls.is_buffered(&"jump", jump_buffer):
+	if grounded and player.can_jump and controls.take_buffered(&"jump", jump_buffer):
 		return &"BaseJump"
 	if grounded and time >= sleep_delay and controls.quiet_time >= sleep_delay:
 		return &"Sleep"
