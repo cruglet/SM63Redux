@@ -21,11 +21,12 @@ void vertex() {
 void fragment() {
 	vec4 source = textureLod(screen_texture, SCREEN_UV, 0.0);
 	bool exempt = metal_mark_is_exempt(source);
+	bool held = held_mark_is_set(source);
 	if (source.a > 0.0001) {
 		source.rgb /= source.a;
 	}
 	
-	if (metal_amount > 0.0 || invisible_amount > 0.0) {
+	if (!held && (metal_amount > 0.0 || invisible_amount > 0.0)) {
 		source = cap_effect(
 			CAP_SAMPLES(screen_texture, SCREEN_UV, SCREEN_PIXEL_SIZE * pixel_scale, metal_facing),
 			source,

@@ -6,7 +6,6 @@ extends Mode
 @export var effect_target: CanvasItem
 @export var effect_parameter: StringName = &""
 @export var effect_exempt: Array[CanvasItem] = []
-@export var sprite_material: Material
 @export var exempt_material: Material
 @export_group("Blink")
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var blink_time: float = 4.0
@@ -121,8 +120,6 @@ func _show_effect(shown: bool) -> void:
 	for item: CanvasItem in effect_exempt:
 		item.use_parent_material = not shown
 		item.material = exempt_material if shown else null
-	if sprite_material:
-		player.sprite.material = sprite_material if shown else null
 	if effect_target and not effect_parameter.is_empty():
 		effect_target.set_instance_shader_parameter(effect_parameter, 1.0 if shown else 0.0)
 

@@ -7120,6 +7120,10 @@ shader_parameter/exempt = false
 shader = ExtResource("metal_mark_shader")
 shader_parameter/exempt = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_held_mark"]
+shader = ExtResource("metal_mark_shader")
+shader_parameter/held = true
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rainbow"]
 shader = ExtResource("rainbow_shader")
 shader_parameter/rainbow_saturation = 0.8
@@ -7211,6 +7215,7 @@ instance_shader_parameters/metal_amount = 0.0
 instance_shader_parameters/metal_facing = 1.0
 
 [node name="Doll" type="Node2D" parent="Visuals" unique_id=1587082698]
+material = SubResource("ShaderMaterial_metal_mark")
 position = Vector2(2, -7)
 script = ExtResource("rig_2d")
 clips = Array[ExtResource("rig_clip")]([SubResource("RigClip_Visuals_Doll_bonk"), SubResource("RigClip_Visuals_Doll_crouch"), SubResource("RigClip_Visuals_Doll_crouch_up"), SubResource("RigClip_Visuals_Doll_death"), SubResource("RigClip_Visuals_Doll_dive"), SubResource("RigClip_Visuals_Doll_double_jump"), SubResource("RigClip_Visuals_Doll_double_jump_fall"), SubResource("RigClip_Visuals_Doll_fall_loop"), SubResource("RigClip_Visuals_Doll_fall_start_l"), SubResource("RigClip_Visuals_Doll_fall_start_r"), SubResource("RigClip_Visuals_Doll_floor_slide"), SubResource("RigClip_Visuals_Doll_fly_down"), SubResource("RigClip_Visuals_Doll_fly_up"), SubResource("Resource_qppe4"), SubResource("RigClip_Visuals_Doll_ground_pound_fall"), SubResource("RigClip_Visuals_Doll_ground_pound_slam"), SubResource("RigClip_Visuals_Doll_ground_pound_start"), SubResource("RigClip_Visuals_Doll_idle"), SubResource("RigClip_Visuals_Doll_idle_low_hp"), SubResource("RigClip_Visuals_Doll_jump_l"), SubResource("RigClip_Visuals_Doll_jump_r"), SubResource("RigClip_Visuals_Doll_run_fast"), SubResource("RigClip_Visuals_Doll_run_loop"), SubResource("RigClip_Visuals_Doll_spin_fast"), SubResource("RigClip_Visuals_Doll_spin_loop"), SubResource("RigClip_Visuals_Doll_stomp"), SubResource("RigClip_Visuals_Doll_swim"), SubResource("RigClip_Visuals_Doll_swim_fast"), SubResource("RigClip_Visuals_Doll_swim_idle"), SubResource("RigClip_Visuals_Doll_triple_jump"), SubResource("RigClip_Visuals_Doll_turbo_run"), SubResource("RigClip_Visuals_Doll_walk_loop"), SubResource("RigClip_Visuals_Doll_sleep_start"), SubResource("RigClip_Visuals_Doll_sleep_loop"), SubResource("RigClip_Visuals_Doll_sleep_end"), SubResource("RigClip_Visuals_Doll_shine_get"), SubResource("RigClip_Visuals_Doll_throw"), SubResource("RigClip_Visuals_Doll_kick")])
@@ -7389,6 +7394,7 @@ variants = Array[ExtResource("rig_variant")]([SubResource("RigVariant_Visuals_Do
 metadata/_custom_type_script = "uid://y3tuooioal0x"
 
 [node name="HoldAnchor" type="Marker2D" parent="Visuals/Doll" unique_id=1860539151]
+material = SubResource("ShaderMaterial_held_mark")
 position = Vector2(10, 6)
 script = ExtResource("rig_anchor")
 rest_position = Vector2(10, 6)
@@ -7404,6 +7410,7 @@ keys = Dictionary[StringName, Array]({
 metadata/_custom_type_script = "uid://biq4ldyyn2utb"
 
 [node name="HeavyHoldAnchor" type="Marker2D" parent="Visuals/Doll" unique_id=1860539152]
+material = SubResource("ShaderMaterial_held_mark")
 position = Vector2(1, -24)
 script = ExtResource("rig_anchor")
 rest_position = Vector2(1, -24)
@@ -7604,13 +7611,15 @@ disabled = true
 debug_color = Color(0.7, 0, 0, 0.41960785)
 
 [node name="HurtBox" type="Area2D" parent="Hitboxes" unique_id=1579798787 node_paths=PackedStringArray("blink_targets")]
+visible = false
 collision_layer = 32
 collision_mask = 16
 monitorable = false
 script = ExtResource("53_sloyf")
 ignored_hitbox_ids = PackedStringArray("player", "koopa_shell")
 components = Array[ExtResource("54_jjwtc")]([SubResource("Resource_ebtvn")])
-blink_targets = [NodePath("../../Visuals/Doll")]
+blink_targets = [NodePath("../../Visuals")]
+blink_property = NodePath("self_modulate")
 metadata/_custom_type_script = "uid://3ara7t8dqmih"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/HurtBox" unique_id=2093513014]
@@ -8113,8 +8122,7 @@ duration = 20.0
 music = ExtResource("music_metal")
 effect_target = NodePath("../../Visuals")
 effect_parameter = &"metal_amount"
-effect_exempt = [NodePath("../../Visuals/Doll/WingBack"), NodePath("../../Visuals/Doll/Fludd"), NodePath("../../Visuals/Doll/WingFront"), NodePath("../../Visuals/Doll/HoldAnchor"), NodePath("../../Visuals/Doll/HeavyHoldAnchor")]
-sprite_material = SubResource("ShaderMaterial_metal_mark")
+effect_exempt = [NodePath("../../Visuals/Doll/WingBack"), NodePath("../../Visuals/Doll/Fludd"), NodePath("../../Visuals/Doll/WingFront")]
 exempt_material = SubResource("ShaderMaterial_metal_exempt")
 
 [node name="Invisible" type="Node" parent="Caps" unique_id=129888118 node_paths=PackedStringArray("effect_target")]

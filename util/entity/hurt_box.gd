@@ -28,6 +28,7 @@ var disable_on_hit_duration: float = 0.0
 @export var blink_targets: Array[CanvasItem] = []
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var blink_interval: float = 0.08
 @export var blink_alpha: float = 0.2
+@export var blink_property: NodePath = ^"modulate"
 
 var _disable_timers: Array[SceneTreeTimer] = []
 var _hit_this_frame: bool = false
@@ -63,11 +64,11 @@ func start_blink() -> void:
 	for target: CanvasItem in blink_targets:
 		_blink_tween.tween_property(
 				target,
-				^"modulate",
+				blink_property,
 				Color(1.0, 1.0, 1.0, blink_alpha),
 				blink_interval,
 		)
-		_blink_tween.tween_property(target, ^"modulate", Color.WHITE, blink_interval)
+		_blink_tween.tween_property(target, blink_property, Color.WHITE, blink_interval)
 
 
 func stop_blink() -> void:
@@ -76,7 +77,7 @@ func stop_blink() -> void:
 	_blink_tween.kill()
 	_blink_tween = null
 	for target: CanvasItem in blink_targets:
-		target.modulate = Color.WHITE
+		target.set_indexed(blink_property, Color.WHITE)
 
 
 func _on_area_entered(area: Area2D) -> void:

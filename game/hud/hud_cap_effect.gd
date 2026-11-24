@@ -36,6 +36,8 @@ func bind(caps: MultiModeMachine) -> void:
 	caps.mode_stopped.connect(_on_mode_stopped)
 	if caps.is_running(cap):
 		_on_mode_started(_cap_mode)
+	elif not material:
+		_set_progress(0.0)
 
 
 func _set_progress(value: float) -> void:
