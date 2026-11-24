@@ -3,6 +3,7 @@ extends Mode
 
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var duration: float = 0.0
 @export var music: AudioStream
+@export var traits: Array[StringName] = []
 @export var effect_target: CanvasItem
 @export var effect_parameter: StringName = &""
 @export var effect_exempt: Array[CanvasItem] = []
@@ -78,42 +79,6 @@ func redirect_state(_from: StringName, to: StringName) -> StringName:
 
 func set_flapping(_flapping: bool) -> void:
 	pass
-
-
-func has_top_speed_run() -> bool:
-	return false
-
-
-func allows_glide() -> bool:
-	return false
-
-
-func ignores_water() -> bool:
-	return false
-
-
-func is_undetectable() -> bool:
-	return false
-
-
-func is_intangible() -> bool:
-	return false
-
-
-func is_harmless() -> bool:
-	return false
-
-
-func is_lethal() -> bool:
-	return false
-
-
-func has_free_jump_chain() -> bool:
-	return false
-
-
-func dive_keeps_fall_speed() -> bool:
-	return false
 
 
 func _show_effect(shown: bool) -> void:

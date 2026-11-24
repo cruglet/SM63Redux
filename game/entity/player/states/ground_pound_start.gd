@@ -8,7 +8,7 @@ extends PlayerState
 
 func _enter() -> void:
 	player.velocity.x = 0.0
-	player.jump_chain = 0
+	player.jumps.reset_chain()
 
 
 func _tick(_delta: float) -> void:

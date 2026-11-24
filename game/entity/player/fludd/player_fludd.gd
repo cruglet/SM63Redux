@@ -231,6 +231,11 @@ func is_turbo_active() -> bool:
 	return mode != null and mode.nozzle == Nozzle.TURBO
 
 
+func is_turbo_striking() -> bool:
+	var turbo: TurboMode = get_running_mode() as TurboMode
+	return turbo != null and turbo.is_striking()
+
+
 func collect_nozzle(nozzle: Nozzle) -> void:
 	held_nozzles.set(nozzle, true)
 	fuel = FUEL_MAX

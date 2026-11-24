@@ -64,4 +64,4 @@ func _is_stroking() -> bool:
 
 
 func _get_animation() -> StringName:
-	return turbo_animation if player.is_turbo_striking() else animation
+	return turbo_animation if player.fludd.is_turbo_striking() else animation

@@ -6,12 +6,12 @@ extends PlayerState
 
 func _enter() -> void:
 	player.can_walk = false
-	player.can_ground_pound = false
+	player.ground_pound.enabled = false
 
 
 func _exit() -> void:
 	player.can_walk = true
-	player.can_ground_pound = true
+	player.ground_pound.enabled = true
 
 
 func _next() -> StringName:

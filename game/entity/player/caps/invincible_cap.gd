@@ -31,10 +31,6 @@ func _enter() -> void:
 	_sync_trail()
 
 
-func has_top_speed_run() -> bool:
-	return true
-
-
 func _tick(delta: float) -> void:
 	super(delta)
 	_sync_trail()
@@ -52,14 +48,6 @@ func _show_effect(shown: bool) -> void:
 	super(shown)
 	if _overlay:
 		_overlay.self_modulate.a = 1.0 if shown else 0.0
-
-
-func is_intangible() -> bool:
-	return true
-
-
-func is_lethal() -> bool:
-	return true
 
 
 func _sync_trail() -> void:

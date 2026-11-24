@@ -4,6 +4,7 @@ const FRICTION_KEY: StringName = &"floorslide"
 
 ## Hitbox that strikes enemies while sliding fast enough.
 @export var hitbox: HitBox
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var strike_speed: float = 180.0
 
 @export_group("Ground")
 ## Floor friction multiplier applied for the duration of the slide.
@@ -120,6 +121,10 @@ func _next() -> StringName:
 
 func get_gravity_scale() -> float:
 	return gravity_scale if player.is_on_floor() else gravity_scale * air_gravity_scale
+
+
+func is_striking() -> bool:
+	return absf(player.velocity.x) > strike_speed
 
 
 func _rotate(delta: float) -> void:

@@ -15,15 +15,3 @@ func _enter() -> void:
 func _exit() -> void:
 	super()
 	player.collision_mask |= _removed_layers
-
-
-func is_undetectable() -> bool:
-	return true
-
-
-func is_intangible() -> bool:
-	return true
-
-
-func is_harmless() -> bool:
-	return true

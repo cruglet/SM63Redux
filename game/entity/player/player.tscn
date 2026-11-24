@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c0hjv83unhj0w"]
 
+[ext_resource type="Script" uid="uid://ch1kj3j78ghqq" path="res://game/entity/player/player_water.gd" id="player_water"]
 [ext_resource type="Script" uid="uid://c0jtt8j5mk6sr" path="res://game/entity/player/player.gd" id="1_b7m82"]
 [ext_resource type="Texture2D" uid="uid://d0ybvaiwv7bs6" path="res://assets/textures/entity/player/mario/run.png" id="2_lh4k8"]
 [ext_resource type="Texture2D" uid="uid://bvpu1uexfy52t" path="res://assets/textures/entity/player/mario/bonk.png" id="4_ria7k"]
@@ -87,7 +88,7 @@
 [ext_resource type="AudioStream" uid="uid://bme1kk82dbdvc" path="res://assets/sfx/player/mario/triple_jump/triple_jump_6.wav" id="85_3yv7w"]
 [ext_resource type="Script" uid="uid://w7qrs66qsrqq" path="res://game/entity/player/states/fall.gd" id="86_53f2h"]
 [ext_resource type="Script" uid="uid://ybk4uj8y5wlf" path="res://game/entity/player/states/rollout.gd" id="87_gai66"]
-[ext_resource type="Script" uid="uid://dynqlpnjt4xim" path="res://game/entity/player/states/base_jump.gd" id="88_81308"]
+[ext_resource type="Script" uid="uid://dynqlpnjt4xim" path="res://game/entity/player/states/base_jump_state.gd" id="88_81308"]
 [ext_resource type="Script" uid="uid://bohltuygnmmpc" path="res://game/entity/player/states/jump_state.gd" id="89_h5pm1"]
 [ext_resource type="AudioStream" uid="uid://bcy4wwvxfd7km" path="res://assets/sfx/player/mario/jump/jump_0.wav" id="90_q8jn1"]
 [ext_resource type="AudioStream" uid="uid://sskhnc1p4cbo" path="res://assets/sfx/player/mario/jump/jump_1.wav" id="91_ngse8"]
@@ -98,7 +99,7 @@
 [ext_resource type="AudioStream" uid="uid://bxthrj2cgps5d" path="res://assets/sfx/player/spin/spin_air_1.wav" id="96_4no0n"]
 [ext_resource type="AudioStream" uid="uid://e0gve7kc1mk1" path="res://assets/sfx/player/spin/spin_air_2.wav" id="97_b85k8"]
 [ext_resource type="AudioStream" uid="uid://csmh3s1xsm72b" path="res://assets/sfx/player/spin/spin_air_3.wav" id="98_r7jop"]
-[ext_resource type="Script" uid="uid://colum57ecgodu" path="res://game/entity/player/states/stomp.gd" id="99_qwmux"]
+[ext_resource type="Script" uid="uid://colum57ecgodu" path="res://game/entity/player/states/stomp_state.gd" id="99_qwmux"]
 [ext_resource type="Script" uid="uid://byjq1xn6pr4wl" path="res://game/entity/player/states/floorslide.gd" id="100_opa2o"]
 [ext_resource type="Script" uid="uid://pii3oobpqp36" path="res://game/entity/player/states/strike.gd" id="101_13jtq"]
 [ext_resource type="AudioStream" uid="uid://cvwxucpxjv4s2" path="res://assets/sfx/player/mario/damage/ough.ogg" id="102_bgmhw"]
@@ -110,7 +111,7 @@
 [ext_resource type="AudioStream" uid="uid://bfd6xls4jjoac" path="res://assets/sfx/player/spin/spin_water_1.wav" id="108_37lcl"]
 [ext_resource type="AudioStream" uid="uid://dfoi0m0cw6fww" path="res://assets/sfx/player/spin/spin_water_end.wav" id="109_mbjyd"]
 [ext_resource type="Script" uid="uid://gtviamx3621c" path="res://game/entity/player/states/swim_strike.gd" id="110_hp8pt"]
-[ext_resource type="Script" uid="uid://bcwoywdfsskwp" path="res://game/entity/player/states/ground_pound.gd" id="111_x7jwh"]
+[ext_resource type="Script" uid="uid://bcwoywdfsskwp" path="res://game/entity/player/states/ground_pound_state.gd" id="111_x7jwh"]
 [ext_resource type="Script" uid="uid://dnyqxih87rkyx" path="res://game/entity/player/states/ground_pound_start.gd" id="112_2keja"]
 [ext_resource type="AudioStream" uid="uid://cfcnya3ow457f" path="res://assets/sfx/player/ground_pound/ground_pound_start.wav" id="113_o2cds"]
 [ext_resource type="Script" uid="uid://bwnbod7vx6vte" path="res://game/entity/player/states/ground_pound_fall_state.gd" id="114_rnjo6"]
@@ -6273,7 +6274,7 @@ size = Vector2(12, 8)
 script = ExtResource("54_jjwtc")
 accepted_hitbox_ids = PackedStringArray("enemy")
 accepted_damage_types = Array[int]([1])
-expression = "not (entity.is_dive_striking() or entity.is_turbo_striking()) or hitbox.hitbox_ids.has(\"bobomb\")"
+expression = "not (entity.is_dive_striking() or entity.fludd.is_turbo_striking()) or hitbox.hitbox_ids.has(\"bobomb\")"
 disable_on_hit = true
 disable_on_hit_duration = 2.0
 override_damage_state = true
@@ -7134,22 +7135,21 @@ shader_parameter/thickness = 1
 shader_parameter/brightness = 1.0
 shader_parameter/fill_alpha = 0.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1740348366 node_paths=PackedStringArray("floor_raycast", "fludd", "carry", "caps", "silhouette_targets", "ground_pound_fall", "shine_get", "hitboxes", "detection_area", "base_collision", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
+[node name="Player" type="CharacterBody2D" unique_id=1740348366 node_paths=PackedStringArray("floor_raycast", "fludd", "carry", "water", "caps", "silhouette_targets", "base_collision", "jumps", "ground_pound", "stomp", "shine_get", "sprite", "components_root", "collision_shapes", "machine", "water_check")]
 collision_mask = 2050
 floor_snap_length = 7.0
 script = ExtResource("1_b7m82")
 floor_raycast = NodePath("FloorRaycast")
 fludd = NodePath("Fludd")
 carry = NodePath("Carry")
+water = NodePath("Water")
 caps = NodePath("Caps")
-submerged_bus_effects = Array[AudioEffect]([SubResource("AudioEffectLowPassFilter_3h1ly")])
 silhouette_targets = [NodePath("Visuals/Doll/WingBack"), NodePath("Visuals/Doll/BodyBack"), NodePath("Visuals/Doll/Fludd"), NodePath("Visuals/Doll/Legs"), NodePath("Visuals/Doll/Body"), NodePath("Visuals/Doll/WingFront"), NodePath("Visuals/Doll/FrontArm")]
-ground_pound_fall = NodePath("StateMachine/GroundPound/GroundPoundFall")
-shine_get = NodePath("StateMachine/ShineGet")
-hitboxes = NodePath("Hitboxes")
-detection_area = NodePath("Regions/DetectionShape")
 base_collision = NodePath("BaseCollision")
-splash_scene = ExtResource("water_splash")
+jumps = NodePath("StateMachine/Dry/Airborne/BaseJump")
+ground_pound = NodePath("StateMachine/GroundPound")
+stomp = NodePath("StateMachine/Dry/Stomp")
+shine_get = NodePath("StateMachine/ShineGet")
 sprite = NodePath("Visuals/Doll")
 components_root = NodePath("Components")
 collision_shapes = [NodePath("BaseCollision"), NodePath("GroundPoundCollision"), NodePath("DiveCollision")]
@@ -7563,7 +7563,7 @@ collision_mask = 32
 monitoring = false
 script = ExtResource("52_tqdqa")
 hitbox_ids = Array[String](["player", "turbo"])
-hit_expression = "is_turbo_striking()"
+hit_expression = "fludd.is_turbo_striking()"
 damage_amount = 1.0
 damage_type = 1
 has_knockback = true
@@ -7601,7 +7601,7 @@ collision_mask = 32
 monitoring = false
 script = ExtResource("52_tqdqa")
 hitbox_ids = Array[String](["player", "ground_pound"])
-hit_expression = "is_pound_impacting()"
+hit_expression = "ground_pound.is_impacting()"
 damage_type = 2
 metadata/_custom_type_script = "uid://c103bnb5445y3"
 
@@ -7969,9 +7969,10 @@ effects = SubResource("Resource_huoey")
 script = ExtResource("110_hp8pt")
 effects = SubResource("Resource_bg4ui")
 
-[node name="GroundPound" type="Node" parent="StateMachine" unique_id=1836909439 node_paths=PackedStringArray("hitbox", "collision_shape")]
+[node name="GroundPound" type="Node" parent="StateMachine" unique_id=1836909439 node_paths=PackedStringArray("hitbox", "fall", "collision_shape")]
 script = ExtResource("111_x7jwh")
 hitbox = NodePath("../../Hitboxes/GroundPound")
+fall = NodePath("GroundPoundFall")
 collision_shape = NodePath("../../GroundPoundCollision")
 effects = SubResource("Resource_xejek")
 
@@ -7993,9 +7994,11 @@ dust = NodePath("../../../GroundPoundDust")
 impact_bank = SubResource("Resource_slam_bank")
 effects = SubResource("Resource_rylnt")
 
-[node name="ShineGet" type="Node" parent="StateMachine" unique_id=1127730842 node_paths=PackedStringArray("hurt_box", "shine_root", "shine_holder", "visuals", "jingle_player", "cap_music")]
+[node name="ShineGet" type="Node" parent="StateMachine" unique_id=1127730842 node_paths=PackedStringArray("hurt_box", "hitboxes", "detection_area", "shine_root", "shine_holder", "visuals", "jingle_player", "cap_music")]
 script = ExtResource("state_shine_get")
 hurt_box = NodePath("../../Hitboxes/HurtBox")
+hitboxes = NodePath("../../Hitboxes")
+detection_area = NodePath("../../Regions/DetectionShape")
 shine_root = NodePath("../../ShineRoot")
 shine_holder = NodePath("../../ShineRoot/Holder")
 visuals = NodePath("../../Visuals")
@@ -8103,6 +8106,7 @@ host = NodePath("..")
 
 [node name="Metal" type="Node" parent="Caps" unique_id=1036229886 node_paths=PackedStringArray("effect_target", "effect_exempt")]
 script = ExtResource("metal_cap")
+traits = Array[StringName]([&"ignores_water"])
 animation_overrides = Dictionary[StringName, StringName]({
 &"run_fast": &"walk_loop",
 &"run_loop": &"walk_loop"
@@ -8127,6 +8131,7 @@ exempt_material = SubResource("ShaderMaterial_metal_exempt")
 
 [node name="Invisible" type="Node" parent="Caps" unique_id=129888118 node_paths=PackedStringArray("effect_target")]
 script = ExtResource("invisible_cap")
+traits = Array[StringName]([&"undetectable", &"intangible", &"harmless"])
 passable_layers = 2048
 duration = 20.0
 music = ExtResource("music_vanish")
@@ -8135,6 +8140,7 @@ effect_parameter = &"invisible_amount"
 
 [node name="Invincible" type="Node" parent="Caps" unique_id=555000642 node_paths=PackedStringArray("silhouette_parts", "hitbox", "trail")]
 script = ExtResource("invincible_cap")
+traits = Array[StringName]([&"top_speed_run", &"intangible", &"lethal"])
 silhouette_material = SubResource("ShaderMaterial_rainbow")
 silhouette_parts = [NodePath("../../Visuals/Doll/WingBack"), NodePath("../../Visuals/Doll/BodyBack"), NodePath("../../Visuals/Doll/Legs"), NodePath("../../Visuals/Doll/Body"), NodePath("../../Visuals/Doll/WingFront"), NodePath("../../Visuals/Doll/FrontArm")]
 hitbox = NodePath("../../Hitboxes/Invincible")
@@ -8146,6 +8152,7 @@ music = ExtResource("music_star")
 
 [node name="Wing" type="Node" parent="Caps" unique_id=24034737 node_paths=PackedStringArray("wings")]
 script = ExtResource("wing_cap")
+traits = Array[StringName]([&"glide", &"free_jump_chain", &"dive_keeps_fall_speed"])
 state_redirects = Dictionary[String, StringName]({
 "TripleJump>Fall": &"Glide"
 })
@@ -8162,6 +8169,12 @@ base = ExtResource("192_37lcl")
 [node name="ShineJingle" type="AudioStreamPlayer" parent="." unique_id=1558942557]
 bus = &"Music"
 
+[node name="Water" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("player_water")
+player = NodePath("..")
+bus_effects = Array[AudioEffect]([SubResource("AudioEffectLowPassFilter_3h1ly")])
+splash_scene = ExtResource("water_splash")
+
 [node name="Carry" type="Node" parent="." unique_id=1127730845 node_paths=PackedStringArray("player", "hold_anchor", "heavy_hold_anchor", "feet_box", "head_box", "catch_box", "kick_particles")]
 script = ExtResource("player_carry")
 player = NodePath("..")
@@ -8174,5 +8187,5 @@ kick_sound = ExtResource("sfx_kick")
 kick_particles = NodePath("../KickParticles")
 
 [connection signal="landed" from="Hitboxes/Feet" to="." method="_on_feet_landed"]
-[connection signal="water_entered" from="Regions/WaterCheck" to="." method="_on_water_entered"]
-[connection signal="water_exited" from="Regions/WaterCheck" to="." method="_on_water_exited"]
+[connection signal="water_entered" from="Regions/WaterCheck" to="Water" method="_on_water_entered"]
+[connection signal="water_exited" from="Regions/WaterCheck" to="Water" method="_on_water_exited"]

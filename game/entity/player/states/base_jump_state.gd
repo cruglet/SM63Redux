@@ -1,3 +1,4 @@
+class_name BaseJumpState
 extends PlayerState
 
 ## The jump chain in order; each jump uses the next entry while its chain window
@@ -6,12 +7,15 @@ extends PlayerState
 ## Dust burst emitted on takeoff.
 @export var particles: AnimatedParticles
 
+var chain: int = 0
+var chain_timer: float = 0.0
+
 var _jump: JumpState
 var _cut: bool = false
 
 
 func _enter() -> void:
-	var index: int = mini(player.jump_chain, jumps.size() - 1) if player.can_chain_jumps() else 0
+	var index: int = mini(chain, jumps.size() - 1) if not player.carry.is_holding() else 0
 	while index > 0 and not jumps[index].can_chain():
 		index -= 1
 	
@@ -19,8 +23,8 @@ func _enter() -> void:
 	_cut = false
 	particles.burst()
 	player.velocity.y = -player.get_jump_speed(_jump.strength)
-	player.jump_chain = index + 1
-	player.jump_chain_timer = _jump.chain_window
+	chain = index + 1
+	chain_timer = _jump.chain_window
 	player.can_jump = false
 
 
@@ -45,3 +49,16 @@ func _next() -> StringName:
 	if player.has_landed():
 		return &"Idle"
 	return _jump.name if is_current() else &""
+
+
+func tick_chain(delta: float) -> void:
+	if not player.is_on_floor() or not player.can_jump:
+		return
+	
+	chain_timer = maxf(chain_timer - delta, 0.0)
+	if chain_timer <= 0.0:
+		chain = 0
+
+
+func reset_chain() -> void:
+	chain = 0

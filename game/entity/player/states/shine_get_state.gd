@@ -9,6 +9,8 @@ signal celebration_ended
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s^2") var air_drag: float = 240.0
 @export var hurt_box: HurtBox
 @export_custom(PROPERTY_HINT_NONE, "suffix:s") var invulnerable_after: float = 1.0
+@export var hitboxes: Node2D
+@export var detection_area: Area2D
 @export_group("Shine")
 @export var follow_offset: Vector2 = Vector2(12.0, -30.0)
 @export var follow_rate: float = 9.0
@@ -39,6 +41,7 @@ var _requested: bool = false
 var _air_time: float = 0.0
 var _follow_position: Vector2 = Vector2.ZERO
 var _settling_rig: SpriteRig2D
+var _body_layer: int = 0
 
 
 func _enter() -> void:
@@ -51,7 +54,7 @@ func _enter() -> void:
 	hurt_box.disable()
 	_set_camera_locked(true)
 	_set_pause_locked(true)
-	player.set_interactions_locked(true)
+	_lock_interactions(true)
 	cap_music.process_mode = Node.PROCESS_MODE_DISABLED
 	hurt_box.stop_blink()
 	sprite.speed_scale = 1.0
@@ -72,7 +75,7 @@ func _exit() -> void:
 	sprite.speed_scale = 1.0
 	_set_camera_locked(false)
 	_set_pause_locked(false)
-	player.set_interactions_locked(false)
+	_lock_interactions(false)
 	cap_music.process_mode = Node.PROCESS_MODE_INHERIT
 	controls.consume(&"jump")
 	machine.animation_player.stop()
@@ -218,6 +221,14 @@ func _set_pause_locked(locked: bool) -> void:
 	var level: Level = Level.of(player)
 	if level:
 		level.pause_locked = locked
+
+
+func _lock_interactions(locked: bool) -> void:
+	if locked:
+		_body_layer = player.collision_layer
+	player.collision_layer = 0 if locked else _body_layer
+	hitboxes.process_mode = Node.PROCESS_MODE_DISABLED if locked else Node.PROCESS_MODE_INHERIT
+	detection_area.set_deferred(&"monitorable", not locked)
 
 
 func _set_soft_paused(paused: bool) -> void:

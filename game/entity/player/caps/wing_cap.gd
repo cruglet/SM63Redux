@@ -25,15 +25,3 @@ func set_flapping(flapping: bool) -> void:
 func _exit() -> void:
 	super()
 	set_flapping(false)
-
-
-func allows_glide() -> bool:
-	return true
-
-
-func has_free_jump_chain() -> bool:
-	return true
-
-
-func dive_keeps_fall_speed() -> bool:
-	return true

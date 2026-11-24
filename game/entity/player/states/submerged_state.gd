@@ -51,7 +51,7 @@ func _tick(delta: float) -> void:
 	if not (machine.get_state() as PlayerState).overrides_vertical():
 		_drift(delta)
 	
-	if player.wants_ground_pound():
+	if player.ground_pound.wants_start():
 		machine.change_state(&"GroundPoundStart")
 
 
@@ -86,7 +86,7 @@ func _swim(delta: float) -> void:
 				delta,
 		)
 	elif not player.is_crouching():
-		player.drive(
+		drive(
 				input,
 				player.get_ground_speed(swim_speed) * water_resistance,
 				acceleration,

@@ -45,7 +45,7 @@ func _next() -> StringName:
 func can_chain() -> bool:
 	return (
 			required_speed <= 0.0
-			or player.has_free_jump_chain()
+			or player.has_cap(&"free_jump_chain")
 			or absf(player.velocity.x) >= required_speed
 			and player.is_moving_with_facing()
 	)

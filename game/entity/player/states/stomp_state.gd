@@ -1,3 +1,4 @@
+class_name StompState
 extends PlayerState
 
 ## Time gravity is suspended before bouncing.
@@ -6,6 +7,9 @@ extends PlayerState
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s")
 var bounce_speed: float = 272.5
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var held_bounce_speed: float = 412.5
+@export_group("Squish")
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var squish_bounce_speed: float = 200.0
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var held_squish_bounce_speed: float = 412.5
 @export_group("Drag")
 ## Horizontal deceleration while stomping.
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s^2") var drag: float = 500.0
@@ -37,3 +41,11 @@ func _next() -> StringName:
 
 func get_gravity_scale() -> float:
 	return 0.0 if time < duration else gravity_scale
+
+
+func bounce_off_squish() -> void:
+	var held: bool = controls.is_held(&"jump")
+	if held and machine.is_active(&"Airborne") and not machine.is_active(&"Dive"):
+		machine.change_state(&"IdleJump")
+	var speed: float = held_squish_bounce_speed if held else squish_bounce_speed
+	player.velocity.y = -player.get_jump_speed(speed)

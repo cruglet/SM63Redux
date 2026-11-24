@@ -70,7 +70,7 @@ func tick(delta: float) -> void:
 	_grace = maxf(_grace - delta, 0.0)
 	_regrab = maxf(_regrab - delta, 0.0)
 	_tick_kick(delta)
-	var free: bool = not held and not player.interactions_locked
+	var free: bool = not held and not player.shine_get.is_active()
 	var target: Carryable = find_target() if free and can_grab() else null
 	for node: Node in get_tree().get_nodes_in_group(Carryable.GROUP):
 		(node as Carryable).highlighted = node == target

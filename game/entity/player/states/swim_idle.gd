@@ -9,7 +9,7 @@ extends PlayerState
 
 
 func _render_tick(_delta: float) -> void:
-	var wanted: StringName = turbo_animation if player.is_turbo_striking() else animation
+	var wanted: StringName = turbo_animation if player.fludd.is_turbo_striking() else animation
 	if sprite.current_animation != wanted:
 		sprite.play(wanted)
 

@@ -90,7 +90,7 @@ func _next() -> StringName:
 func _update_gait() -> void:
 	var input_strength: float = absf(player.move_input)
 	var animation: StringName = sprite.current_animation
-	if player.is_turbo_striking():
+	if player.fludd.is_turbo_striking():
 		animation = turbo_animation
 	elif input_strength >= walk_input_threshold:
 		animation = _get_stride(input_strength)
@@ -113,7 +113,7 @@ func _get_stride(input_strength: float) -> StringName:
 	if input_strength < run_input_threshold:
 		return player.get_cap_animation(&"walk_loop")
 	if (
-			player.has_top_speed_run()
+			player.has_cap(&"top_speed_run")
 			and absf(player.velocity.x)
 			>= player.get_ground_speed(_grounded.run_speed) * top_speed_ratio
 	):

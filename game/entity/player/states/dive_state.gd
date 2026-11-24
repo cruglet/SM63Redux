@@ -3,6 +3,7 @@ extends PlayerState
 
 ## Hitbox that strikes enemies while diving fast enough.
 @export var hitbox: HitBox
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var strike_speed: float = 180.0
 
 @export_group("Launch")
 ## Horizontal speed the dive launch pulls toward.
@@ -51,7 +52,7 @@ var _was_grounded: bool = false
 
 
 func _enter() -> void:
-	player.jump_chain = 0
+	player.jumps.reset_chain()
 	player.lock_flipping = true
 	hitbox.enable()
 	_stomp_time = 0.0
@@ -88,6 +89,10 @@ func _next() -> StringName:
 
 func get_gravity_scale() -> float:
 	return 0.0 if _stomp_time > 0.0 else gravity_scale
+
+
+func is_striking() -> bool:
+	return absf(player.velocity.x) > strike_speed
 
 
 func stomp() -> void:
@@ -138,7 +143,7 @@ func _launch() -> void:
 	
 	player.velocity.y = (
 			maxf(player.velocity.y, -max_rise_speed)
-			if player.dive_keeps_fall_speed()
+			if player.has_cap(&"dive_keeps_fall_speed")
 			else clampf(player.velocity.y, -max_rise_speed, max_drop_speed)
 	)
 

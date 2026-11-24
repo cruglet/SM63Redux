@@ -14,7 +14,7 @@ var _landed_at: float = -1.0
 
 func _enter() -> void:
 	_landed_at = -1.0
-	player.can_ground_pound = false
+	player.ground_pound.enabled = false
 
 
 func _tick(delta: float) -> void:
@@ -30,7 +30,7 @@ func _tick(delta: float) -> void:
 
 
 func _exit() -> void:
-	player.can_ground_pound = true
+	player.ground_pound.enabled = true
 
 
 func _next() -> StringName:

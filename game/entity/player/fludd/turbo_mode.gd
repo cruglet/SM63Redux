@@ -1,9 +1,11 @@
+class_name TurboMode
 extends FluddMode
 
 const MODIFIER_KEY: StringName = &"fludd_turbo"
 
 @export_group("Turbo")
 @export var hitbox: HitBox
+@export_custom(PROPERTY_HINT_NONE, "suffix:px/s") var strike_speed: float = 300.0
 @export_range(0.0, 1.0) var bump_damp: float = 0.75
 @export_custom(PROPERTY_HINT_NONE, "suffix:px/s^2")
 var rebuild_acceleration: float = 250.0
@@ -41,8 +43,8 @@ func _enter() -> void:
 
 func _tick(delta: float) -> void:
 	_cap = move_toward(_cap, speed, rebuild_acceleration * delta)
-	player.set_water_surface_solid(
-			not player.ignores_water() and not player.controls.is_held(&"crouch")
+	player.water.set_surface_solid(
+			not player.has_cap(&"ignores_water") and not player.controls.is_held(&"crouch")
 	)
 	player.ground_speed_override = _cap
 	player.air_speed_override = _cap
@@ -60,7 +62,7 @@ func _exit() -> void:
 	if hitbox:
 		hitbox.disable()
 	_stop_aiming()
-	player.set_water_surface_solid(false)
+	player.water.set_surface_solid(false)
 	player.friction_modifiers.clear_modifier(MODIFIER_KEY)
 	player.ground_speed_override = 0.0
 	player.air_speed_override = 0.0
@@ -69,6 +71,10 @@ func _exit() -> void:
 
 func get_spray_angle() -> float:
 	return float(player.get_facing()) * (0.5 * PI + deg_to_rad(player.sprite.local_rotation))
+
+
+func is_striking() -> bool:
+	return absf(player.velocity.x) >= strike_speed
 
 
 func _aim(delta: float) -> void:

@@ -41,7 +41,3 @@ func get_water_fall_speed(pounding: bool) -> float:
 			if pounding and water_pound_fall_speed > 0.0
 			else water_max_fall_speed
 	)
-
-
-func ignores_water() -> bool:
-	return true
